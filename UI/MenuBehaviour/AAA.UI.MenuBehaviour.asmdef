@@ -1,0 +1,18 @@
+{
+    "name": "AAA.UI.MenuBehaviour",
+    "rootNamespace": "AAA.UI.MenuBehaviour",
+    "references": [
+        "GUID:cc9b1dbcea8af584ba492afeb67a12da",
+        "GUID:19a0c22aa3d2d9ad8b050c265d72fcbf",
+        "GUID:d2bf662c1b33a3318a35ed7ae227aadd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

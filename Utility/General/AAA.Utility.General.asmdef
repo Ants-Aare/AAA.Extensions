@@ -1,0 +1,21 @@
+{
+    "name": "AAA.Utility.General",
+    "rootNamespace": "AAA.Utility.General",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:d2bf662c1b33a3318a35ed7ae227aadd",
+        "GUID:4644162c871cfaac495977ade7f80c3d",
+        "GUID:1cfd9807e784fbfc3b3c5e3db3be2308",
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,14 @@
+{
+    "name": "AAA.Utility.DataTypes",
+    "rootNamespace": "AAA.Utility.DataTypes",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

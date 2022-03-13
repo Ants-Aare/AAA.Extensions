@@ -1,0 +1,19 @@
+{
+    "name": "AAA.Mobile.Input.Interactions",
+    "rootNamespace": "AAA.Mobile.Input.Interactions",
+    "references": [
+        "GUID:d2bf662c1b33a3318a35ed7ae227aadd",
+        "GUID:e1e2b2ff258d3da479892ed7a835f4cd",
+        "GUID:4644162c871cfaac495977ade7f80c3d",
+        "GUID:19a0c22aa3d2d9ad8b050c265d72fcbf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

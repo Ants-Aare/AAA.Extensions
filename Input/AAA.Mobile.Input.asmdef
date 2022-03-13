@@ -1,0 +1,19 @@
+{
+    "name": "AAA.Mobile.Input",
+    "rootNamespace": "AAA.Mobile.Input",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:19a0c22aa3d2d9ad8b050c265d72fcbf",
+        "GUID:4644162c871cfaac495977ade7f80c3d",
+        "GUID:d2bf662c1b33a3318a35ed7ae227aadd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
