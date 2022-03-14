@@ -2,7 +2,9 @@
     "name": "AAA.Utility",
     "rootNamespace": "AAA.Utility",
     "references": [
-        "GUID:4644162c871cfaac495977ade7f80c3d"
+        "GUID:4644162c871cfaac495977ade7f80c3d",
+        "GUID:d2bf662c1b33a3318a35ed7ae227aadd",
+        "GUID:1cfd9807e784fbfc3b3c5e3db3be2308"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

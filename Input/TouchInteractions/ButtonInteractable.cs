@@ -32,6 +32,13 @@ namespace AAA.Mobile.Input.Interactions
             else
                 ActivateButton();
         }
+        [Button][HideInEditorMode]
+        public void DebugPress()
+        {
+            onPressed?.Invoke(true);
+            ActivateButton();
+            Invoke("DeactivateButton", 0.3f);
+        }
 
         public override void EndTouchInteraction(TouchInputAction touchInputAction)
         {

@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using AAA.Utility.CustomUnityEvents;
 using Sirenix.OdinInspector;
 
 namespace AAA.Utility.GlobalVariables
@@ -13,6 +12,8 @@ namespace AAA.Utility.GlobalVariables
 
         protected virtual void OnEnable()
         {
+            if(variable == null)
+                Debug.LogWarning("Please Assign the variable for " + gameObject.name, gameObject);
             variable.OnChanged += OnChanged;
             if (initializeValueOnStart)
                 OnChanged();

@@ -19,6 +19,8 @@ public class SetVolume : MonoBehaviour
     [SerializeField]
     private bool playSoundCheck = true;
 
+    private YieldInstruction waitforSeconds = new WaitForSeconds(0.2f);
+
     private void Start()
     {
         slider.value = variable.Value.Value;
@@ -50,7 +52,7 @@ public class SetVolume : MonoBehaviour
 
     private IEnumerator Stopper()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return waitforSeconds;
         playSoundCheck = true;
     }
 }

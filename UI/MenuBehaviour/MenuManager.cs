@@ -11,8 +11,8 @@ namespace AAA.UI.MenuBehaviour
     {
         public bool isMenuEnabled = false;
 
-        [SerializeField]
-        private bool enableMenuOnStart = false;
+        [SerializeField] private bool enableMenuOnStart = false;
+        [SerializeField] private bool instantiateAsChild = false;
 
         [Header("Events")]
         [SerializeField][FormerlySerializedAs("onMenuLoad")]
@@ -21,13 +21,10 @@ namespace AAA.UI.MenuBehaviour
         private UnityEvent onMenuDisabled = new UnityEvent();
 
         [Header("Menus")]
-        [SerializeField]
-        private GameObject startMenu = null;
-        [SerializeField]
-        private MenuBehaviour currentMenu = null;
+        [SerializeField] private GameObject startMenu = null;
+        [SerializeField] private MenuBehaviour currentMenu = null;
         private GameObject currentMenuPrefab = null;
-        [SerializeField]
-        private GameObject previousMenuPrefab = null;
+        [SerializeField] private GameObject previousMenuPrefab = null;
         public GameObject menuToLoad = null;
 
         [HideInInspector]
@@ -115,7 +112,14 @@ namespace AAA.UI.MenuBehaviour
             if(currentMenu != null)
                 currentMenu.DisableMenu();
 
-            currentMenu = Instantiate(targetMenuPrefab).GetComponent<MenuBehaviour>();
+            if(instantiateAsChild)
+            {
+                currentMenu = Instantiate(targetMenuPrefab, transform).GetComponent<MenuBehaviour>();
+            }
+            else
+            {
+                currentMenu = Instantiate(targetMenuPrefab).GetComponent<MenuBehaviour>();
+            }
 
             if(currentMenu != null)
                 currentMenu.EnableMenu();
