@@ -2,16 +2,22 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEditor;
 
-public class GUIDToAssetPath : MonoBehaviour
+namespace AAA.Utility.General
 {
-    public string GUID;
-    public string assetPath;
-
-    [Button]
-    public void GetAssetPath()
+    public class GUIDToAssetPath : MonoBehaviour
     {
         #if UNITY_EDITOR
-        assetPath = AssetDatabase.GUIDToAssetPath(GUID);
+
+        [SerializeField] private string GUID;
+        [SerializeField] private string assetPath;
+
+        [Button]
+        public void GetAssetPath()
+        {
+            #if UNITY_EDITOR
+            assetPath = AssetDatabase.GUIDToAssetPath(GUID);
+            #endif
+        }
         #endif
     }
 }

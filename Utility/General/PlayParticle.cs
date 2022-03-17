@@ -1,71 +1,46 @@
 using UnityEngine;
+using Sirenix.OdinInspector;
+using AAA.Utility.GlobalVariables;
 
 public class PlayParticle : MonoBehaviour
 {
-    [Header("Values")]
-    [SerializeField]
-    private bool instantiateAsChild = true;
-    [SerializeField]
-    private Transform instantiatePosition;
+    [TabGroup("Properties")][SerializeField] private bool instantiateAsChild = true;
+    [TabGroup("Properties")][SerializeField] private Transform instantiatePosition;
 
-    [Header("References")]
-    [SerializeField]
-    private GameObject[] randomizedParticlePrefabs;
-    [SerializeField]
-    private GameObject[] multipleParticles;
-    [SerializeField]
-    private GameObject[] particleList;
+    [TabGroup("References")][SerializeField][InlineEditor] private PrefabPool randomizedParticlePrefabs, multipleParticles, particlePrefabs;
 
-    public void PlaySpecificParticle(int particlePrefab)
+    public void PlaySpecificParticle(int prefabIndex)
     {
-        if (particlePrefab < particleList.Length && particlePrefab >= 0 && particleList[particlePrefab] != null)
-        {
-            GameObject go = CreateParticlesystem(particleList[particlePrefab]);
-            Destroy(go, go.GetComponent<ParticleSystem>().main.duration + 0.5f);
-        }
+        CreateParticlesystem(particlePrefabs.GetPrefab(prefabIndex));
     }
+
     public void PlayRandomizedParticle()
     {
-        if (randomizedParticlePrefabs.Length > 0)
-        {
-            GameObject go = CreateParticlesystem(randomizedParticlePrefabs[Random.Range(0, randomizedParticlePrefabs.Length)]);
-            Destroy(go, go.GetComponent<ParticleSystem>().main.duration + 0.5f);
-        }
+        CreateParticlesystem(particlePrefabs.GetRandomPrefabFromPool());
     }
     public void PlayRandomizedParticleAtPosition(Vector3 position)
     {
-        if (randomizedParticlePrefabs.Length > 0)
-        {
-            GameObject go = CreateParticlesystem(randomizedParticlePrefabs[Random.Range(0, randomizedParticlePrefabs.Length)]);
-            Destroy(go, go.GetComponent<ParticleSystem>().main.duration + 0.5f);
-        }
+        CreateParticlesystem(randomizedParticlePrefabs.GetRandomPrefabFromPool(), position);
     }
 
     public void PlayMultipleParticles()
     {
-        for (int i = 0; i < multipleParticles.Length; i++)
+        foreach (var prefab in multipleParticles.GetAllPrefabs())
         {
-            GameObject go = CreateParticlesystem(multipleParticles[i]);
-            Destroy(go, go.GetComponent<ParticleSystem>().main.duration + 0.5f);
+            CreateParticlesystem(prefab);
         }
-
     }
     public void PlayMultipleParticlesAtPosition(Vector3 position)
     {
-        for (int i = 0; i < multipleParticles.Length; i++)
+        foreach (var prefab in multipleParticles.GetAllPrefabs())
         {
-            GameObject go = CreateParticlesystem(multipleParticles[i], position);
-            Destroy(go, go.GetComponent<ParticleSystem>().main.duration + 0.5f);
+            CreateParticlesystem(prefab, position);
         }
     }
 
     private GameObject CreateParticlesystem(GameObject prefab)
     {
-        GameObject go = null;
-        if (instantiateAsChild)
-            go = Instantiate(prefab, this.transform);
-        else
-            go = Instantiate(prefab);
+        GameObject go = instantiateAsChild ? Instantiate(prefab, transform) : Instantiate(prefab);
 
         if (instantiatePosition != null)
         {
@@ -76,6 +51,11 @@ public class PlayParticle : MonoBehaviour
         {
             go.transform.position = transform.position;
         }
+
+        ParticleSystem particleSystem = go.GetComponent<ParticleSystem>();
+        if(particleSystem != null)
+            Destroy(go, particleSystem.main.duration + 0.5f);
+
         return go;
     }
     private GameObject CreateParticlesystem(GameObject prefab, Vector3 position)

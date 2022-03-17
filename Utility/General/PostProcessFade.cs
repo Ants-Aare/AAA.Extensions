@@ -1,112 +1,37 @@
-using System;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.Rendering;
+using Sirenix.OdinInspector;
 
-public class PostProcessFade : MonoBehaviour
+namespace AAA.Utility.General
 {
-    [Header("Values")]
-    [SerializeField] private float fadeInSpeed = 0.5f;
-    [SerializeField] private float fadeOutSpeed = 0.5f;
-    [SerializeField] private bool fadeInOnStart = true;
-    [SerializeField] private bool useUnscaledTime = false;
-
-    [Header("References")]
-    [SerializeField] private Volume volume = null;
-
-    void Awake()
+    public class PostProcessFade : ValueFader
     {
-        if (volume == null)
-            volume = GetComponent<Volume>();
-        if (volume == null)
+        [TabGroup("References")][SerializeField] private Volume volume = null;
+
+#if UNITY_EDITOR
+        void OnValidate()
         {
-            Destroy(this);
-            Debug.LogError("There is no Post Processing Volume on this GameObject: " + gameObject.name);
+            if (volume == null)
+                volume = GetComponentInChildren<Volume>();
         }
-    }
-    void OnEnable()
-    {
-        if (fadeInOnStart)
+#endif
+        void Start()
         {
-            volume.weight = 0f;
-            Enter();
-        }
-    }
-
-    public void Enter()
-    {
-        Enter(null);
-    }
-    public void Exit()
-    {
-        Exit(null);
-    }
-    public void Enter(Action onFadeFinished)
-    {
-        StopAllCoroutines();
-        StartCoroutine(FadeIn(onFadeFinished));
-    }
-    public void Exit(Action onFadeFinished)
-    {
-        StopAllCoroutines();
-        StartCoroutine(FadeOut(onFadeFinished));
-    }
-
-    public void FadeInOut()
-    {
-        StopAllCoroutines();
-        StartCoroutine(FadeIn(()=>StartCoroutine(FadeOut())));
-    }
-    public void FadeOutIn()
-    {
-        StopAllCoroutines();
-        StartCoroutine(FadeOut(()=>StartCoroutine(FadeIn())));
-    }
-
-    public void FadeInOut(float multiplier)
-    {
-        StopAllCoroutines();
-        StartCoroutine(FadeIn(()=>StartCoroutine(FadeOut()), multiplier));
-    }
-
-    IEnumerator FadeIn(Action onFadeFinished = null, float multiplier = 1f)
-    {
-        // Debug.Log("Startfadein");
-        while (volume.weight < multiplier)
-        {
-            if(useUnscaledTime)
-                volume.weight += Time.unscaledDeltaTime / fadeInSpeed * multiplier;
-            else
-                volume.weight += Time.deltaTime / fadeInSpeed * multiplier;
-
-            if (volume.weight > 1)
+            if (fadeOnStart)
             {
-                volume.weight = 1;
+                volume.weight = startValue;
+                FadeIn();
             }
-            // Debug.Log("Set weight to " + volume.weight);
-            yield return null;
         }
-        if(onFadeFinished != null)
-            onFadeFinished();
-    }
-    IEnumerator FadeOut(Action onFadeFinished = null)
-    {
-        // Debug.Log("Startfadeout");
-        while (volume.weight > 0)
+        protected override void ChangeFadeProgress(float value)
         {
-            if(useUnscaledTime)
-                volume.weight -= Time.unscaledDeltaTime / fadeOutSpeed;
-            else
-                volume.weight -= Time.deltaTime / fadeOutSpeed;
+            volume.weight += Mathf.Lerp(startValue, targetValue, value);
 
-            if (volume.weight < 0)
-            {
-                volume.weight = 0;
-            }
-            // Debug.Log("Set weight to " + volume.weight);
-            yield return null;
+            volume.weight = Mathf.Clamp(volume.weight, startValue, targetValue);
         }
-        if(onFadeFinished != null)
-            onFadeFinished();
+        protected override float GetFadeProgress()
+        {
+            return Mathf.InverseLerp(startValue, targetValue, volume.weight);
+        }
     }
 }

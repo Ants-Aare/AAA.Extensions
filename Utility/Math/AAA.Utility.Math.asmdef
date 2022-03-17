@@ -1,0 +1,14 @@
+{
+    "name": "AAA.Utility.Math",
+    "rootNamespace": "AAA.Utility.Math",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

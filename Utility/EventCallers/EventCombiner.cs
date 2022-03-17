@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-namespace AAA.Utility
+namespace AAA.Utility.EventCallers
 {
     public class EventCombiner : MonoBehaviour
     {

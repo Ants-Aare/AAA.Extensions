@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Sirenix.OdinInspector;
-using AAA.Utility;
+using AAA.Utility.Math;
 using AAA.Utility.GlobalVariables;
 
 namespace AAA.Mobile.Input.Interactions

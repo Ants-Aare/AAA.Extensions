@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AAA.Utility
+namespace AAA.Utility.Math
 {
     public static class Vector3Utility
     {

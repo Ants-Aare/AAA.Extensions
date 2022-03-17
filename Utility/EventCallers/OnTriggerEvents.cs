@@ -1,23 +1,14 @@
 using UnityEngine;
-using UnityEngine.Events;
+using AAA.Utility.CustomUnityEvents;
 
-public class OnTriggerEvents : MonoBehaviour
+namespace AAA.Utility.EventCallers
 {
-    [SerializeField]
-    private ColliderUnityEvent OnTriggerEntered = null;
-    [SerializeField]
-    private ColliderUnityEvent OnTriggerExited = null;
+    public class OnTriggerEvents : MonoBehaviour
+    {
+        [SerializeField] private GameObjectUnityEvent onTriggerEntered;
+        [SerializeField] private GameObjectUnityEvent onTriggerExited;
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        OnTriggerEntered.Invoke(collider);
-    }
-    private void OnTriggerExit(Collider collider)
-    {
-        OnTriggerExited.Invoke(collider);
+        private void OnTriggerEnter(Collider collider) => onTriggerEntered.Invoke(collider.gameObject);
+        private void OnTriggerExit(Collider collider) => onTriggerExited.Invoke(collider.gameObject);
     }
 }
-
-
-[System.Serializable]
-public class ColliderUnityEvent : UnityEvent<Collider>{}

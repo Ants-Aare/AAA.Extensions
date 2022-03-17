@@ -1,34 +1,43 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using Sirenix.OdinInspector;
 using AAA.Utility.GlobalVariables;
+using AAA.Utility.DataTypes;
 
-public class AudioMixerChangeVariable : MonoBehaviour
+namespace AAA.Utility.Audio
 {
-    [SerializeField]
-    private FloatRangeVariable variable;
-    [SerializeField]
-    private bool useProgress = false;
-    [SerializeField]
-    private bool setValueUsingLogarithmicScaling = false;
-    [Header("References")]
-    [SerializeField]
-    private AudioMixer audioMixer = null;
-    [SerializeField]
-    private string parameterName = "";
-    
-    private void Start()
+    public class AudioMixerChangeVariable : MonoBehaviour
     {
-        variable.OnChanged += UpdateAudioMixer;
+        [TabGroup("Properties")][SerializeField] private string parameterName = "";
+        [TabGroup("Properties")][SerializeField] private bool useProgress = false;
+        [TabGroup("Properties")][SerializeField] private bool setValueUsingLogarithmicScaling = false;
+        [TabGroup("References")][SerializeField] private FloatRangeVariable variable;
+        [TabGroup("References")][SerializeField] private AudioMixer audioMixer = null;
 
-        UpdateAudioMixer();
-    }
+        private void OnEnable()
+        {
+            variable.OnChanged += UpdateAudioMixer;
 
-    public void UpdateAudioMixer()
-    {
-        float value = useProgress ? variable.Value.GetProgress() : variable.Value.Value;
-        if(setValueUsingLogarithmicScaling)
-            value = Mathf.Log10(value) * 20;
+            UpdateAudioMixer();
+        }
 
-        audioMixer.SetFloat(parameterName, value);
+        private void OnDisable()
+        {
+            variable.OnChanged -= UpdateAudioMixer;
+        }
+
+        public void UpdateAudioMixer()
+        {
+            float value = useProgress ? variable.Value.GetProgress() : variable.Value.Value;
+            SetAudioMixerValue(value);
+        }
+
+        public void SetAudioMixerValue(float value)
+        {
+            if (setValueUsingLogarithmicScaling)
+                value = Mathf.Log10(value) * 20;
+
+            audioMixer.SetFloat(parameterName, value);
+        }
     }
 }

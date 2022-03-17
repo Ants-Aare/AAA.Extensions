@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SetGameFrameRate : MonoBehaviour
+namespace AAA.Utility.General
 {
-    public int maxFramesPerSecond = 30;
-
-    private void Awake()
+    public class SetGameFrameRate : MonoBehaviour
     {
-        SetGameFrameRateTo(maxFramesPerSecond);
-    }
+        public int maxFramesPerSecond = 30;
 
-    //this limits the FPS and processor usage and therefore battery lifetime, 30FPS is mobile standard
-    public void SetGameFrameRateTo(int frameRate)
-    {
-        Application.targetFrameRate = frameRate;
+        private void Awake()
+        {
+            SetGameFrameRateTo(maxFramesPerSecond);
+        }
+
+        //this limits the FPS and processor usage and therefore battery lifetime, 30FPS is mobile standard
+        public void SetGameFrameRateTo(int frameRate)
+        {
+            Application.targetFrameRate = frameRate;
+        }
     }
 }

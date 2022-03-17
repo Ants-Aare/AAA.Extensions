@@ -1,16 +1,29 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MinimumRepeatsEvent : MonoBehaviour
+namespace AAA.Utility.EventCallers
 {
-    [SerializeField] private int minimumRepeats;
-    [SerializeField] private int currentRepeats;
-    [SerializeField] private UnityEvent onFinished;
-
-    public void OnRepeat()
+    public class MinimumRepeatsEvent : MonoBehaviour
     {
-        currentRepeats++;
-        if(currentRepeats == minimumRepeats)
-            onFinished?.Invoke();
+        [SerializeField] private int minimumRepeats;
+        [SerializeField] private int currentRepeats = 0;
+        [SerializeField] private UnityEvent onFinished;
+
+        public void OnRepeat()
+        {
+            currentRepeats++;
+            if (currentRepeats == minimumRepeats)
+                onFinished?.Invoke();
+        }
+        
+        public void ResetRepeats()
+        {
+            currentRepeats = 0;
+        }
+
+        public void SetMinimumRepeats(int value)
+        {
+            minimumRepeats = value;
+        }
     }
 }

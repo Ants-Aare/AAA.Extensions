@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class EnumUtil
+namespace AAA.Utility.General
 {
-    public static TEnum[] GetEnumList<TEnum>() where TEnum : Enum 
-        => ((TEnum[])Enum.GetValues(typeof(TEnum)));
+    public class EnumUtil
+    {
+        public static TEnum[] GetEnumList<TEnum>() where TEnum : Enum
+            => ((TEnum[])Enum.GetValues(typeof(TEnum)));
+    }
 }

@@ -3,17 +3,26 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using AAA.Utility.DataTypes;
 
-public class RandomizePitch : MonoBehaviour
+namespace AAA.Utility.General
 {
-    [SerializeField]
-    private FloatRangeValue range;
-    [SerializeField]
-    private AudioSource audioSource = null;
-
-    public void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class RandomizePitch : MonoBehaviour
     {
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-        audioSource.pitch = range.RandomValue();
+        [SerializeField] private FloatRangeValue range;
+        [SerializeField] private AudioSource audioSource = null;
+
+        void OnValidate()
+        {
+            if (audioSource == null)
+                audioSource = GetComponent<AudioSource>();
+        }
+        void Start()
+        {
+            RandomizePitchValue();
+        }
+        public void RandomizePitchValue()
+        {
+            audioSource.pitch = range.RandomValue();
+        }
     }
 }

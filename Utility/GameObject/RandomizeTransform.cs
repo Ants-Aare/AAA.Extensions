@@ -1,4 +1,5 @@
 using UnityEngine;
+using AAA.Utility.Math;
 
 namespace AAA.Utility.GameObjectUtil
 {
@@ -6,7 +7,7 @@ namespace AAA.Utility.GameObjectUtil
     {
         [SerializeField] private Vector3 maxPositionDelta, maxRotationDelta;
         [SerializeField] private Vector3 minScale, maxScale = Vector3.one;
-        [Tooltip("This will use the x Value of minScale and maxScale for y and z Values as well")]
+        [Tooltip("This will use the x Value of minScale and maxScale for all scale values")]
         [SerializeField] private bool scaleUniform = true;
         [SerializeField] private Space space = Space.Self;
 

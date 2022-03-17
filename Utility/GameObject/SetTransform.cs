@@ -4,10 +4,10 @@ namespace AAA.Utility.GameObjectUtil
 {
     public class SetTransform : MonoBehaviour
     {
-        [SerializeField] private Transform targetTransform;
         [SerializeField] private bool setPosition;
         [SerializeField] private bool setRotation;
         [SerializeField] private bool setScale;
+        [SerializeField] private Transform targetTransform;
 
         public void SetTransformToTarget()
         {

@@ -4,30 +4,34 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using System.IO;
-public static class AddressablesUtility
+
+namespace AAA.Utility.General
 {
-    public static bool AssetExists(object key)
+    public static class AddressablesUtility
     {
-        if (Application.isPlaying)
+        public static bool AssetExists(object key)
         {
-            foreach (var l in Addressables.ResourceLocators)
+            if (Application.isPlaying)
             {
-                IList<IResourceLocation> locs;
-                
-                if (l.Locate(key, null, out locs))
-                    return true;
+                foreach (var l in Addressables.ResourceLocators)
+                {
+                    IList<IResourceLocation> locs;
+                    
+                    if (l.Locate(key, null, out locs))
+                        return true;
+                }
+                return false;
+            }
+            else if (Application.isEditor && !Application.isPlaying)
+            {
+
+    #if UNITY_EDITOR
+                // note: my keys are always asset file paths
+                return File.Exists(System.IO.Path.Combine(Application.dataPath, (string)key));
+    #endif
             }
             return false;
         }
-        else if (Application.isEditor && !Application.isPlaying)
-        {
-
-#if UNITY_EDITOR
-            // note: my keys are always asset file paths
-            return File.Exists(System.IO.Path.Combine(Application.dataPath, (string)key));
-#endif
-        }
-        return false;
     }
 }
-#endif
+    #endif

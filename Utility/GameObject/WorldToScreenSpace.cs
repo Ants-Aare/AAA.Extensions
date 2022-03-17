@@ -5,9 +5,9 @@ namespace AAA.Utility.GameObjectUtil
 {
     public class WorldToScreenSpace : MonoBehaviour
     {
-        public Transform sourceWorldSpaceTransform;
-        public Transform targetScreenSpaceTransform;
-        public Vector3 offset;
+        [SerializeField] private Vector3 offset;
+        [SerializeField] private Transform sourceWorldSpaceTransform;
+        [SerializeField] private Transform targetScreenSpaceTransform;
         private Camera mainCamera;
 
         private void Start()

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Sirenix.OdinInspector;
-using AAA.Utility;
+using AAA.Utility.Math;
 
 namespace AAA.Mobile.Input
 {

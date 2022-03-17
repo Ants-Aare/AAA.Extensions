@@ -1,40 +1,40 @@
 using UnityEngine;
 
-public class Reparent : MonoBehaviour
+namespace AAA.Utility.GameObjectUtil
 {
-    [SerializeField]
-    private Transform[] objectsToReparent;
-
-    [SerializeField]
-    private Transform targetParent;
-    [SerializeField]
-    private Transform[] targetParents;
-
-    public void ReparentObjectsToTargetParent()
+    public class Reparent : MonoBehaviour
     {
-        ReparentObjectsTo(targetParent);
-    }
-    public void ReparentObjectsToTargetParents()
-    {
-        for (int i = 0; i < objectsToReparent.Length; i++)
+        [SerializeField] private Transform[] objectsToReparent;
+
+        [SerializeField] private Transform targetParent;
+        [SerializeField] private Transform[] targetParents;
+
+        public void ReparentObjectsToTargetParent()
         {
-            if(objectsToReparent[i] != null && targetParents[i] != null)
-                objectsToReparent[i].parent = targetParents[i];
+            ReparentObjectsTo(targetParent);
         }
-    }
-
-    public void ReparentObjectsTo(Transform targetParent)
-    {
-        if(targetParent == null)
-            return;
-        for (int i = 0; i < objectsToReparent.Length; i++)
+        public void ReparentObjectsToTargetParents()
         {
-            if(objectsToReparent[i] != null)
-                objectsToReparent[i].parent = targetParent;
+            for (int i = 0; i < objectsToReparent.Length; i++)
+            {
+                if (objectsToReparent[i] != null && targetParents[i] != null)
+                    objectsToReparent[i].parent = targetParents[i];
+            }
         }
-    }
-    public void ReparentObjectToTargetParent(Transform sourceObject)
-    {
-        sourceObject.parent = targetParent;
+
+        public void ReparentObjectsTo(Transform targetParent)
+        {
+            if (targetParent == null)
+                return;
+            for (int i = 0; i < objectsToReparent.Length; i++)
+            {
+                if (objectsToReparent[i] != null)
+                    objectsToReparent[i].parent = targetParent;
+            }
+        }
+        public void ReparentObjectToTargetParent(Transform sourceObject)
+        {
+            sourceObject.parent = targetParent;
+        }
     }
 }

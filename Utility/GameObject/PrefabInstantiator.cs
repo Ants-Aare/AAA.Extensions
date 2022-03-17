@@ -1,27 +1,37 @@
 using UnityEngine;
+using AAA.Utility.GlobalVariables;
 
-public class PrefabInstantiator : MonoBehaviour
+namespace AAA.Utility.GameObjectUtil
 {
-    [SerializeField]
-    private GameObject[] prefabs;
-    [SerializeField]
-    private bool InstantiateOnStart = false;
-
-    public void Start()
+    public class PrefabInstantiator : MonoBehaviour
     {
-        if (InstantiateOnStart)
-            InstantiateAllPrefabs();
-    }
+        [SerializeField] private PrefabPool prefabPool;
+        [SerializeField] private bool instantiateAtStart = false;
 
-    public void InstantiateAllPrefabs()
-    {
-        foreach (GameObject prefab in prefabs)
+        public void Start()
+        {
+            if (instantiateAtStart)
+                InstantiateAllPrefabs();
+        }
+
+        public void InstantiateAllPrefabs()
+        {
+            foreach (GameObject prefab in prefabPool.GetAllPrefabs())
+            {
+                Instantiate(prefab, Vector3.zero, Quaternion.identity);
+            }
+        }
+        public void InstantiateRandomPrefab()
+        {
+            Instantiate(prefabPool.GetRandomPrefabFromPool(), Vector3.zero, Quaternion.identity);
+        }
+        public void InstantiateSpecificPrefab(int index)
+        {
+            Instantiate(prefabPool.GetPrefab(index), Vector3.zero, Quaternion.identity);
+        }
+        public void InstantiatePrefab(GameObject prefab)
         {
             Instantiate(prefab, Vector3.zero, Quaternion.identity);
         }
-    }
-    public void InstantiateSpecificPrefab(int index)
-    {
-        Instantiate(prefabs[index], Vector3.zero, Quaternion.identity);
     }
 }

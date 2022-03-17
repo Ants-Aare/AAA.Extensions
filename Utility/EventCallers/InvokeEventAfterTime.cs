@@ -2,33 +2,36 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 
-public class InvokeEventAfterTime : MonoBehaviour
+namespace AAA.Utility.EventCallers
 {
-    [SerializeField]
-    private bool invokeAtStart = true;
-    [SerializeField]
-    private float timeDelay;
-    [SerializeField]
-    private UnityEvent unityEvent = null;
-    
-    private void Start()
+    public class InvokeEventAfterTime : MonoBehaviour
     {
-        if(invokeAtStart)
+        [SerializeField]
+        private bool invokeAtStart = true;
+        [SerializeField]
+        private float timeDelay;
+        [SerializeField]
+        private UnityEvent unityEvent = null;
+
+        private void Start()
+        {
+            if (invokeAtStart)
+                StartCoroutine(InvokeAfterTime(timeDelay));
+        }
+
+        public void InvokeEvent()
+        {
             StartCoroutine(InvokeAfterTime(timeDelay));
-    }
+        }
+        public void InvokeEvent(float time)
+        {
+            StartCoroutine(InvokeAfterTime(time));
+        }
 
-    public void InvokeEvent()
-    {
-        StartCoroutine(InvokeAfterTime(timeDelay));
+        private IEnumerator InvokeAfterTime(float time)
+        {
+            yield return new WaitForSeconds(time);
+            unityEvent.Invoke();
+        }
     }
-    public void InvokeEvent(float time)
-    {
-        StartCoroutine(InvokeAfterTime(time));
-    }
-
-    private IEnumerator InvokeAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-        unityEvent.Invoke();
-    }  
 }

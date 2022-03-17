@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
 
-namespace AAA.Utility
+namespace AAA.Utility.EventCallers
 {
     public class MonoBehaviourEvents : MonoBehaviour
     {

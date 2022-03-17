@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class DontDestroyOnLoad : MonoBehaviour
+namespace AAA.Utility.GameObjectUtil
 {
-    private void Start()
+    public class DontDestroyOnLoad : MonoBehaviour
     {
-        DontDestroyOnLoad(gameObject);
+        private void Start()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 }

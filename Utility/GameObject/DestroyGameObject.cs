@@ -6,10 +6,8 @@ namespace AAA.Utility.GameObjectUtil
     public class DestroyGameObject : MonoBehaviour
     {
         [Header("Values")]
-        [SerializeField]
-        private bool destroyOnStart = false;
-        [SerializeField]
-        private float delay = 0f;
+        [SerializeField] private bool destroyOnStart = false;
+        [SerializeField] private float delay = 0f;
 
         private void Start()
         {
@@ -20,6 +18,11 @@ namespace AAA.Utility.GameObjectUtil
                 else
                     Destroy(gameObject);
             }
+        }
+
+        public void DestroyThisGameObject()
+        {
+            Destroy(gameObject);
         }
     }
 }

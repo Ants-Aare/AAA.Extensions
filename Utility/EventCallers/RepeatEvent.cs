@@ -1,32 +1,42 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
-public class RepeatEvent : MonoBehaviour
-{
-    [SerializeField] private UnityEvent onRepeat;
-    [SerializeField] private float delayTime;
-    [SerializeField] private bool repeatFromStart;
 
-    void Start()
+namespace AAA.Utility.EventCallers
+{
+    public class RepeatEvent : MonoBehaviour
     {
-        if(repeatFromStart)
-            StartRepeating(delayTime);
-    }
-    private void StartRepeating()
-    {
-        StartRepeating(delayTime);
-    }
-    private void StartRepeating(float time)
-    {
-        StopAllCoroutines();
-        StartCoroutine(Repeat(time));
-    }
-    private IEnumerator Repeat(float time)
-    {
-        while(true)
+        [SerializeField] private float delayTime;
+        [SerializeField] private int repeatAmount = 1;
+        [SerializeField] private bool repeatAtStart;
+        [SerializeField] private UnityEvent onRepeated;
+
+        void Start()
         {
-            onRepeat?.Invoke();
-            yield return new WaitForSeconds(time);
+            if (repeatAtStart)
+                StartRepeating(delayTime);
+        }
+        private void StartRepeating()
+        {
+            StartRepeating(delayTime);
+        }
+        private void StartRepeating(float time)
+        {
+            StopAllCoroutines();
+            StartCoroutine(Repeat(time));
+        }
+        private IEnumerator Repeat(float time)
+        {
+            int repeatIndex = 0;
+            YieldInstruction waitForSeconds = new WaitForSeconds(time);
+            while (true)
+            {
+                yield return waitForSeconds;
+                repeatIndex++;
+                onRepeated?.Invoke();
+                if( repeatAmount != 0 && repeatIndex >= repeatAmount)
+                    break;
+            }
         }
     }
 }

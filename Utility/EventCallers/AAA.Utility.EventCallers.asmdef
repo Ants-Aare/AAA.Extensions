@@ -1,0 +1,16 @@
+{
+    "name": "AAA.Utility.EventCallers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4644162c871cfaac495977ade7f80c3d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

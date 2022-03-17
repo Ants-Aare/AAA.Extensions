@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public class GameObjectMover : MonoBehaviour
+namespace AAA.Utility.GameObjectUtil
 {
-    [SerializeField] private Vector3 direction;
-
-    public void Update()
+    public class GameObjectMover : MonoBehaviour
     {
-        transform.Translate(direction * Time.deltaTime);
+        [SerializeField] private Vector3 direction;
+
+        public void Update()
+        {
+            transform.Translate(direction * Time.deltaTime);
+        }
     }
 }

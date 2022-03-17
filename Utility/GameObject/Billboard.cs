@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AAA.Utility.GameObjectUtil
 {
-    public class UIBillboard : MonoBehaviour
+    public class Billboard : MonoBehaviour
     {
         [SerializeField] private bool useMainCamera;
 

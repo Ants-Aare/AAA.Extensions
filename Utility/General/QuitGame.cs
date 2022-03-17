@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class QuitGame : MonoBehaviour
+namespace AAA.Utility.General
 {
-    public void Quit()
+    public class QuitGame : MonoBehaviour
     {
-        #if UNITY_STANDALONE
-        Application.Quit();
-        #endif
+        public void Quit()
+        {
+            #if UNITY_STANDALONE
+            Application.Quit();
+            #endif
 
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #endif
+        }
     }
 }

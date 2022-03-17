@@ -1,0 +1,18 @@
+{
+    "name": "AAA.Utility.GameObjectUtil",
+    "rootNamespace": "AAA.Utility.GameObjectUtil",
+    "references": [
+        "GUID:d2bf662c1b33a3318a35ed7ae227aadd",
+        "GUID:4644162c871cfaac495977ade7f80c3d",
+        "GUID:7c291e7c1b671fcee9cac2c1ae4ac3a2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

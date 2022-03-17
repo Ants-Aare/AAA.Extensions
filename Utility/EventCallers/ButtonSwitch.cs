@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using AAA.Utility.CustomUnityEvents;
 
-namespace AAA.Utility
+namespace AAA.Utility.EventCallers
 {
     public class ButtonSwitch : MonoBehaviour
     {

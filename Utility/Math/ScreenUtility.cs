@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AAA.Utility
+namespace AAA.Utility.Math
 {
     public static class ScreenUtility
     {
@@ -17,11 +17,7 @@ namespace AAA.Utility
             return vector2;
         }
 
-        /// <summary>
-        /// This will make the distance of the vector not based on aspect ratio. The y value may go above 1.
-        /// </summary>
-        /// <param name="vector2"></param>
-        /// <returns></returns>
+        // This will make the distance of the vector not based on aspect ratio. The y value may go above 1.
         public static Vector2 FixViewportDistanceHeight(Vector2 vector2)
         {
             vector2.y = vector2.y * Screen.height;
@@ -29,11 +25,7 @@ namespace AAA.Utility
             return vector2;
         }
 
-        /// <summary>
-        /// This will make the distance of the vector not based on aspect ratio. The x value may go above 1.
-        /// </summary>
-        /// <param name="vector2"></param>
-        /// <returns></returns>
+        // This will make the distance of the vector not based on aspect ratio. The x value may go above 1.
         public static Vector2 FixViewportDistanceWidth(Vector2 vector2)
         {
             vector2.x = vector2.x * Screen.width;

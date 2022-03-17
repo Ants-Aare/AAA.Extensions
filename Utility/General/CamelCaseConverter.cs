@@ -1,21 +1,24 @@
 using System.Text.RegularExpressions;
 
-public static class CamelCaseConverter
+namespace AAA.Utility.General
 {
-    public static string FromCamelCase(this string str )
+    public static class CamelCaseConverter
     {
-        return Regex.Replace( 
-            Regex.Replace( 
-                str, 
-                @"(\P{Ll})(\P{Ll}\p{Ll})", 
-                "$1 $2" 
-            ), 
-            @"(\p{Ll})(\P{Ll})", 
-            "$1 $2" 
-        );
-    }
-    public static string ToCamelCase(this string str)
-    {
-        return str.Replace(" ", string.Empty);
+        public static string FromCamelCase(this string str)
+        {
+            return Regex.Replace(
+                Regex.Replace(
+                    str,
+                    @"(\P{Ll})(\P{Ll}\p{Ll})",
+                    "$1 $2"
+                ),
+                @"(\p{Ll})(\P{Ll})",
+                "$1 $2"
+            );
+        }
+        public static string ToCamelCase(this string str)
+        {
+            return str.Replace(" ", string.Empty);
+        }
     }
 }

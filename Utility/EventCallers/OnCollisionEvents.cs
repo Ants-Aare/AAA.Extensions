@@ -1,23 +1,14 @@
 using UnityEngine;
-using UnityEngine.Events;
+using AAA.Utility.CustomUnityEvents;
 
-public class OnCollisionEvents : MonoBehaviour
+namespace AAA.Utility.EventCallers
 {
-    [SerializeField]
-    private CollisionUnityEvent OnCollisionEntered = null;
-    [SerializeField]
-    private CollisionUnityEvent OnCollisionExited = null;
+    public class OnCollisionEvents : MonoBehaviour
+    {
+        [SerializeField] private CollisionUnityEvent onCollisionEntered = null;
+        [SerializeField] private CollisionUnityEvent onCollisionExited = null;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        OnCollisionEntered.Invoke(collision);
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        OnCollisionExited.Invoke(collision);
+        private void OnCollisionEnter(Collision collision)=> onCollisionEntered?.Invoke(collision);
+        private void OnCollisionExit(Collision collision)=> onCollisionExited?.Invoke(collision);
     }
 }
-
-
-[System.Serializable]
-public class CollisionUnityEvent : UnityEvent<Collision>{}

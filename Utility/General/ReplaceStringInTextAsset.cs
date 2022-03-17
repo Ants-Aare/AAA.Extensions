@@ -4,26 +4,31 @@ using System.IO;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class ReplaceStringInTextAsset : MonoBehaviour
+namespace AAA.Utility.General
 {
-    public string outputFolder;
-    public string fileType;
-
-    public List<TextAsset> textAssets = new List<TextAsset>();
-
-    public string oldString;
-    public string newString;
-
-    [Button]
-    public void ReplaceString()
+    public class ReplaceStringInTextAsset : MonoBehaviour
     {
-        foreach (var textAsset in textAssets)
+        #if UNITY_EDITOR
+        public string outputFolder;
+        public string fileType;
+
+        public List<TextAsset> textAssets = new List<TextAsset>();
+
+        public string oldString;
+        public string newString;
+
+        [Button]
+        public void ReplaceString()
         {
-            string textString = textAsset.text;
+            foreach (var textAsset in textAssets)
+            {
+                string textString = textAsset.text;
 
-            textString = textString.Replace(oldString, newString);
+                textString = textString.Replace(oldString, newString);
 
-            File.WriteAllText(Application.dataPath + outputFolder + textAsset.name + fileType, textString);
+                File.WriteAllText(Application.dataPath + outputFolder + textAsset.name + fileType, textString);
+            }
         }
+        #endif
     }
 }

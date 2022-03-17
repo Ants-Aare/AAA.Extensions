@@ -5,75 +5,77 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
-using Newtonsoft.Json;
-public class CheckGameVersion : MonoBehaviour
+// using Newtonsoft.Json;
+
+namespace AAA.Utility.EventCallers
 {
-    [SerializeField] private bool checkOnStart = true;
-    [SerializeField] private string url;
-    [SerializeField] private UnityEvent onCorrectVersion;
-    [SerializeField] private UnityEvent onWrongVersion;
-    [SerializeField] private UnityEvent onNetworkError;
-
-    void Start()
+    public class CheckGameVersion : MonoBehaviour
     {
-        if(checkOnStart)
+        [SerializeField] private bool checkOnStart = true;
+        [SerializeField] private string url;
+        [SerializeField] private UnityEvent onCorrectVersion, onWrongVersion, onNetworkError;
+
+        void Start()
         {
-            CheckVersion();
+            if (checkOnStart)
+            {
+                CheckVersion();
+            }
         }
-    }
 
-    public void CheckVersion()
-    {
-        #if UNITY_EDITOR
+        public void CheckVersion()
+        {
+#if UNITY_EDITOR
             onCorrectVersion?.Invoke();
             return;
-        #endif
+#endif
 
-        StartCoroutine(GetJson());
-    }
+            // StartCoroutine(GetJson());
+        }
 
-    private IEnumerator GetJson()
-    {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        private IEnumerator GetJson()
         {
-            // Request and wait for the desired page.
-            yield return webRequest.SendWebRequest();
-
-            switch (webRequest.result)
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
-                case UnityWebRequest.Result.ConnectionError:
-                    onNetworkError?.Invoke();
-                    break;
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError("Error: " + webRequest.error);
-                    onNetworkError?.Invoke();
-                    break;
-                case UnityWebRequest.Result.ProtocolError:
-                    Debug.LogError("HTTP Error: " + webRequest.error);
-                    onNetworkError?.Invoke();
-                    break;
-                case UnityWebRequest.Result.Success:
-                    GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(webRequest.downloadHandler.text);
-                    CheckVersion(gameInfo);
-                    break;
+                // Request and wait for the desired page.
+                yield return webRequest.SendWebRequest();
+
+                switch (webRequest.result)
+                {
+                    case UnityWebRequest.Result.ConnectionError:
+                        onNetworkError?.Invoke();
+                        break;
+                    case UnityWebRequest.Result.DataProcessingError:
+                        Debug.LogError("Error: " + webRequest.error);
+                        onNetworkError?.Invoke();
+                        break;
+                    case UnityWebRequest.Result.ProtocolError:
+                        Debug.LogError("HTTP Error: " + webRequest.error);
+                        onNetworkError?.Invoke();
+                        break;
+                    case UnityWebRequest.Result.Success:
+                        // GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(webRequest.downloadHandler.text);
+                        // CheckVersion(gameInfo);
+                        break;
+                }
+            }
+        }
+
+        public void CheckVersion(GameInfo gameInfo)
+        {
+            if (Application.version.ToLowerInvariant().Replace(".", string.Empty) == gameInfo.buildVersion.ToLowerInvariant().Replace(".", string.Empty))
+            {
+                onCorrectVersion?.Invoke();
+            }
+            else
+            {
+                onWrongVersion?.Invoke();
             }
         }
     }
 
-    public void CheckVersion(GameInfo gameInfo)
+    public class GameInfo
     {
-        if(Application.version.ToLowerInvariant().Replace(".", string.Empty) == gameInfo.buildVersion.ToLowerInvariant().Replace(".", string.Empty))
-        {
-            onCorrectVersion?.Invoke();
-        }
-        else
-        {
-            onWrongVersion?.Invoke();
-        }
+        public string buildVersion;
     }
-}
-
-public class GameInfo
-{
-    public string buildVersion;
 }

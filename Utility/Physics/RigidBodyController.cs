@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Contaquest.Metaverse.Behaviours
+namespace AAA.Utility.Physics
 {
     public class RigidBodyController : MonoBehaviour
     {

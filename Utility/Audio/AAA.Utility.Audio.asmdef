@@ -1,0 +1,18 @@
+{
+    "name": "AAA.Utility.Audio",
+    "rootNamespace": "AAA.Utility.Audio",
+    "references": [
+        "GUID:d2bf662c1b33a3318a35ed7ae227aadd",
+        "GUID:1cfd9807e784fbfc3b3c5e3db3be2308",
+        "GUID:b9c280b4d4f435888bf1a3546aa080d6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
