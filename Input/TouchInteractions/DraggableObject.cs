@@ -127,10 +127,6 @@ namespace AAA.Mobile.Input.Interactions
                     return false;
                 }
 
-                dropArea.OnObjectDropped(this);
-                onDropped?.Invoke(dropArea.transform);
-                activeDropArea = dropArea;
-
                 if(dropArea.disableObjectInteractability)
                     DisableInteractability();
 
@@ -140,8 +136,11 @@ namespace AAA.Mobile.Input.Interactions
                     if(dropOffsetTransform != null)
                         targetPosition = dropArea.targetTransform.position - transformToMove.TransformVector(dropOffsetTransform.localPosition);
 
-                    StartCoroutine(MoveToPosition(targetPosition));
+                    StartCoroutine(MoveToPosition(targetPosition, ()=> OnFinishedDropping(dropArea)));
                 }
+                else
+                    OnFinishedDropping(dropArea);
+
                 if(dropArea.setRotation)
                 {
                     StartCoroutine(TurnToRotation(dropArea.targetTransform.rotation));
@@ -150,6 +149,13 @@ namespace AAA.Mobile.Input.Interactions
             }
 
             return false;
+        }
+
+        private void OnFinishedDropping(DropArea dropArea)
+        {
+            dropArea.OnObjectDropped(this);
+            onDropped?.Invoke(dropArea.transform);
+            activeDropArea = dropArea;
         }
 
         private IEnumerator MoveToNewTransform(Transform newTransform, bool setRotation = true)
@@ -171,7 +177,7 @@ namespace AAA.Mobile.Input.Interactions
                 }
             }
         }
-        private IEnumerator MoveToPosition(Vector3 newPosition)
+        private IEnumerator MoveToPosition(Vector3 newPosition, Action callback = null)
         {
             bool hasArrived = false;
             while(!hasArrived)
@@ -186,6 +192,7 @@ namespace AAA.Mobile.Input.Interactions
                     hasArrived = true;
                 }
             }
+            callback?.Invoke();
         }
         private IEnumerator TurnToRotation(Quaternion newRotation)
         {
