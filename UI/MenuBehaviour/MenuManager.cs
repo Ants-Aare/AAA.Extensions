@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using AAA.Utility.Singleton;
+using Sirenix.OdinInspector;
 
 namespace AAA.UI.MenuBehaviour
 {
@@ -11,63 +12,39 @@ namespace AAA.UI.MenuBehaviour
     {
         public bool isMenuEnabled = false;
 
-        [SerializeField] private bool enableMenuOnStart = false;
-        [SerializeField] private bool instantiateAsChild = false;
+        [TabGroup("Properties")][SerializeField] private bool enableMenuOnStart = false;
+        [TabGroup("Properties")][SerializeField] private bool instantiateAsChild = false;
+        [TabGroup("References")][SerializeField] private GameObject startMenu = null;
 
-        [Header("Events")]
-        [SerializeField][FormerlySerializedAs("onMenuLoad")]
-        private UnityEvent onMenuEnabled = new UnityEvent();
-        [SerializeField][FormerlySerializedAs("onMenuUnload")]
-        private UnityEvent onMenuDisabled = new UnityEvent();
+        [TabGroup("Events")][SerializeField] private UnityEvent onMenuEnabled, onMenuDisabled = new UnityEvent();
 
-        [Header("Menus")]
-        [SerializeField] private GameObject startMenu = null;
-        [SerializeField] private MenuBehaviour currentMenu = null;
-        private GameObject currentMenuPrefab = null;
-        [SerializeField] private GameObject previousMenuPrefab = null;
-        public GameObject menuToLoad = null;
+        [TabGroup("State")][ShowInInspector, ReadOnly] private MenuBehaviour currentMenu = null;
+        [TabGroup("State")][ShowInInspector, ReadOnly] private GameObject currentMenuPrefab = null;
+        [TabGroup("State")][ShowInInspector, ReadOnly] private GameObject previousMenuPrefab = null;
 
-        [HideInInspector]
-        public List<HUDElement> hudElements = new List<HUDElement>();
+        private List<HUDElement> hudElements = new List<HUDElement>();
 
         private void Start()
         {
             if(enableMenuOnStart)
-                Invoke("EnableMenu", 0.05f);
-        }
-
-        public void EnableMenu()
-        {
-            if(menuToLoad == null)
                 EnableMenu(startMenu);
-            else
-            {
-                EnableMenu(menuToLoad);
-                menuToLoad = null;
-            }
         }
-        public void SetMenuToLoad(GameObject menuPrefab)
+
+        public void EnableMenu(GameObject menuPrefab, bool disableHUD = true)
         {
-            menuToLoad = menuPrefab;
-        }
-        public void EnableMenu(GameObject menuPrefab)
-        {
-            if(isMenuEnabled)
+            if(!isMenuEnabled)
             {
-                // Debug.Log("The Menu is already opened, no need to open it again.");
-                return;
+                if(disableHUD)
+                {
+                    DisableHUD();
+                }
+                onMenuEnabled.Invoke();
+                isMenuEnabled = true;
             }
 
-            onMenuEnabled.Invoke();
-
-            isMenuEnabled = true;
             SwitchToMenu(menuPrefab);
-
-            foreach (var hudElement in hudElements)
-            {
-                hudElement.DisableHUD();
-            }
         }
+
         public void DisableMenu()
         {
             if(!isMenuEnabled)
@@ -81,25 +58,15 @@ namespace AAA.UI.MenuBehaviour
             previousMenuPrefab = null;
             currentMenuPrefab = null;
 
-            if(currentMenu != null)
-                currentMenu.DisableMenu();
+            currentMenu?.OnMenuDisabled();
                 
-            menuToLoad = null;
             isMenuEnabled = false;
 
-            foreach (var hudElement in hudElements)
-            {
-                hudElement.EnableHUD();
-            }
+            EnableHUD();
         }
 
-        public void SwitchToMenu(GameObject targetMenuPrefab)
+        private void SwitchToMenu(GameObject targetMenuPrefab)
         {
-            if(!isMenuEnabled)
-            {
-                Debug.LogError("Please enable the menu before instantiating.");
-                return;
-            }
             if(targetMenuPrefab == currentMenuPrefab)
             {
                 Debug.LogError("You are trying to switch to the same menu twice");
@@ -110,19 +77,15 @@ namespace AAA.UI.MenuBehaviour
             currentMenuPrefab = targetMenuPrefab;
 
             if(currentMenu != null)
-                currentMenu.DisableMenu();
+                currentMenu.OnMenuDisabled();
 
             if(instantiateAsChild)
-            {
                 currentMenu = Instantiate(targetMenuPrefab, transform).GetComponent<MenuBehaviour>();
-            }
             else
-            {
                 currentMenu = Instantiate(targetMenuPrefab).GetComponent<MenuBehaviour>();
-            }
 
             if(currentMenu != null)
-                currentMenu.EnableMenu();
+                currentMenu.OnMenuEnabled();
         }
 
         public void MenuBack()
@@ -140,6 +103,22 @@ namespace AAA.UI.MenuBehaviour
         {
             if(hudElement != null)
                 hudElements.Add(hudElement);
+        }
+
+        public void EnableHUD()
+        {
+            foreach (var hudElement in hudElements)
+            {
+                hudElement.EnableHUD();
+            }
+        }
+
+        public void DisableHUD()
+        {
+            foreach (var hudElement in hudElements)
+            {
+                hudElement.DisableHUD();
+            }
         }
     }
 }

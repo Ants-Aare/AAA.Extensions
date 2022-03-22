@@ -15,7 +15,7 @@ namespace AAA.UI
         [TabGroup("References")][SerializeField] [ShowIf("useImage")] protected Image image = null;
         [TabGroup("References")][SerializeField] [HideIf("useImage")] protected Slider slider = null;
 
-        public virtual void SetSliderProgress(FloatRangeValue newValue)
+        public virtual void SetSliderProgress(RangeValue newValue)
         {
             if (useImage)
                 image.fillAmount = newValue.GetProgress();

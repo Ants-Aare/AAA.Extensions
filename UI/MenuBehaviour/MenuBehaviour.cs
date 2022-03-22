@@ -9,17 +9,14 @@ namespace AAA.UI.MenuBehaviour
 {
     public class MenuBehaviour : MonoBehaviour
     {
-        [SerializeField] private BoolVariable isInMenu;
-
         [TabGroup("Events")][SerializeField] private UnityEvent onMenuEnabled = new UnityEvent();
         [TabGroup("Events")][SerializeField] private UnityEvent onMenuDisabled = new UnityEvent();
 
+        [SerializeField] private BoolVariable isInMenu;
         [SerializeField] private GameObject firstSelected = null;
 
-        [Button]
-        [TabGroup("Buttons")]
-        [HideInEditorMode]
-        public virtual void EnableMenu()
+        [Button("Enable Menu")][TabGroup("Buttons")][HideInEditorMode]
+        internal virtual void OnMenuEnabled()
         {
             if (isInMenu != null)
                 isInMenu.Value = true;
@@ -28,14 +25,17 @@ namespace AAA.UI.MenuBehaviour
                 EventSystem.current?.SetSelectedGameObject(firstSelected);
             onMenuEnabled.Invoke();
         }
-        [Button]
-        [TabGroup("Buttons")]
-        [HideInEditorMode]
-        public virtual void DisableMenu()
+        [Button("Disable Menu")][TabGroup("Buttons")][HideInEditorMode]
+        internal virtual void OnMenuDisabled()
         {
             if (isInMenu != null)
                 isInMenu.Value = false;
             onMenuDisabled.Invoke();
+        }
+
+        public void DisableMenu()
+        {
+            MenuManager.Instance.DisableMenu();
         }
     }
 }

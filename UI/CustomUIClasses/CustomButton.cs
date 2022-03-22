@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -6,56 +7,50 @@ using UnityEngine.Serialization;
 using System.Collections.Generic;
 using System.Collections;
 using Lean.Transition;
+using Sirenix.OdinInspector;
 
 namespace AAA.UI.CustomUI
 {
     public class CustomButton : Selectable, IBeginDragHandler, IDragHandler, IEndDragHandler, ISubmitHandler
     {
-        [SerializeField]
-        protected float dragThreshold = 10.0f;
-        [SerializeField]
-        protected bool multiDown;
-        [SerializeField]
-        [Tooltip("This Button can only trigger the OnClicked Event once. Use ResetIsClicked() to make it fire the event again.")]
-        private bool onlyAllowClickingOnce = false;
-        [SerializeField]
+        #region Properties
+        #if UNITY_EDITOR
+        [SerializeField] [PropertyOrder(-5)] private bool showAdvancedSettings = false;
+        #endif
+
+        [TabGroup("Properties")][SerializeField]protected float dragThreshold = 10.0f;
+        [TabGroup("Properties")][SerializeField]protected bool allowMultiplePointers;
+
+        [Tooltip("This means the button can only trigger the OnClicked Event once. Use ResetIsClicked() to make it fire the event again.")]
+        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private bool onlyAllowClickingOnce = false;
         [Tooltip("You can't click the button this many seconds after it has been pressed.")]
-        private float clickTimeOut = 0.1f;
-        [SerializeField]
+        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private float clickTimeOut = 0.1f;
         [Tooltip("Which Object to Select after Clicking the button. QOL thing. Defaults to itself when unassigned.")]
-        private GameObject firstSelectedWhenClicked = null;
+        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private GameObject firstSelectedWhenClicked = null;
+        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private bool sendLogs = false;
 
 
-        [Header("Transitions")]
-        [SerializeField]
-        protected LeanPlayer normalTransitions = new LeanPlayer();
-        [SerializeField]
-        protected LeanPlayer downTransitions = new LeanPlayer();
-        [SerializeField]
-        protected LeanPlayer clickTransitions = new LeanPlayer();
-        [SerializeField]
-        protected LeanPlayer selectedTransitions = new LeanPlayer();
+        [TabGroup("Transitions")][SerializeField] protected LeanPlayer normalTransitions = new LeanPlayer();
+        [TabGroup("Transitions")][SerializeField] protected LeanPlayer downTransitions = new LeanPlayer();
+        [TabGroup("Transitions")][SerializeField] protected LeanPlayer clickTransitions = new LeanPlayer();
+        [TabGroup("Transitions")][SerializeField] protected LeanPlayer selectedTransitions = new LeanPlayer();
 
 
-        [Header("Button Events")]
-        [SerializeField] protected UnityEvent onDown = new UnityEvent();
-        [SerializeField] protected UnityEvent onClick = new UnityEvent();
-        [SerializeField] protected UnityEvent onSelect = new UnityEvent();
-        [SerializeField] protected UnityEvent onDeselect = new UnityEvent();
+        [TabGroup("Button Events")]
+        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonDown;
+        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonClicked;
+        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonSelected;
+        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonDeselected;
 
 
-        [Header("Button State")]
-        public bool isSelected = false;
-        public bool isDown = false;
-        public bool isClicked = false;
+        [TabGroup("State")][ShowInInspector, ReadOnly] protected bool isSelected = false;
+        [TabGroup("State")][ShowInInspector, ReadOnly] protected bool isDown = false;
+        [TabGroup("State")][ShowInInspector, ReadOnly] protected bool isClicked = false;
+        [TabGroup("State")][ShowInInspector, ReadOnly] protected Vector2 totalDelta;
+        [TabGroup("State")][ShowInInspector, ReadOnly] protected List<int> downPointers = new List<int>();
+        [TabGroup("State")][ShowInInspector, ReadOnly] protected ScrollRect parentScrollRect;
 
-
-        [System.NonSerialized]
-        protected Vector2 totalDelta;
-        protected List<int> downPointers = new List<int>();
-        [System.NonSerialized]
-        protected ScrollRect parentScrollRect;
-
+        #endregion
 
         #region Select
         public override void OnPointerEnter(PointerEventData eventData)
@@ -72,7 +67,7 @@ namespace AAA.UI.CustomUI
             if (!IsInteractable())
                 return;
 
-            // Debug.Log($"exiting");
+            Log($"Exiting");
             if (isDown)
             {
                 if (dragThreshold == 0.0f)
@@ -127,7 +122,7 @@ namespace AAA.UI.CustomUI
 
             downPointers.Add(eventData.pointerId);
 
-            if (multiDown == true || downPointers.Count == 1)
+            if (allowMultiplePointers == true || downPointers.Count == 1)
             {
                 DoDown();
             }
@@ -159,12 +154,10 @@ namespace AAA.UI.CustomUI
         #region Drag Behaviour
         public void OnBeginDrag(PointerEventData eventData)
         {
-            parentScrollRect = GetComponentInParent<ScrollRect>();
+            if(parentScrollRect == null)
+                parentScrollRect = GetComponentInParent<ScrollRect>();
 
-            if (parentScrollRect != null)
-            {
-                parentScrollRect.OnBeginDrag(eventData);
-            }
+            parentScrollRect?.OnBeginDrag(eventData);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -189,18 +182,12 @@ namespace AAA.UI.CustomUI
                 }
             }
 
-            if (parentScrollRect != null)
-            {
-                parentScrollRect.OnDrag(eventData);
-            }
+            parentScrollRect?.OnDrag(eventData);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if (parentScrollRect != null)
-            {
-                parentScrollRect.OnEndDrag(eventData);
-            }
+            parentScrollRect?.OnEndDrag(eventData);
         }
 
         #endregion
@@ -212,23 +199,23 @@ namespace AAA.UI.CustomUI
 
         private void StartSelect()
         {
-            if (!isSelected)
-            {
-                // Debug.Log("StartSelect" + gameObject.name, gameObject);
-                selectedTransitions?.Begin();
-                onSelect?.Invoke();
-            }
+            if (isSelected)
+                return;
+
+            Log("StartSelect");
+            selectedTransitions?.Begin();
+            onButtonSelected?.Invoke();
             isSelected = true;
         }
 
         private void StopSelect()
         {
-            if (isSelected)
-            {
-                // Debug.Log("StopSelect" + gameObject.name, gameObject);
-                onDeselect?.Invoke();
-                isSelected = false;
-            }
+            if (!isSelected)
+                return;
+
+            Log("StopSelect");
+            onButtonDeselected?.Invoke();
+            isSelected = false;
         }
 
         protected void DoNormal()
@@ -241,7 +228,7 @@ namespace AAA.UI.CustomUI
             if (isDown)
                 return;
 
-            onDown?.Invoke();
+            onButtonDown?.Invoke();
             downTransitions?.Begin();
 
             isDown = true;
@@ -252,7 +239,7 @@ namespace AAA.UI.CustomUI
             if (isClicked)
                 return;
 
-            onClick?.Invoke();
+            onButtonClicked?.Invoke();
             clickTransitions?.Begin();
 
             if (gameObject.activeInHierarchy)
@@ -278,13 +265,27 @@ namespace AAA.UI.CustomUI
                 EventSystem.current?.SetSelectedGameObject(firstSelectedWhenClicked);
             else
             {
-                // Debug.Log("Doing selectiontransition" + gameObject.name, gameObject);
+                Log("Doing Selectiontransition");
                 selectedTransitions?.Begin();
                 isSelected = true;
             }
 
             if (!onlyAllowClickingOnce)
                 ResetIsClicked();
+        }
+        #if UNITY_EDITOR
+        [Button("Visualize Navigation")][TabGroup("Properties")][PropertyOrder(-1)]
+        public void Visualize()
+        {
+            string s_ShowNavigationKey = "SelectableEditor.ShowNavigation";
+            bool currentVisualization = EditorPrefs.GetBool(s_ShowNavigationKey);
+            EditorPrefs.SetBool(s_ShowNavigationKey, !currentVisualization);
+        }
+        #endif
+        public void Log(string message)
+        {
+            if(sendLogs)
+                Debug.Log($"Button {gameObject.name}: {message}", gameObject);
         }
     }
 }

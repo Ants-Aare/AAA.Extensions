@@ -11,6 +11,7 @@ namespace AAA.UI.MenuBehaviour
         private UnityEvent onHUDEnabled = new UnityEvent();
         [SerializeField]
         private UnityEvent onHUDDisabled = new UnityEvent();
+        private bool isEnabled = true;
 
         private void Start()
         {
@@ -18,11 +19,17 @@ namespace AAA.UI.MenuBehaviour
         }
         public void EnableHUD()
         {
+            if(isEnabled)
+                return;
             onHUDEnabled.Invoke();
+            isEnabled = true;
         }
         public void DisableHUD()
         {
+            if(!isEnabled)
+                return;
             onHUDDisabled.Invoke();
+            isEnabled = false;
         }
     }
 }

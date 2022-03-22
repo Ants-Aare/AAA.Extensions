@@ -5,8 +5,8 @@ namespace AAA.UI.MenuBehaviour
 {
     public class SwitchMenu : MonoBehaviour
     {
-        public GameObject targetMenu;
-
+        [SerializeField] private GameObject targetMenu;
+        [SerializeField] private bool disableHUD = true;
         public void EnableMenu(GameObject targetMenu)
         {
             if (targetMenu == null)
@@ -14,30 +14,11 @@ namespace AAA.UI.MenuBehaviour
                 Debug.LogError("Please assign a valid menu");
                 return;
             }
-            MenuManager.Instance.SetMenuToLoad(targetMenu);
-            MenuManager.Instance.EnableMenu();
-        }
-        public void SwitchToMenu(GameObject targetMenu)
-        {
-            if (targetMenu == null)
-            {
-                Debug.LogError("Please assign a valid menu");
-                return;
-            }
-
-            if (MenuManager.Instance.isMenuEnabled)
-                MenuManager.Instance.SwitchToMenu(targetMenu);
-            else
-                MenuManager.Instance.menuToLoad = targetMenu;
-        }
-
-        public void SwitchToMenu()
-        {
-            SwitchToMenu(targetMenu);
+            MenuManager.Instance.EnableMenu(targetMenu, disableHUD);
         }
         public void EnableMenu()
         {
-            MenuManager.Instance.EnableMenu();
+            EnableMenu(targetMenu);
         }
         public void DisableMenu()
         {

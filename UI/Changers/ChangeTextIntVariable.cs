@@ -17,7 +17,7 @@ namespace AAA.UI
             if (useIntRange)
             {
                 intRangeVariable.OnChanged += VariableChanged;
-                // floatRangeVariable.Value.OnChanged += VariableChanged;
+                // intRangeVariable.Value.OnChanged += VariableChanged;
             }
             else
             {
@@ -30,7 +30,7 @@ namespace AAA.UI
             if (useIntRange)
             {
                 intRangeVariable.OnChanged -= VariableChanged;
-                // floatRangeVariable.Value.OnChanged -= VariableChanged;
+                // intRangeVariable.Value.OnChanged -= VariableChanged;
             }
             else
                 intVariable.OnChanged -= VariableChanged;
