@@ -10,7 +10,7 @@ namespace AAA.Utility.GlobalVariables
     public class IntRangeVariableChangedEvents : GlobalVariableChangedEvents<IntRangeValue, IntRangeVariable>
     {
         [TabGroup("Events")][SerializeField] private IntRangeValueUnityEvent onChanged;
-        [TabGroup("Events")][SerializeField] private UnityEvent onIncreased, onDecreased;
+        [TabGroup("Events")][SerializeField] private UnityEvent onIncreased, onDecreased, onReachedMin, onReachedMax;
         private int cachedValue = 0;
 
         protected override void OnEnable()
@@ -31,6 +31,14 @@ namespace AAA.Utility.GlobalVariables
             else if (outputValue < cachedValue)
             {
                 onDecreased?.Invoke();
+            }
+            if(variable.Value.GetProgress() == 1)
+            {
+                onReachedMax?.Invoke();
+            }
+            else if(variable.Value.GetProgress() == 0)
+            {
+                onReachedMin?.Invoke();
             }
             cachedValue = outputValue;
         }

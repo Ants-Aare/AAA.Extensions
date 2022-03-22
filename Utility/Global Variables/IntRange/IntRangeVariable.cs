@@ -15,11 +15,12 @@ namespace AAA.Utility.GlobalVariables
                 if (this.value == value)
                     return;
 
-                this.value.OnChanged -= ()=> OnChanged?.Invoke();
+                this.value.OnChanged -= InvokeOnChanged;
 
                 this.value = value;
+                value.OnChanged = OnChanged;
 
-                this.value.OnChanged += ()=> OnChanged?.Invoke();
+                this.value.OnChanged += InvokeOnChanged;
 
                 OnChanged?.Invoke();
             }
@@ -28,14 +29,18 @@ namespace AAA.Utility.GlobalVariables
         protected override void OnEnable()
         {
             base.OnEnable();
-            if(Value != null && Value.OnChanged != null)
-                value.OnChanged += ()=> OnChanged?.Invoke();
+            value.OnChanged += InvokeOnChanged;
         }
+
         protected override void OnDisable()
         {
             base.OnDisable();
-            if(Value != null && Value.OnChanged != null)
-                value.OnChanged -= ()=> OnChanged?.Invoke();
+            value.OnChanged -= InvokeOnChanged;
+        }
+        
+        private void InvokeOnChanged()
+        {
+            OnChanged?.Invoke();
         }
 
         public override void Save()

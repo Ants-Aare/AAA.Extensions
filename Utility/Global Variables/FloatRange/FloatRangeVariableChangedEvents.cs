@@ -10,7 +10,7 @@ namespace AAA.Utility.GlobalVariables
     public class FloatRangeVariableChangedEvents : GlobalVariableChangedEvents<FloatRangeValue, FloatRangeVariable>
     {
         [TabGroup("Events")][SerializeField] private FloatRangeValueUnityEvent onChanged;
-        [TabGroup("Events")][SerializeField] private UnityEvent onIncreased, onDecreased;
+        [TabGroup("Events")][SerializeField] private UnityEvent onIncreased, onDecreased, onReachedMin, onReachedMax;
         private float cachedValue = 0f;
 
         protected override void OnEnable()
@@ -31,6 +31,15 @@ namespace AAA.Utility.GlobalVariables
             else if (outputValue < cachedValue)
             {
                 onDecreased?.Invoke();
+            }
+
+            if(variable.Value.GetProgress() == 1)
+            {
+                onReachedMax?.Invoke();
+            }
+            else if(variable.Value.GetProgress() == 0)
+            {
+                onReachedMin?.Invoke();
             }
             cachedValue = outputValue;
         }

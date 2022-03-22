@@ -8,6 +8,23 @@ namespace AAA.Utility.GlobalVariables
 {
     public class SetFloatRangeVariable : SetGlobalVariable<FloatRangeValue, FloatRangeVariable>
     {
+        public void Increase(float amount)
+        {
+            variable.Value.Value += amount;
+        }
+        public void Decrease(float amount)
+        {
+            variable.Value.Value -= amount;
+        }
+        
+        public void Increment()
+        {
+            variable.Value.Value++;
+        }
+        public void Decrement()
+        {
+            variable.Value.Value--;
+        }
         public void SetVariableValue(float newValue)
         {
             variable.Value.Value = newValue;
