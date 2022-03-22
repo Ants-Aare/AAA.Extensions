@@ -72,11 +72,13 @@ namespace AAA.Utility.GlobalVariables
             int index = Random.Range(0, pools.Length);
             return pools[index].Get().gameObject;
         }
-        public GameObject GetInstance(int index)
+        public GameObject GetInstanceFromPool(int index)
         {
             index = Mathf.Clamp(index, 0, pools.Length - 1);
             return pools[index].Get().gameObject;
         }
+        public GameObject[] GetAllInstances()=> pools.Select((pool) => pool.Get().gameObject).ToArray();
+
         public void ReleaseInstance(PooledObject pooledObjectInstance, int index)
         {
             pools[index].Release(pooledObjectInstance);

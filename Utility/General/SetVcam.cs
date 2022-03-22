@@ -1,3 +1,5 @@
+#if CINEMACHINE
+
 using UnityEngine;
 using Cinemachine;
 
@@ -19,3 +21,4 @@ namespace AAA.Utility.General
         }
     }
 }
+#endif

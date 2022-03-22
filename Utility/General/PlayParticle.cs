@@ -11,36 +11,45 @@ public class PlayParticle : MonoBehaviour
 
     public void PlaySpecificParticle(int prefabIndex)
     {
-        CreateParticlesystem(particlePrefabs.GetPrefab(prefabIndex));
+        GameObject go = particlePrefabs.GetInstanceFromPool(prefabIndex);
+
+        CreateParticlesystem(go);
     }
 
     public void PlayRandomizedParticle()
     {
-        CreateParticlesystem(particlePrefabs.GetRandomPrefabFromPool());
+        GameObject go = particlePrefabs.GetRandomInstanceFromPool();
+
+        CreateParticlesystem(go);
     }
     public void PlayRandomizedParticleAtPosition(Vector3 position)
     {
-        CreateParticlesystem(randomizedParticlePrefabs.GetRandomPrefabFromPool(), position);
+        GameObject go = particlePrefabs.GetRandomInstanceFromPool();
+
+        CreateParticlesystem(go, position);
     }
 
     public void PlayMultipleParticles()
     {
-        foreach (var prefab in multipleParticles.GetAllPrefabs())
+        GameObject[] gameObjects = multipleParticles.GetAllInstances();
+        foreach (var go in gameObjects)
         {
-            CreateParticlesystem(prefab);
+            CreateParticlesystem(go);
         }
     }
     public void PlayMultipleParticlesAtPosition(Vector3 position)
     {
-        foreach (var prefab in multipleParticles.GetAllPrefabs())
+        GameObject[] gameObjects = multipleParticles.GetAllInstances();
+        foreach (var go in gameObjects)
         {
-            CreateParticlesystem(prefab, position);
+            CreateParticlesystem(go, position);
         }
     }
 
-    private GameObject CreateParticlesystem(GameObject prefab)
+    private GameObject CreateParticlesystem(GameObject go)
     {
-        GameObject go = instantiateAsChild ? Instantiate(prefab, transform) : Instantiate(prefab);
+        if(instantiateAsChild)
+            go.transform.parent = transform;
 
         if (instantiatePosition != null)
         {
@@ -53,8 +62,8 @@ public class PlayParticle : MonoBehaviour
         }
 
         ParticleSystem particleSystem = go.GetComponent<ParticleSystem>();
-        if(particleSystem != null)
-            Destroy(go, particleSystem.main.duration + 0.5f);
+        // if(particleSystem != null)
+        //     Destroy(go, particleSystem.main.duration + 0.5f);
 
         return go;
     }

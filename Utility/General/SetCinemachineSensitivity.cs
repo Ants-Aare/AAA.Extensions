@@ -1,3 +1,4 @@
+#if CINEMACHINE
 using UnityEngine;
 using Cinemachine;
 using AAA.Utility.GlobalVariables;
@@ -39,3 +40,4 @@ namespace AAA.Utility.General
         }
     }
 }
+#endif

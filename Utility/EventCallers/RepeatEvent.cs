@@ -16,14 +16,18 @@ namespace AAA.Utility.EventCallers
             if (repeatAtStart)
                 StartRepeating(delayTime);
         }
-        private void StartRepeating()
+        public void StartRepeating()
         {
             StartRepeating(delayTime);
         }
-        private void StartRepeating(float time)
+        public void StartRepeating(float time)
         {
             StopAllCoroutines();
             StartCoroutine(Repeat(time));
+        }
+        public void StopRepeating()
+        {
+            StopAllCoroutines();
         }
         private IEnumerator Repeat(float time)
         {
@@ -32,8 +36,8 @@ namespace AAA.Utility.EventCallers
             while (true)
             {
                 yield return waitForSeconds;
-                repeatIndex++;
                 onRepeated?.Invoke();
+                repeatIndex++;
                 if( repeatAmount != 0 && repeatIndex >= repeatAmount)
                     break;
             }
