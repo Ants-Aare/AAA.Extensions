@@ -2,130 +2,48 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using AAA.Utility.General;
+using Sirenix.OdinInspector;
 
 namespace AAA.UI
 {
     [RequireComponent(typeof(CanvasGroup))]
-    public class CanvasGroupFade : MonoBehaviour
+    public class CanvasGroupFade : ValueFader
     {
-        [Header("Values")]
-        [SerializeField] private float fadeInSpeed, fadeOutSpeed = 0.5f;
-        [SerializeField] private bool fadeOnStart, destroyOnExit, useUnscaledTime = false;
-
-        [Header("References")]
-        [SerializeField] private CanvasGroup canvasGroup = null;
+        [TabGroup("Properties")][SerializeField] private bool destroyOnFadeOut;
+        [TabGroup("References")][SerializeField] private CanvasGroup canvasGroup;
         
+#if UNITY_EDITOR
+
         void OnValidate()
         {
             if (canvasGroup == null)
                 canvasGroup = GetComponent<CanvasGroup>();
         }
-        void OnEnable()
+#endif
+        void Start()
         {
-            if(fadeOnStart)
+            if (fadeOnStart)
             {
                 canvasGroup.alpha = 0;
-                Enter(true);
+                FadeIn();
             }
         }
-        public void Enter()
+        protected override void ChangeFadeProgress(float value)
         {
-            Enter(null);
-        }
-        public void Exit()
-        {
-            Exit(null);
-        }
+            canvasGroup.alpha += value;
 
-        public void Enter(bool fadeFromBeginning)
-        {
-            if(fadeFromBeginning)
-                canvasGroup.alpha = 0;
-            Enter(null);
+            canvasGroup.alpha = Mathf.Clamp(canvasGroup.alpha, startValue, targetValue);
         }
-        public void Exit(bool fadeFromBeginning)
+        protected override float GetFadeProgress()
         {
-            if(fadeFromBeginning)
-                canvasGroup.alpha = 1;
-            Exit(null);
+            return Mathf.InverseLerp(startValue, targetValue, canvasGroup.alpha);
         }
-
-        public void Enter(Action onFadeFinished = null)
+        protected override void OnFadeOutFinished()
         {
-            StartCoroutine(FadeIn(fadeInSpeed, onFadeFinished));
-        }
-        public void Exit(Action onFadeFinished = null)
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut(fadeOutSpeed, onFadeFinished));
-        }
-
-        public void Enter(float speed, Action onFadeFinished = null)
-        {
-            StartCoroutine(FadeIn(speed, onFadeFinished));
-        }
-        public void Exit(float speed, Action onFadeFinished = null)
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut(speed, onFadeFinished));
-        }
-
-        public void FadeInOut()
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeIn(fadeInSpeed, ()=>StartCoroutine(FadeOut(fadeOutSpeed))));
-        }
-        public void FadeOutIn()
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeOut(fadeOutSpeed, ()=>StartCoroutine(FadeIn(fadeInSpeed))));
-        }
-
-        #region Coroutines
-        private IEnumerator FadeIn(float speed, Action onFadeFinished = null)
-        {
-            if(speed == 0)
-            {
-                canvasGroup.alpha = 1;
-                yield return null;
-            }
-            else
-            {
-                while (canvasGroup.alpha < 1)
-                {
-                    if(useUnscaledTime)
-                    canvasGroup.alpha += Time.unscaledDeltaTime / speed;
-                else
-                    canvasGroup.alpha += Time.deltaTime / speed;
-                    if(canvasGroup.alpha > 1)
-                        canvasGroup.alpha = 1;
-
-                    yield return null;
-                }
-            }
-            if(onFadeFinished != null)
-                onFadeFinished();
-        }
-
-        private IEnumerator FadeOut(float speed, Action onFadeFinished = null)
-        {
-            while (canvasGroup.alpha > 0)
-            {
-                if(useUnscaledTime)
-                    canvasGroup.alpha -= Time.unscaledDeltaTime / speed;
-                else
-                    canvasGroup.alpha -= Time.deltaTime / speed;
-
-                if(canvasGroup.alpha < 0)
-                    canvasGroup.alpha = 0;
-
-                yield return null;
-            }
-            if(onFadeFinished != null)
-                onFadeFinished();
-            if(destroyOnExit)
+            base.OnFadeOutFinished();
+            if(destroyOnFadeOut)
                 Destroy(gameObject);
         }
-        #endregion
     }
 }

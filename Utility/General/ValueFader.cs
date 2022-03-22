@@ -10,7 +10,8 @@ namespace AAA.Utility.General
         [Tooltip("In seconds")]
         [TabGroup("Properties")][SerializeField] protected float fadeInSpeed, fadeOutSpeed = 0.5f;
         [TabGroup("Properties")][SerializeField] protected bool fadeOnStart, useUnscaledTime = false;
-        [TabGroup("Properties")][SerializeField] protected float startValue, targetValue = 0f;
+        [TabGroup("Properties")][SerializeField] protected float startValue = 0f;
+        [TabGroup("Properties")][SerializeField] protected float targetValue = 1f;
 
         [Button]
         public void FadeIn()=> FadeIn(null);
@@ -35,6 +36,15 @@ namespace AAA.Utility.General
             StartCoroutine(FadeInCoroutine(()=>StartCoroutine(FadeOutCoroutine())));
         }
 
+        protected virtual void OnFadeInFinished()
+        {
+
+        }
+        protected virtual void OnFadeOutFinished()
+        {
+            
+        }
+
         IEnumerator FadeInCoroutine(Action onFadeFinished = null)
         {
             while (GetFadeProgress() < targetValue  - 0.001f)
@@ -46,6 +56,7 @@ namespace AAA.Utility.General
                 yield return null;
             }
             onFadeFinished?.Invoke();
+            OnFadeInFinished();
         }
 
         IEnumerator FadeOutCoroutine(Action onFadeFinished = null)
@@ -59,6 +70,7 @@ namespace AAA.Utility.General
                 yield return null;
             }
             onFadeFinished?.Invoke();
+            OnFadeOutFinished();
         }
 
         protected abstract void ChangeFadeProgress(float value);
