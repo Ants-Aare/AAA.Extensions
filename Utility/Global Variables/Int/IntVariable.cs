@@ -26,5 +26,25 @@ namespace AAA.Utility.GlobalVariables
 
             isInitialized = true;
         }
+        public static IntVariable operator -(IntVariable a, int b)
+        {
+            a.Value = a.value - b;
+            return a;
+        }
+        public static IntVariable operator +(IntVariable a, int b)
+        {
+            a.Value = a.value + b;
+            return a;
+        }
+        public static IntVariable operator ++(IntVariable a)
+        {
+            a.Value++;
+            return a;
+        }
+        public static IntVariable operator --(IntVariable a)
+        {
+            a.Value--;
+            return a;
+        }
     }
 }

@@ -4,28 +4,28 @@ using Sirenix.OdinInspector;
 
 namespace AAA.Utility.GlobalVariables
 {
-    public class GlobalVariable<T> : ScriptableObject, ISavable where T : IEquatable<T>
+    public class GlobalVariable<T> : ScriptableObject, ISavable
+        where T : IEquatable<T>
     {
         [SerializeField] protected T value;
         [SerializeField] protected T defaultValue;
         [System.NonSerialized] protected bool isInitialized = false;
 
         public Action OnChanged;
+
         public virtual T Value
         {
-            get
-            {
-                return value;
-            }
+            get { return value; }
             set
             {
-                if(!this.Value.Equals(value))
+                if (!this.Value.Equals(value))
                 {
                     this.value = value;
                     OnChanged?.Invoke();
                 }
             }
         }
+
         // This will change the value without calling onupdate
         public virtual void SetValueSilent(T newValue)
         {
@@ -43,27 +43,30 @@ namespace AAA.Utility.GlobalVariables
         {
             InitializeVariable();
         }
+
         protected virtual void OnDisable()
         {
             InitializeVariable();
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         protected virtual void OnValidate()
         {
             OnChanged?.Invoke();
         }
-        #endif
+#endif
 
         public virtual void Save()
         {
             PlayerPrefs.Save();
         }
+
         public virtual void InitializeVariable()
         {
-            if(isInitialized)
+            if (isInitialized)
                 return;
         }
 
+        public static implicit operator T(GlobalVariable<T> variable) => variable.Value;
     }
 }
