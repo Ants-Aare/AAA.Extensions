@@ -1,13 +1,14 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.EventCallers
 {
     public class MaximumRepeatsEvent : MonoBehaviour
     {
         [SerializeField] private int maximumRepeats;
-        [ShowInInspector, ReadOnly] private int currentRepeats = 0;
+        [ShowNonSerializedField, ReadOnly] private int currentRepeats = 0;
         [SerializeField] private UnityEvent onEventCalled;
 
         public void OnRepeat()

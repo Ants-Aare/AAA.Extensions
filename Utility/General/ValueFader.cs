@@ -1,17 +1,18 @@
 using System;
 using UnityEngine;
-using Sirenix.OdinInspector;
+
 using System.Collections;
+using NaughtyAttributes;
 
 namespace AAA.Utility.General
 {
     public abstract class ValueFader : MonoBehaviour
     {
         [Tooltip("In seconds")]
-        [TabGroup("Properties")][SerializeField] protected float fadeInSpeed, fadeOutSpeed = 0.5f;
-        [TabGroup("Properties")][SerializeField] protected bool fadeOnStart, useUnscaledTime = false;
-        [TabGroup("Properties")][SerializeField] protected float startValue = 0f;
-        [TabGroup("Properties")][SerializeField] protected float targetValue = 1f;
+        [SerializeField] protected float fadeInSpeed, fadeOutSpeed = 0.5f;
+        [SerializeField] protected bool fadeOnStart, useUnscaledTime = false;
+        [SerializeField] protected float startValue = 0f;
+        [SerializeField] protected float targetValue = 1f;
 
         [Button]
         public void FadeIn()=> FadeIn(null);

@@ -1,13 +1,14 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.EventCallers
 {
     public class MonoBehaviourEvents : MonoBehaviour
     {
-        [SerializeField] [HorizontalGroup("Split", 0.5f)][BoxGroup("Split/Start")]private UnityEvent OnAwake, OnEnabled, OnStart;
-        [SerializeField][BoxGroup("Split/End")] private UnityEvent OnDestroyed, OnDisabled;
+        [SerializeField] [BoxGroup("Start")] private UnityEvent OnAwake, OnEnabled, OnStart;
+        [SerializeField] [BoxGroup("End")] private UnityEvent OnDestroyed, OnDisabled;
 
         private void Awake() => OnAwake.Invoke();
         private void Start() => OnStart.Invoke();

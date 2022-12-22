@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
-using Sirenix.OdinInspector;
+
 using UnityEngine.Events;
 using AAA.Utility.CustomUnityEvents;
+using NaughtyAttributes;
 
 namespace AAA.Mobile.Input.Interactions
 {
     [RequireComponent(typeof(Collider))]
     public class ButtonInteractable : TouchInteractable
     {
-        [TabGroup("Properties")] [SerializeField] private bool isTapButton;
+         [SerializeField] private bool isTapButton;
 
-        [TabGroup("Events")] [SerializeField] private UnityEvent onButtonDeactivated, onButtonActivated;
-        [TabGroup("Events")] [SerializeField] private BoolUnityEvent onPressed;
+         [SerializeField] private UnityEvent onButtonDeactivated, onButtonActivated;
+         [SerializeField] private BoolUnityEvent onPressed;
 
-        [TabGroup("State")] [ReadOnly] private bool isActivated = false;
+         [ReadOnly] private bool isActivated = false;
 
         public override void StartTouchInteraction(TouchInputAction touchInputAction)
         {
@@ -32,7 +33,7 @@ namespace AAA.Mobile.Input.Interactions
             else
                 ActivateButton();
         }
-        [Button][HideInEditorMode]
+        [Button]
         public void DebugPress()
         {
             onPressed?.Invoke(true);

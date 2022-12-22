@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using Sirenix.OdinInspector;
 using AAA.Utility.Singleton;
 using AAA.Utility.GlobalVariables;
 
@@ -9,13 +8,12 @@ namespace AAA.UI.MenuBehaviour
 {
     public class MenuBehaviour : MonoBehaviour
     {
-        [TabGroup("Events")][SerializeField] private UnityEvent onMenuEnabled = new UnityEvent();
-        [TabGroup("Events")][SerializeField] private UnityEvent onMenuDisabled = new UnityEvent();
+        [SerializeField] private UnityEvent onMenuEnabled = new UnityEvent();
+        [SerializeField] private UnityEvent onMenuDisabled = new UnityEvent();
 
         [SerializeField] private BoolVariable isInMenu;
         [SerializeField] private GameObject firstSelected = null;
 
-        [Button("Enable Menu")][TabGroup("Buttons")][HideInEditorMode]
         internal virtual void OnMenuEnabled()
         {
             if (isInMenu != null)
@@ -25,7 +23,7 @@ namespace AAA.UI.MenuBehaviour
                 EventSystem.current?.SetSelectedGameObject(firstSelected);
             onMenuEnabled.Invoke();
         }
-        [Button("Disable Menu")][TabGroup("Buttons")][HideInEditorMode]
+
         internal virtual void OnMenuDisabled()
         {
             if (isInMenu != null)

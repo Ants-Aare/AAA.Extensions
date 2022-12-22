@@ -1,8 +1,9 @@
 ﻿using System.Collections;
-using Sirenix.OdinInspector;
+
 using TMPro;
 using UnityEngine;
 using AAA.Utility.Singleton;
+using NaughtyAttributes;
 
 namespace Contaquest.UI
 {
@@ -15,7 +16,7 @@ namespace Contaquest.UI
 
         private bool isEnabled = false;
 
-        [Button][HideInEditorMode]
+        [Button]
         public void Enable()
         {
             if (isEnabled)
@@ -25,7 +26,7 @@ namespace Contaquest.UI
             StartCoroutine(UpdateDots());
             isEnabled = true;
         }
-        [Button][HideInEditorMode]
+        [Button]
         public void Disable()
         {
             if (!isEnabled)

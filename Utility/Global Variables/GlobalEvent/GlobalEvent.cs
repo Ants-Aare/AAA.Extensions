@@ -6,7 +6,7 @@ namespace AAA.Utility.GlobalVariables
     [CreateAssetMenu(menuName = "Variable/Global Event")]
     public class GlobalEvent : ScriptableObject
     {
-        /*[ShowInInspector]*/
+        /*[ShowNonSerializedField]*/
         private List<IEventListener> eventListeners = new List<IEventListener>();
         public virtual void Raise()
         {

@@ -1,13 +1,14 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.GlobalVariables;
+using NaughtyAttributes;
 
 public class PlayParticle : MonoBehaviour
 {
-    [TabGroup("Properties")][SerializeField] private bool instantiateAsChild = true;
-    [TabGroup("Properties")][SerializeField] private Transform instantiatePosition;
+    [SerializeField] private bool instantiateAsChild = true;
+    [SerializeField] private Transform instantiatePosition;
 
-    [TabGroup("References")][SerializeField][InlineEditor] private PrefabPool randomizedParticlePrefabs, multipleParticles, particlePrefabs;
+    [SerializeField][Expandable] private PrefabPool randomizedParticlePrefabs, multipleParticles, particlePrefabs;
 
     public void PlaySpecificParticle(int prefabIndex)
     {

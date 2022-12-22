@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.General
 {
     public class PostProcessFade : ValueFader
     {
-        [TabGroup("References")][SerializeField] private Volume volume = null;
+        [SerializeField] private Volume volume = null;
 
 #if UNITY_EDITOR
         void OnValidate()

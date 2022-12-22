@@ -1,24 +1,26 @@
 ﻿using System.Runtime.InteropServices.WindowsRuntime;
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Mobile.Input
 {
     [System.Serializable]
     public class TouchInputAction
     {
-        [TabGroup("Values")][ReadOnly] public bool pressed = false;
+        [ReadOnly] public bool pressed = false;
 
-        [TabGroup("Values")][ReadOnly] public float startTime;
+        [ReadOnly] public float startTime;
 
-        [TabGroup("Values")][ReadOnly] public Vector2 startPosition, currentPosition, deltaPosition;
-        [TabGroup("Values")] [ShowInInspector, ReadOnly] private Vector2 direction;
-        
-        [TabGroup("Events")] public TouchInputUnityEvent onStartTouch, onEndTouch;
+        [ReadOnly] public Vector2 startPosition, currentPosition, deltaPosition;
+        [ShowNonSerializedField, ReadOnly] private Vector2 direction;
+
+        public TouchInputUnityEvent onStartTouch, onEndTouch;
 
         public float Duration => Time.time - startTime;
+
         public Vector2 Direction
         {
             get
@@ -27,6 +29,7 @@ namespace AAA.Mobile.Input
                 return currentPosition - startPosition;
             }
         }
+
         public Action<TouchInputAction> OnPositionChanged;
 
         public void StartTouch(Vector2 value)
@@ -41,7 +44,7 @@ namespace AAA.Mobile.Input
 
         public void UpdateTouch(Vector2 value)
         {
-            if(startPosition == Vector2.zero)
+            if (startPosition == Vector2.zero)
                 startPosition = value;
 
             deltaPosition = value - currentPosition;
@@ -58,4 +61,3 @@ namespace AAA.Mobile.Input
         }
     }
 }
-

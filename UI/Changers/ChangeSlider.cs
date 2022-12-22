@@ -1,19 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using Sirenix.OdinInspector;
 using AAA.Utility.DataTypes;
+using NaughtyAttributes;
 
 namespace AAA.UI
 {
     public class ChangeSlider : MonoBehaviour
     {
-        [TabGroup("Properties")][SerializeField] protected bool useImage;
+        [SerializeField] protected bool useImage;
 
-        [TabGroup("References")][SerializeField] [ShowIf("useImage")] protected Image image = null;
-        [TabGroup("References")][SerializeField] [HideIf("useImage")] protected Slider slider = null;
+        [SerializeField] [ShowIf("useImage")] protected Image image = null;
+        [SerializeField] [HideIf("useImage")] protected Slider slider = null;
 
         public virtual void SetSliderProgress(RangeValue newValue)
         {

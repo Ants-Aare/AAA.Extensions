@@ -1,8 +1,9 @@
 using System.Linq;
 using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Pool;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.GlobalVariables
 {
@@ -15,8 +16,8 @@ namespace AAA.Utility.GlobalVariables
         [SerializeField] private int maxCapacity = 20;
         [SerializeField] private bool performCollectionChecks = false;
 
-        [ShowInInspector, ReadOnly] private ObjectPool<PooledObject>[] pools;
-        [ShowInInspector, ReadOnly] private bool isInitialized;
+        [ShowNonSerializedField, ReadOnly] private ObjectPool<PooledObject>[] pools;
+        [ShowNonSerializedField, ReadOnly] private bool isInitialized;
 
         void OnEnable()
         {

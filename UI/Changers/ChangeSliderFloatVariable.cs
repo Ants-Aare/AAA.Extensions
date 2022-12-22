@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.DataTypes;
 using AAA.Utility.GlobalVariables;
 
@@ -11,11 +11,11 @@ namespace AAA.UI
 {
     public class ChangeSliderFloatVariable : ChangeSlider
     {
-        [TabGroup("Properties")][SerializeField] private bool receiveChanges = true;
-        [TabGroup("Properties")][SerializeField] private bool sendChanges = false;
+        [SerializeField] private bool receiveChanges = true;
+        [SerializeField] private bool sendChanges = false;
 
-        [TabGroup("References")][SerializeField] private FloatRangeVariable variable = null;
-        [TabGroup("Events")][SerializeField] private UnityEvent onChanged;
+        [SerializeField] private FloatRangeVariable variable = null;
+        [SerializeField] private UnityEvent onChanged;
 
         private void OnEnable()
         {

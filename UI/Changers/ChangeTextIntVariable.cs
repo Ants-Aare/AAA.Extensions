@@ -1,16 +1,17 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.GlobalVariables;
 using AAA.Utility.DataTypes;
+using NaughtyAttributes;
 
 namespace AAA.UI
 {
     public class ChangeTextIntVariable : ChangeText
     {
-        [TabGroup("References")][SerializeField] private bool useIntRange = false;
-        [TabGroup("References")][SerializeField][HideIf("useIntRange")] private IntVariable intVariable;
-        [TabGroup("References")][SerializeField][ShowIf("useIntRange")] private IntRangeVariable intRangeVariable;
-        [TabGroup("References")][SerializeField][ShowIf("useIntRange")] private VariableValue valueType = VariableValue.Value;
+        [SerializeField] private bool useIntRange = false;
+        [SerializeField][HideIf("useIntRange")] private IntVariable intVariable;
+        [SerializeField][ShowIf("useIntRange")] private IntRangeVariable intRangeVariable;
+        [SerializeField][ShowIf("useIntRange")] private VariableValue valueType = VariableValue.Value;
 
         private void OnEnable()
         {

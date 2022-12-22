@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.Math;
 using AAA.Utility.GlobalVariables;
 
@@ -10,9 +10,9 @@ namespace AAA.Mobile.Input.Interactions
 {
     public class TouchInteractionDetector : MonoBehaviour
     {
-        [TabGroup("Properties")][SerializeField] private LayerMask layerMask;
-        [TabGroup("Properties")][SerializeField] private LayerMask UILayerMask;
-        [TabGroup("Properties")][SerializeField] private BoolReference allowInteractions;
+        [SerializeField] private LayerMask layerMask;
+        [SerializeField] private LayerMask UILayerMask;
+        [SerializeField] private BoolReference allowInteractions;
         private Camera activeCamera;
 
         private void Awake()

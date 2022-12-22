@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.Math;
+using NaughtyAttributes;
 
 namespace AAA.Mobile.Input
 {
     public class TouchInputManager : MonoBehaviour
     {
-        [ShowInInspector] private PlayerControls playerControls;
+        [ShowNonSerializedField] private PlayerControls playerControls;
 
         [SerializeField] private TouchInputAction primaryInputTouchAction = new TouchInputAction();
         [SerializeField] private TouchInputAction secondaryInputTouchAction = new TouchInputAction();

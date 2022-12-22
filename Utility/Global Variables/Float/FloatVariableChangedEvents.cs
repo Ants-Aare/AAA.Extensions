@@ -2,14 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using AAA.Utility.CustomUnityEvents;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.GlobalVariables
 {
     public class FloatVariableChangedEvents : GlobalVariableChangedEvents<float, FloatVariable>
     {
-        [TabGroup("Events")][SerializeField] private FloatUnityEvent onChanged;
-        [TabGroup("Events")][SerializeField] private UnityEvent onIncreased, onDecreased;
+        [SerializeField] private FloatUnityEvent onChanged;
+        [SerializeField] private UnityEvent onIncreased, onDecreased;
         private float cachedValue = 0f;
 
         protected override void OnEnable()

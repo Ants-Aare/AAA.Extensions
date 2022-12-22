@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace AAA.Utility.GameObjectUtil

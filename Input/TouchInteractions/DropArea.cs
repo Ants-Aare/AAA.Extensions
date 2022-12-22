@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,16 +9,16 @@ namespace AAA.Mobile.Input.Interactions
     [RequireComponent(typeof(Collider))]
     public class DropArea : TouchInteractable
     {
-        [TabGroup("Properties")] public bool disableObjectInteractability = false;
-        [TabGroup("Properties")] public bool setPosition = true;
-        [TabGroup("Properties")] public bool setRotation = true;
-        [TabGroup("Properties")] [SerializeField] private int maxDroppedObjects = 1;
+         public bool disableObjectInteractability = false;
+         public bool setPosition = true;
+         public bool setRotation = true;
+         [SerializeField] private int maxDroppedObjects = 1;
         
-        [TabGroup("References")] public Transform targetTransform;
+         public Transform targetTransform;
 
-        [TabGroup("Events")] [SerializeField] private UnityEvent onObjectDropped, onObjectReleased, onDropFailed;
+         [SerializeField] private UnityEvent onObjectDropped, onObjectReleased, onDropFailed;
         
-        [TabGroup("State")] [ShowInInspector, ReadOnly] private List<DraggableObject> droppedObjects = new List<DraggableObject>();
+         [ShowNonSerializedField, ReadOnly] private List<DraggableObject> droppedObjects = new List<DraggableObject>();
 
         public void OnObjectDropped(DraggableObject draggableObject)
         {

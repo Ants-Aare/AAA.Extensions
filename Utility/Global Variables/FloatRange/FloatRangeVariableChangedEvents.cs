@@ -2,15 +2,15 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using AAA.Utility.CustomUnityEvents;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.DataTypes;
 
 namespace AAA.Utility.GlobalVariables
 {
     public class FloatRangeVariableChangedEvents : GlobalVariableChangedEvents<FloatRangeValue, FloatRangeVariable>
     {
-        [TabGroup("Events")][SerializeField] private FloatRangeValueUnityEvent onChanged;
-        [TabGroup("Events")][SerializeField] private UnityEvent onIncreased, onDecreased, onReachedMin, onReachedMax;
+        [SerializeField] private FloatRangeValueUnityEvent onChanged;
+        [SerializeField] private UnityEvent onIncreased, onDecreased, onReachedMin, onReachedMax;
         private float cachedValue = 0f;
 
         protected override void OnEnable()

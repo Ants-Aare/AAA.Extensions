@@ -1,5 +1,5 @@
 ﻿using System;
-using Sirenix.OdinInspector;
+
 using UnityEngine;
 
 namespace AAA.Mobile.Input.Interactions
@@ -7,7 +7,7 @@ namespace AAA.Mobile.Input.Interactions
     [RequireComponent(typeof(Collider))]
     public class TouchInteractable : MonoBehaviour, iTouchInteractable
     {
-        [TabGroup("Properties")][SerializeField] protected bool enableOnStart = false;
+        [SerializeField] protected bool enableOnStart = false;
         [SerializeField, HideInInspector] private Collider col;
 
         #if UNITY_EDITOR

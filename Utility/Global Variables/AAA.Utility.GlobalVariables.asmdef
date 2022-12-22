@@ -3,7 +3,8 @@
     "rootNamespace": "AAA.Utility.GlobalVariables",
     "references": [
         "GUID:4644162c871cfaac495977ade7f80c3d",
-        "GUID:1cfd9807e784fbfc3b3c5e3db3be2308"
+        "GUID:1cfd9807e784fbfc3b3c5e3db3be2308",
+        "GUID:776d03a35f1b52c4a9aed9f56d7b4229"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

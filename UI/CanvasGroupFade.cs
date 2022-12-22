@@ -3,15 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using AAA.Utility.General;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.UI
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class CanvasGroupFade : ValueFader
     {
-        [TabGroup("Properties")][SerializeField] private bool destroyOnFadeOut;
-        [TabGroup("References")][SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private bool destroyOnFadeOut;
+        [SerializeField] private CanvasGroup canvasGroup;
         
 #if UNITY_EDITOR
 

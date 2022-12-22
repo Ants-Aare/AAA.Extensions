@@ -2,16 +2,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 using AAA.Utility.CustomUnityEvents;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.GlobalVariables
 {
     public class BoolVariableChangedEvents : GlobalVariableChangedEvents<bool, BoolVariable>
     {
-        [TabGroup("Properties")][SerializeField] private bool invertValue = false;
+        [SerializeField] private bool invertValue = false;
 
-        [TabGroup("Events")][SerializeField] private BoolUnityEvent onChanged;
-        [TabGroup("Events")][SerializeField] private UnityEvent onTrue, onFalse;
+        [SerializeField] private BoolUnityEvent onChanged;
+        [SerializeField] private UnityEvent onTrue, onFalse;
 
         protected override void OnChanged()
         {

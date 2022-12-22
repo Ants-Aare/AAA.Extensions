@@ -2,14 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using AAA.Utility.CustomUnityEvents;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.GlobalVariables
 {
     public class IntVariableChangedEvents : GlobalVariableChangedEvents<int, IntVariable>
     {
-        [TabGroup("Events")][SerializeField] private IntUnityEvent onChanged;
-        [TabGroup("Events")][SerializeField] private UnityEvent onIncreased, onDecreased;
+        [SerializeField] private IntUnityEvent onChanged;
+        [SerializeField] private UnityEvent onIncreased, onDecreased;
         private int cachedValue = 0;
 
         protected override void OnEnable()

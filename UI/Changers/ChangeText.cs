@@ -1,19 +1,20 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 using TMPro;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.UI
 {
     public class ChangeText : MonoBehaviour
     {
-        [TabGroup("Properties")][SerializeField] private int roundDecimals = 1;
-        [HorizontalGroup("Properties/GroupPrefix")][SerializeField] private bool usePrefix;
-        [HorizontalGroup("Properties/GroupPrefix")][SerializeField][LabelWidth(50f)][ShowIf("usePrefix")] private string prefix;
-        [HorizontalGroup("Properties/GroupSuffix")][SerializeField] private bool useSuffix;
-        [HorizontalGroup("Properties/GroupSuffix")][SerializeField][LabelWidth(50f)][ShowIf("useSuffix")] private string suffix;
+        [SerializeField] private int roundDecimals = 1;
+        [BoxGroup("GroupPrefix")][SerializeField] private bool usePrefix;
+        [BoxGroup("GroupPrefix")][SerializeField][ShowIf("usePrefix")] private string prefix;
+        [BoxGroup("GroupSuffix")][SerializeField] private bool useSuffix;
+        [BoxGroup("GroupSuffix")][SerializeField][ShowIf("useSuffix")] private string suffix;
 
-        [TabGroup("References")][SerializeField] private TextMeshProUGUI textField;
+        [SerializeField] private TextMeshProUGUI textField;
 
 #if UNITY_EDITOR
         protected virtual void OnValidate()

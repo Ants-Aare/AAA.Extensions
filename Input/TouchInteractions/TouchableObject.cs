@@ -2,7 +2,7 @@ using System.Net.Mail;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Mobile.Input.Interactions
 {
@@ -10,9 +10,9 @@ namespace AAA.Mobile.Input.Interactions
 	public class TouchableObject : TouchInteractable
     {
         [Tooltip("The time (in seconds) it takes for a tap to count as a hold.")]
-        [TabGroup("Properties")][SerializeField] private float holdThresholdTime = 1.0f;
+        [SerializeField] private float holdThresholdTime = 1.0f;
 
-		[TabGroup("Events")][SerializeField] private TouchInputUnityEvent onTapped, onHeld;
+		[SerializeField] private TouchInputUnityEvent onTapped, onHeld;
 
         public override void EndTouchInteraction(TouchInputAction touchInputAction)
         {

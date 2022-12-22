@@ -1,6 +1,7 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
-using Sirenix.OdinInspector;
+
 
 namespace AAA.Utility.GlobalVariables
 {
@@ -9,8 +10,8 @@ namespace AAA.Utility.GlobalVariables
         [SerializeField] protected UnityEvent onTakeFromPool;
         [SerializeField] protected UnityEvent onReturnToPool;
         // [SerializeField] private UnityEvent onDestroyed;
-        [ShowInInspector, ReadOnly] protected PrefabPool prefabPool;
-        [ShowInInspector, ReadOnly] protected int index;
+        [ShowNonSerializedField, ReadOnly] protected PrefabPool prefabPool;
+        [ShowNonSerializedField, ReadOnly] protected int index;
 
         internal void Initialize(PrefabPool prefabPool, int index)
         {

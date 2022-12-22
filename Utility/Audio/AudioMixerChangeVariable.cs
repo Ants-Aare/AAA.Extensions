@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.GlobalVariables;
 using AAA.Utility.DataTypes;
 
@@ -8,11 +8,11 @@ namespace AAA.Utility.Audio
 {
     public class AudioMixerChangeVariable : MonoBehaviour
     {
-        [TabGroup("Properties")][SerializeField] private string parameterName = "";
-        [TabGroup("Properties")][SerializeField] private bool useProgress = false;
-        [TabGroup("Properties")][SerializeField] private bool setValueUsingLogarithmicScaling = false;
-        [TabGroup("References")][SerializeField] private FloatRangeVariable variable;
-        [TabGroup("References")][SerializeField] private AudioMixer audioMixer = null;
+        [SerializeField] private string parameterName = "";
+        [SerializeField] private bool useProgress = false;
+        [SerializeField] private bool setValueUsingLogarithmicScaling = false;
+        [SerializeField] private FloatRangeVariable variable;
+        [SerializeField] private AudioMixer audioMixer = null;
 
         private void OnEnable()
         {

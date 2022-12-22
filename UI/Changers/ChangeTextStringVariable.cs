@@ -1,5 +1,5 @@
 using UnityEngine;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.GlobalVariables;
 using AAA.Utility.DataTypes;
 
@@ -7,7 +7,7 @@ namespace AAA.UI
 {
     public class ChangeTextStringVariable : ChangeText
     {
-        [TabGroup("References")][SerializeField] private StringVariable stringVariable;
+        [SerializeField] private StringVariable stringVariable;
 
         private void OnEnable()
         {

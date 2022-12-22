@@ -7,52 +7,60 @@ using UnityEngine.Serialization;
 using System.Collections.Generic;
 using System.Collections;
 using Lean.Transition;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
+
 
 namespace AAA.UI.CustomUI
 {
     public class CustomButton : Selectable, IBeginDragHandler, IDragHandler, IEndDragHandler, ISubmitHandler
     {
         #region Properties
-        #if UNITY_EDITOR
-        [SerializeField] [PropertyOrder(-5)] private bool showAdvancedSettings = false;
-        #endif
 
-        [TabGroup("Properties")][SerializeField]protected float dragThreshold = 10.0f;
-        [TabGroup("Properties")][SerializeField]protected bool allowMultiplePointers;
+#if UNITY_EDITOR
+        [SerializeField] private bool showAdvancedSettings = false;
+#endif
 
-        [Tooltip("This means the button can only trigger the OnClicked Event once. Use ResetIsClicked() to make it fire the event again.")]
-        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private bool onlyAllowClickingOnce = false;
-        [Tooltip("You can't click the button this many seconds after it has been pressed.")]
-        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private float clickTimeOut = 0.1f;
+        [SerializeField] protected float dragThreshold = 10.0f;
+        [SerializeField] protected bool allowMultiplePointers;
+
+        [Tooltip(
+            "This means the button can only trigger the OnClicked Event once. Use ResetIsClicked() to make it fire the event again.")]
+        [SerializeField]
+        private bool onlyAllowClickingOnce = false;
+
+        [Tooltip("You can't click the button this many seconds after it has been pressed.")] [SerializeField]
+        private float clickTimeOut = 0.1f;
+
         [Tooltip("Which Object to Select after Clicking the button. QOL thing. Defaults to itself when unassigned.")]
-        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private GameObject firstSelectedWhenClicked = null;
-        [TabGroup("Properties")][SerializeField][ShowIf("showAdvancedSettings")] private bool sendLogs = false;
+        [SerializeField]
+        private GameObject firstSelectedWhenClicked = null;
+
+        [SerializeField] private bool sendLogs = false;
 
 
-        [TabGroup("Transitions")][SerializeField] protected LeanPlayer normalTransitions = new LeanPlayer();
-        [TabGroup("Transitions")][SerializeField] protected LeanPlayer downTransitions = new LeanPlayer();
-        [TabGroup("Transitions")][SerializeField] protected LeanPlayer clickTransitions = new LeanPlayer();
-        [TabGroup("Transitions")][SerializeField] protected LeanPlayer selectedTransitions = new LeanPlayer();
+        [SerializeField] protected LeanPlayer normalTransitions = new LeanPlayer();
+        [SerializeField] protected LeanPlayer downTransitions = new LeanPlayer();
+        [SerializeField] protected LeanPlayer clickTransitions = new LeanPlayer();
+        [SerializeField] protected LeanPlayer selectedTransitions = new LeanPlayer();
 
 
-        [TabGroup("Button Events")]
-        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonDown;
-        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonClicked;
-        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonSelected;
-        [TabGroup("Button Events")][SerializeField] protected UnityEvent onButtonDeselected;
+        [SerializeField] protected UnityEvent onButtonDown;
+        [SerializeField] protected UnityEvent onButtonClicked;
+        [SerializeField] protected UnityEvent onButtonSelected;
+        [SerializeField] protected UnityEvent onButtonDeselected;
 
 
-        [TabGroup("State")][ShowInInspector, ReadOnly] protected bool isSelected = false;
-        [TabGroup("State")][ShowInInspector, ReadOnly] protected bool isDown = false;
-        [TabGroup("State")][ShowInInspector, ReadOnly] protected bool isClicked = false;
-        [TabGroup("State")][ShowInInspector, ReadOnly] protected Vector2 totalDelta;
-        [TabGroup("State")][ShowInInspector, ReadOnly] protected List<int> downPointers = new List<int>();
-        [TabGroup("State")][ShowInInspector, ReadOnly] protected ScrollRect parentScrollRect;
+        [ShowNonSerializedField, ReadOnly] protected bool isSelected = false;
+        [ShowNonSerializedField, ReadOnly] protected bool isDown = false;
+        [ShowNonSerializedField, ReadOnly] protected bool isClicked = false;
+        [ShowNonSerializedField, ReadOnly] protected Vector2 totalDelta;
+        [ShowNonSerializedField, ReadOnly] protected List<int> downPointers = new List<int>();
+        [ShowNonSerializedField, ReadOnly] protected ScrollRect parentScrollRect;
 
         #endregion
 
         #region Select
+
         public override void OnPointerEnter(PointerEventData eventData)
         {
             if (!IsInteractable())
@@ -96,6 +104,7 @@ namespace AAA.UI.CustomUI
 
             StartSelect();
         }
+
         public override void OnDeselect(BaseEventData eventData)
         {
             if (!IsInteractable())
@@ -109,6 +118,7 @@ namespace AAA.UI.CustomUI
         #endregion
 
         #region Submitting and Clicking
+
         public override void OnPointerDown(PointerEventData eventData)
         {
             if (!IsInteractable() || eventData.button != PointerEventData.InputButton.Left)
@@ -152,9 +162,10 @@ namespace AAA.UI.CustomUI
         #endregion
 
         #region Drag Behaviour
+
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if(parentScrollRect == null)
+            if (parentScrollRect == null)
                 parentScrollRect = GetComponentInParent<ScrollRect>();
 
             parentScrollRect?.OnBeginDrag(eventData);
@@ -273,18 +284,18 @@ namespace AAA.UI.CustomUI
             if (!onlyAllowClickingOnce)
                 ResetIsClicked();
         }
-        #if UNITY_EDITOR
-        [Button("Visualize Navigation")][TabGroup("Properties")][PropertyOrder(-1)]
+#if UNITY_EDITOR
+        [Button(nameof(Visualize))]
         public void Visualize()
         {
             string s_ShowNavigationKey = "SelectableEditor.ShowNavigation";
             bool currentVisualization = EditorPrefs.GetBool(s_ShowNavigationKey);
             EditorPrefs.SetBool(s_ShowNavigationKey, !currentVisualization);
         }
-        #endif
+#endif
         public void Log(string message)
         {
-            if(sendLogs)
+            if (sendLogs)
                 Debug.Log($"Button {gameObject.name}: {message}", gameObject);
         }
     }

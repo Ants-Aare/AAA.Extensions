@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using AAA.Utility.Singleton;
-using Sirenix.OdinInspector;
 
 namespace AAA.UI.MenuBehaviour
 {
@@ -12,15 +9,15 @@ namespace AAA.UI.MenuBehaviour
     {
         public bool isMenuEnabled = false;
 
-        [TabGroup("Properties")][SerializeField] private bool enableMenuOnStart = false;
-        [TabGroup("Properties")][SerializeField] private bool instantiateAsChild = false;
-        [TabGroup("References")][SerializeField] private GameObject startMenu = null;
+        [SerializeField] private bool enableMenuOnStart = false;
+        [SerializeField] private bool instantiateAsChild = false;
+        [SerializeField] private GameObject startMenu = null;
 
-        [TabGroup("Events")][SerializeField] private UnityEvent onMenuEnabled, onMenuDisabled = new UnityEvent();
+        [SerializeField] private UnityEvent onMenuEnabled, onMenuDisabled = new UnityEvent();
 
-        [TabGroup("State")][ShowInInspector, ReadOnly] private MenuBehaviour currentMenu = null;
-        [TabGroup("State")][ShowInInspector, ReadOnly] private GameObject currentMenuPrefab = null;
-        [TabGroup("State")][ShowInInspector, ReadOnly] private GameObject previousMenuPrefab = null;
+        private MenuBehaviour currentMenu = null;
+        private GameObject currentMenuPrefab = null;
+        private GameObject previousMenuPrefab = null;
 
         private List<HUDElement> hudElements = new List<HUDElement>();
 

@@ -2,13 +2,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
+using NaughtyAttributes;
+
 
 namespace AAA.Utility.EventCallers
 {
     public class EventCombiner : MonoBehaviour
     {
-        [ShowInInspector, ReadOnly] private bool hasBeenCalled = false;
+        [ShowNonSerializedField, ReadOnly] private bool hasBeenCalled = false;
         [SerializeField] private UnityEvent combinedEvent;
 
         public void CallEvent()

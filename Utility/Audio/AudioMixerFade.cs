@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using Sirenix.OdinInspector;
+
 using AAA.Utility.General;
 
 namespace AAA.Utility.Audio
 {
     public class AudioMixerFade : ValueFader
     {
-        [TabGroup("References")][SerializeField] private string parameterName = "";
-        [TabGroup("References")][SerializeField] private AudioMixer audioMixer = null;
+        [SerializeField] private string parameterName = "";
+        [SerializeField] private AudioMixer audioMixer = null;
 
         private float currentValue;
 
