@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using AAA.Utility.DataTypes;
 
 namespace AAA.Utility.GlobalVariables
@@ -37,37 +36,25 @@ namespace AAA.Utility.GlobalVariables
             base.OnDisable();
             value.OnChanged -= InvokeOnChanged;
         }
-        
+
         private void InvokeOnChanged()
         {
             OnChanged?.Invoke();
         }
 
-        public override void Save()
+        protected override void SaveVariable()
         {
             PlayerPrefs.SetFloat(name, value.Value);
             PlayerPrefs.SetFloat(name + "Min", value.MinValue);
             PlayerPrefs.SetFloat(name + "Max", value.MaxValue);
-            base.Save();
         }
 
-        public override void InitializeVariable()
+        protected override void LoadVariable()
         {
-            base.InitializeVariable();
-
-            if (PlayerPrefs.HasKey(name))
-            {
-                float targetValue = PlayerPrefs.GetFloat(name, value.Value);
-                float minValue = PlayerPrefs.GetFloat(name + "Min", value.MinValue);
-                float maxValue = PlayerPrefs.GetFloat(name + "Max", value.MaxValue);
-                value = new FloatRangeValue(minValue, maxValue, targetValue);
-            }
-            else
-            {
-                value = new FloatRangeValue(defaultValue);
-            }
-
-            isInitialized = true;
+            var targetValue = PlayerPrefs.GetFloat(name, defaultValue.Value);
+            var minValue = PlayerPrefs.GetFloat(name + "Min", defaultValue.MinValue);
+            var maxValue = PlayerPrefs.GetFloat(name + "Max", defaultValue.MaxValue);
+            value = new FloatRangeValue(minValue, maxValue, targetValue);
         }
 
 #if UNITY_EDITOR
@@ -77,5 +64,43 @@ namespace AAA.Utility.GlobalVariables
         OnChanged?.Invoke();
     }
 #endif
+        
+        public static bool operator <(FloatRangeVariable a, float b) => a.Value.Value < b;
+        public static bool operator >(FloatRangeVariable a, float b) => a.Value.Value > b;
+        public static bool operator <=(FloatRangeVariable a, float b) => a.Value.Value <= b;
+        public static bool operator >=(FloatRangeVariable a, float b) => a.Value.Value >= b;
+
+        public static FloatRangeVariable operator -(FloatRangeVariable a, float b)
+        {
+            a.Value.Value -= b;
+            return a;
+        }
+        public static FloatRangeVariable operator +(FloatRangeVariable a, float b)
+        {
+            a.Value.Value += b;
+            return a;
+        }
+        public static FloatRangeVariable operator -(FloatRangeVariable a, int b)
+        {
+            a.Value.Value -= b;
+            return a;
+        }
+        public static FloatRangeVariable operator +(FloatRangeVariable a, int b)
+        {
+            a.Value.Value += b;
+            return a;
+        }
+
+        public static FloatRangeVariable operator ++(FloatRangeVariable a)
+        {
+            a.Value.Value++;
+            return a;
+        }
+
+        public static FloatRangeVariable operator --(FloatRangeVariable a)
+        {
+            a.Value.Value--;
+            return a;
+        }
     }
 }

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System.Linq;
 
 namespace AAA.Utility.GlobalVariables
 {
@@ -11,39 +10,64 @@ namespace AAA.Utility.GlobalVariables
             EditorGUI.BeginProperty(position, label, property);
             position = EditorGUI.PrefixLabel(position, GUIUtility.GetControlID(FocusType.Passive), label);
 
-            bool useConstant = property.FindPropertyRelative("useConstant").boolValue;
+            var useConstantProperty = property.FindPropertyRelative("UseConstant");
 
+            position = DrawDropDown(position, useConstantProperty);
+            DrawProperties(position, useConstantProperty, property);
+
+            EditorGUI.EndProperty();
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var useConstantProperty = property.FindPropertyRelative("UseConstant");
+
+            return base.GetPropertyHeight(property, label) + (useConstantProperty.boolValue ? 0 : EditorGUIUtility.singleLineHeight);
+        }
+
+        private static Rect DrawDropDown(Rect position, SerializedProperty useConstantProperty)
+        {
             var rect = new Rect(position.position, Vector2.one * 20);
             var content = EditorGUIUtility.IconContent("Icon Dropdown");
             var style = new GUIStyle() { fixedWidth = 50f, border = new RectOffset(1, 1, 1, 1) };
 
             if (EditorGUI.DropdownButton(rect, content, FocusType.Keyboard, style))
-            {
-                GenericMenu menu = new GenericMenu();
-                menu.AddItem(new GUIContent("Use Constant"), useConstant, () => SetProperty(property, true));
-                menu.AddItem(new GUIContent("Use Variable"), !useConstant, () => SetProperty(property, false));
-                menu.ShowAsContext();
-            }
+                ShowContextMenu(useConstantProperty);
 
             position.position += Vector2.right * 15;
             position.width -= 15;
-
-            if (useConstant)
-            {
-                EditorGUI.PropertyField(position, property.FindPropertyRelative("constantValue"), GUIContent.none);
-            }
-            else
-            {
-                EditorGUI.ObjectField(position, property.FindPropertyRelative("variable"), GUIContent.none);
-            }
-            EditorGUI.EndProperty();
+            return position;
         }
 
-        private void SetProperty(SerializedProperty property, bool value)
+        private void DrawProperties(Rect position, SerializedProperty useConstantProperty, SerializedProperty property)
         {
-            var propertyRelative = property.FindPropertyRelative("useConstant");
-            propertyRelative.boolValue = value;
-            propertyRelative.serializedObject.ApplyModifiedProperties();
+            if (useConstantProperty.boolValue)
+                EditorGUI.PropertyField(position, property.FindPropertyRelative("ConstantValue"), GUIContent.none);
+            else
+            {
+                var variableProperty = property.FindPropertyRelative("Variable");
+                EditorGUI.ObjectField(position, variableProperty, GUIContent.none);
+                // if (variableProperty.objectReferenceValue != null)
+                // {
+                //     position.yMax -= EditorGUIUtility.singleLineHeight;
+                //     position.yMin -= EditorGUIUtility.singleLineHeight;
+                //     EditorGUI.PropertyField(position, variableProperty.FindPropertyRelative("value"), GUIContent.none);
+                // }
+            }
+        }
+
+        private static void ShowContextMenu(SerializedProperty useConstantProperty)
+        {
+            var menu = new GenericMenu();
+            menu.AddItem(new GUIContent("Use Constant"), useConstantProperty.boolValue, () => SetProperty(useConstantProperty, true));
+            menu.AddItem(new GUIContent("Use Variable"), !useConstantProperty.boolValue, () => SetProperty(useConstantProperty, false));
+            menu.ShowAsContext();
+        }
+
+        private static void SetProperty(SerializedProperty useConstantProperty, bool value)
+        {
+            useConstantProperty.boolValue = value;
+            useConstantProperty.serializedObject.ApplyModifiedProperties();
         }
     }
 }

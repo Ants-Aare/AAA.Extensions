@@ -5,7 +5,7 @@ namespace AAA.Utility.GlobalVariables
     {
         public StringReference(string value)
         {
-            constantValue = value;
+            ConstantValue = value;
         }
     }
 }

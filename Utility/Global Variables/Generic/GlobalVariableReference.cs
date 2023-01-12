@@ -3,51 +3,55 @@ using UnityEngine;
 
 namespace AAA.Utility.GlobalVariables
 {
-    public class GlobalVariableReference<TValue, TVariable> where TVariable : GlobalVariable<TValue> where TValue : IEquatable<TValue>
+    public class GlobalVariableReference<TValue, TVariable> where TVariable : GlobalVariable<TValue>
+        where TValue : IEquatable<TValue>
     {
-        public bool useConstant = true;
-        public TValue constantValue;
-        public TVariable variable;
+        public bool UseConstant = true;
+        public TValue ConstantValue;
+        public TVariable Variable;
+        public Action OnChanged;
 
         public TValue Value
         {
             get
             {
-                if (useConstant)
-                    return constantValue;
-                else
-                {
-                    if (variable == null)
-                    {
 #if UNITY_EDITOR
-                        Debug.LogError("The Variable was not set.");
+                if (Variable == null)
+                        Debug.LogError("The Variable was not set and a Constant Value will be used.");
 #endif
-                        useConstant = true;
-                        return constantValue;
-                    }
-
-                    return variable.Value;
-                }
+                return UseConstant ? ConstantValue : Variable.Value;
             }
             set
             {
-                if (useConstant)
-                    constantValue = value;
-                else
-                {
-                    if (variable == null)
-                    {
 #if UNITY_EDITOR
+                    if (Variable == null)
                         Debug.LogError("The Variable was not set.");
 #endif
-                        useConstant = true;
-                    }
-                    else
+                if (UseConstant)
+                {
+                    var hasChanged = !ConstantValue.Equals(value);
+                    
+                    ConstantValue = value;
+                    
+                    if(hasChanged)
+                        OnChanged?.Invoke();
+                }
+                else
+                {
+                    //Maybe change this
+                    if (OnChanged != null)
                     {
-                        variable.Value = value;
+                        Variable.OnChanged -= VariableOnChanged;
+                        Variable.OnChanged += VariableOnChanged;
                     }
+                    Variable.Value = value;
                 }
             }
         }
+
+        void VariableOnChanged() => OnChanged?.Invoke();
+        
+        public static implicit operator TValue(GlobalVariableReference<TValue, TVariable> variable) => variable.Value;
+
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using AAA.Utility.DataTypes;
 
 namespace AAA.Utility.GlobalVariables
@@ -37,37 +36,25 @@ namespace AAA.Utility.GlobalVariables
             base.OnDisable();
             value.OnChanged -= InvokeOnChanged;
         }
-        
+
         private void InvokeOnChanged()
         {
             OnChanged?.Invoke();
         }
 
-        public override void Save()
+        protected override void SaveVariable()
         {
             PlayerPrefs.SetInt(name, value.Value);
             PlayerPrefs.SetInt(name + "Min", value.MinValue);
             PlayerPrefs.SetInt(name + "Max", value.MaxValue);
-            base.Save();
         }
 
-        public override void InitializeVariable()
+        protected override void LoadVariable()
         {
-            base.InitializeVariable();
-
-            if (PlayerPrefs.HasKey(name))
-            {
-                int targetValue = PlayerPrefs.GetInt(name, value.Value);
-                int minValue = PlayerPrefs.GetInt(name + "Min", value.MinValue);
-                int maxValue = PlayerPrefs.GetInt(name + "Max", value.MaxValue);
-                value = new IntRangeValue(minValue, maxValue, targetValue);
-            }
-            else
-            {
-                value = new IntRangeValue(defaultValue);
-            }
-
-            isInitialized = true;
+            var targetValue = PlayerPrefs.GetInt(name, defaultValue.Value);
+            var minValue = PlayerPrefs.GetInt(name + "Min", defaultValue.MinValue);
+            var maxValue = PlayerPrefs.GetInt(name + "Max", defaultValue.MaxValue);
+            value = new IntRangeValue(minValue, maxValue, targetValue);
         }
 
 #if UNITY_EDITOR
@@ -77,5 +64,34 @@ namespace AAA.Utility.GlobalVariables
         OnChanged?.Invoke();
     }
 #endif
+
+        public static bool operator <(IntRangeVariable a, int b) => a.Value.Value < b;
+        public static bool operator >(IntRangeVariable a, int b) => a.Value.Value > b;
+        public static bool operator <=(IntRangeVariable a, int b) => a.Value.Value <= b;
+        public static bool operator >=(IntRangeVariable a, int b) => a.Value.Value >= b;
+
+        public static IntRangeVariable operator -(IntRangeVariable a, int b)
+        {
+            a.Value.Value -= b;
+            return a;
+        }
+
+        public static IntRangeVariable operator +(IntRangeVariable a, int b)
+        {
+            a.Value.Value += b;
+            return a;
+        }
+
+        public static IntRangeVariable operator ++(IntRangeVariable a)
+        {
+            a.Value.Value++;
+            return a;
+        }
+
+        public static IntRangeVariable operator --(IntRangeVariable a)
+        {
+            a.Value.Value--;
+            return a;
+        }
     }
 }

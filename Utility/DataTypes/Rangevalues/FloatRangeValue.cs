@@ -109,5 +109,46 @@ namespace AAA.Utility.DataTypes
         {
             return value == this;
         }
+        
+        public static bool operator <(FloatRangeValue a, float b) => a.Value < b;
+        public static bool operator >(FloatRangeValue a, float b) => a.Value > b;
+        public static bool operator <=(FloatRangeValue a, float b) => a.Value <= b;
+        public static bool operator >=(FloatRangeValue a, float b) => a.Value >= b;
+
+        public static FloatRangeValue operator -(FloatRangeValue a, float b)
+        {
+            a.Value -= b;
+            return a;
+        }
+        public static FloatRangeValue operator +(FloatRangeValue a, float b)
+        {
+            a.Value += b;
+            return a;
+        }
+        public static FloatRangeValue operator -(FloatRangeValue a, int b)
+        {
+            a.Value -= b;
+            return a;
+        }
+        public static FloatRangeValue operator +(FloatRangeValue a, int b)
+        {
+            a.Value += b;
+            return a;
+        }
+
+        public static FloatRangeValue operator ++(FloatRangeValue a)
+        {
+            a.Value++;
+            return a;
+        }
+
+        public static FloatRangeValue operator --(FloatRangeValue a)
+        {
+            a.Value--;
+            return a;
+        }
+        
+        public static implicit operator float(FloatRangeValue variable) => variable.Value;
+
     }
 }

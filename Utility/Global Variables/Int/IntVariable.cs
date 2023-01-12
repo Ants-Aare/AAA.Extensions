@@ -5,42 +5,51 @@ namespace AAA.Utility.GlobalVariables
     [CreateAssetMenu(menuName = "Variable/Integer Variable")]
     public class IntVariable : GlobalVariable<int>
     {
-        public override void Save()
-        {
-            PlayerPrefs.SetInt(name, value);
-            base.Save();
-        }
+        protected override void SaveVariable() => PlayerPrefs.SetInt(name, value);
+        protected override void LoadVariable() => value = PlayerPrefs.GetInt(name, defaultValue);
 
-        public override void InitializeVariable()
+        public bool ClampValue(int min, int max)
         {
-            base.InitializeVariable();
-
-            if (PlayerPrefs.HasKey(name))
+            if (value > max)
             {
-                value = PlayerPrefs.GetInt(name);
-            }
-            else
-            {
-                value = defaultValue;
+                value = max;
+                OnChanged?.Invoke();
+                return true;
             }
 
-            isInitialized = true;
+            if (value < min)
+            {
+                value = min;
+                OnChanged?.Invoke();
+                return true;
+            }
+
+            return false;
         }
+
+        public static bool operator <(IntVariable a, int b) => a.Value < b;
+        public static bool operator >(IntVariable a, int b) => a.Value > b;
+        public static bool operator <=(IntVariable a, int b) => a.Value <= b;
+        public static bool operator >=(IntVariable a, int b) => a.Value >= b;
+
         public static IntVariable operator -(IntVariable a, int b)
         {
             a.Value = a.value - b;
             return a;
         }
+
         public static IntVariable operator +(IntVariable a, int b)
         {
             a.Value = a.value + b;
             return a;
         }
+
         public static IntVariable operator ++(IntVariable a)
         {
             a.Value++;
             return a;
         }
+
         public static IntVariable operator --(IntVariable a)
         {
             a.Value--;

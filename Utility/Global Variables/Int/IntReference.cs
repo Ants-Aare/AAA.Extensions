@@ -7,23 +7,21 @@ namespace AAA.Utility.GlobalVariables
     {
         public IntReference(int value)
         {
-            constantValue = value;
+            ConstantValue = value;
         }
-
-        public static IntReference operator -(IntReference a, int b)
-        {
-            a.Value = a.Value - b;
-            return a;
-        }
-
         public static bool operator <(IntReference a, int b) => a.Value < b;
         public static bool operator >(IntReference a, int b) => a.Value > b;
         public static bool operator <=(IntReference a, int b) => a.Value <= b;
         public static bool operator >=(IntReference a, int b) => a.Value >= b;
 
+        public static IntReference operator -(IntReference a, int b)
+        {
+            a.Value -= b;
+            return a;
+        }
         public static IntReference operator +(IntReference a, int b)
         {
-            a.Value = a.Value + b;
+            a.Value += b;
             return a;
         }
 

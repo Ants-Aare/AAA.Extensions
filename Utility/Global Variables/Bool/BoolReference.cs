@@ -5,7 +5,7 @@ namespace AAA.Utility.GlobalVariables
     {
         public BoolReference(bool value)
         {
-            constantValue = value;
+            ConstantValue = value;
         }
     }
 }

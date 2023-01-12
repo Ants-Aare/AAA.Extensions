@@ -8,11 +8,11 @@ namespace AAA.Utility.GlobalVariables
     {
         public IntRangeReference(IntRangeValue value)
         {
-            constantValue = value;
+            ConstantValue = value;
         }
         public IntRangeReference(int minValue, int maxValue, int defaultValue)
         {
-            constantValue = new IntRangeValue(minValue, maxValue, defaultValue);
+            ConstantValue = new IntRangeValue(minValue, maxValue, defaultValue);
         }
     }
 }

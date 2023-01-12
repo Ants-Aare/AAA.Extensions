@@ -25,14 +25,7 @@ namespace AAA.Utility.GlobalVariables
                 Value = !sourceBoolVariable.Value;
         }
 
-        public override void Save()
-        {
-        }
-        public override void InitializeVariable()
-        {
-            base.InitializeVariable();
-
-            isInitialized = true;
-        }
+        protected override void SaveVariable() { }
+        protected override void LoadVariable() { }
     }
 }

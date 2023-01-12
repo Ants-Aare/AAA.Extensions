@@ -1,4 +1,3 @@
-using UnityEngine;
 using AAA.Utility.DataTypes;
 
 namespace AAA.Utility.GlobalVariables
@@ -8,11 +7,49 @@ namespace AAA.Utility.GlobalVariables
     {
         public FloatRangeReference(FloatRangeValue value)
         {
-            constantValue = value;
+            ConstantValue = value;
         }
         public FloatRangeReference(float minValue, float maxValue, float defaultValue)
         {
-            constantValue = new FloatRangeValue(minValue, maxValue, defaultValue);
+            ConstantValue = new FloatRangeValue(minValue, maxValue, defaultValue);
+        }
+        
+        public static bool operator <(FloatRangeReference a, float b) => a.Value.Value < b;
+        public static bool operator >(FloatRangeReference a, float b) => a.Value.Value > b;
+        public static bool operator <=(FloatRangeReference a, float b) => a.Value.Value <= b;
+        public static bool operator >=(FloatRangeReference a, float b) => a.Value.Value >= b;
+
+        public static FloatRangeReference operator -(FloatRangeReference a, float b)
+        {
+            a.Value.Value -= b;
+            return a;
+        }
+        public static FloatRangeReference operator +(FloatRangeReference a, float b)
+        {
+            a.Value.Value += b;
+            return a;
+        }
+        public static FloatRangeReference operator -(FloatRangeReference a, int b)
+        {
+            a.Value.Value -= b;
+            return a;
+        }
+        public static FloatRangeReference operator +(FloatRangeReference a, int b)
+        {
+            a.Value.Value += b;
+            return a;
+        }
+
+        public static FloatRangeReference operator ++(FloatRangeReference a)
+        {
+            a.Value.Value++;
+            return a;
+        }
+
+        public static FloatRangeReference operator --(FloatRangeReference a)
+        {
+            a.Value.Value--;
+            return a;
         }
     }
 }

@@ -5,7 +5,45 @@ namespace AAA.Utility.GlobalVariables
     {
         public FloatReference(float value)
         {
-            constantValue = value;
+            ConstantValue = value;
+        }
+        
+        public static bool operator <(FloatReference a, float b) => a.Value < b;
+        public static bool operator >(FloatReference a, float b) => a.Value > b;
+        public static bool operator <=(FloatReference a, float b) => a.Value <= b;
+        public static bool operator >=(FloatReference a, float b) => a.Value >= b;
+
+        public static FloatReference operator -(FloatReference a, float b)
+        {
+            a.Value -= b;
+            return a;
+        }
+        public static FloatReference operator +(FloatReference a, float b)
+        {
+            a.Value += b;
+            return a;
+        }
+        public static FloatReference operator -(FloatReference a, int b)
+        {
+            a.Value -= b;
+            return a;
+        }
+        public static FloatReference operator +(FloatReference a, int b)
+        {
+            a.Value += b;
+            return a;
+        }
+
+        public static FloatReference operator ++(FloatReference a)
+        {
+            a.Value++;
+            return a;
+        }
+
+        public static FloatReference operator --(FloatReference a)
+        {
+            a.Value--;
+            return a;
         }
     }
 }
