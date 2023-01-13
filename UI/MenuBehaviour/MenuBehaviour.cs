@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using AAA.Utility.Singleton;
-using AAA.Utility.GlobalVariables;
+using AAA.GlobalVariables.Variables;
 
 namespace AAA.UI.MenuBehaviour
 {

@@ -1,5 +1,5 @@
 using UnityEngine;
-using AAA.Utility.GlobalVariables;
+using AAA.GlobalVariables.Variables;
 
 namespace AAA.Utility.General
 {

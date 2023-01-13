@@ -1,5 +1,4 @@
 using UnityEngine;
-using AAA.Utility.GlobalVariables;
 
 namespace AAA.Utility.GameObjectUtil
 {

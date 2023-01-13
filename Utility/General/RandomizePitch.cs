@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-using AAA.Utility.DataTypes;
+using AAA.DataTypes;
 
 namespace AAA.Utility.General
 {

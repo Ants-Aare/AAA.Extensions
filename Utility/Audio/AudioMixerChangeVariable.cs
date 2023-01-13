@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-using AAA.Utility.GlobalVariables;
-using AAA.Utility.DataTypes;
+using AAA.GlobalVariables.Variables;
+using AAA.DataTypes;
 
 namespace AAA.Utility.Audio
 {

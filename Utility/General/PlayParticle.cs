@@ -1,6 +1,5 @@
 using UnityEngine;
-
-using AAA.Utility.GlobalVariables;
+using AAA.Utility;
 using NaughtyAttributes;
 
 public class PlayParticle : MonoBehaviour

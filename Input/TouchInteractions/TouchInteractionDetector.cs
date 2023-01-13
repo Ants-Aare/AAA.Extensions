@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using AAA.Utility.Math;
-using AAA.Utility.GlobalVariables;
+using AAA.GlobalVariables.Variables;
 
 namespace AAA.Mobile.Input.Interactions
 {
