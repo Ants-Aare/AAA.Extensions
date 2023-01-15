@@ -4,6 +4,3 @@ Tested on Unity 2022
 
 Dependencies:
 - NaughtyAssets
-- Lean Transition
-
-Some scripts may require some assets.
