@@ -11,6 +11,7 @@ namespace AAA.GlobalVariables.Variables
         {
             UseConstant = true;
         }
+        
         public bool UseConstant = true;
         public TValue ConstantValue;
         public TVariable Variable;
