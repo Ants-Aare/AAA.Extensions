@@ -4,7 +4,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace AAA.Utility.General
+namespace AAA.GlobalVariables.Utility
 {
     public class CursorBehaviour : MonoBehaviour
     {

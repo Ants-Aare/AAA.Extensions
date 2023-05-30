@@ -33,6 +33,10 @@ namespace AAA.GlobalVariables.Variables
             }
         }
 
+        public virtual void SetValue(T newValue)
+        {
+            value = newValue;
+        }
         // This will change the value without calling OnChanged
         public virtual void SetValueSilent(T newValue)
         {

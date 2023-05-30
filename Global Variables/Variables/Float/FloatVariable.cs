@@ -71,5 +71,13 @@ namespace AAA.GlobalVariables.Variables
             a.Value--;
             return a;
         }
+        
+        public void Increase(float amount) => Value += amount;
+
+        public void Decrease(float amount) => Value -= amount;
+
+        public void Increment() => Value++;
+
+        public void Decrement() => Value--;
     }
 }

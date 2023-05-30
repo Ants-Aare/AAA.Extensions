@@ -30,15 +30,15 @@ namespace AAA.Utility.GameObjectUtil
 
         public void RandomizeScaleUniform()
         {
-            float scale = Random.Range(minScale, maxScale);
+            var scale = Random.Range(minScale, maxScale);
             transform.localScale = new Vector3(scale, scale, scale);
         }
 
         public void RandomizeScaleNonUniform()
         {
-            float scaleX = Random.Range(minScaleVector.x, maxScaleVector.x);
-            float scaleY = Random.Range(minScaleVector.y, maxScaleVector.y);
-            float scaleZ = Random.Range(minScaleVector.z, maxScaleVector.z);
+            var scaleX = Random.Range(minScaleVector.x, maxScaleVector.x);
+            var scaleY = Random.Range(minScaleVector.y, maxScaleVector.y);
+            var scaleZ = Random.Range(minScaleVector.z, maxScaleVector.z);
             transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
         }
     }

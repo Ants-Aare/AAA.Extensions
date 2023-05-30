@@ -20,7 +20,7 @@ namespace AAA.Utility.GameObjectUtil
         #endif
         private void Start()
         {
-            for (int i = 0; i < groupObjects.Length; i++)
+            for (var i = 0; i < groupObjects.Length; i++)
             {
                 if (groupObjects[i] != null)
                     groupObjects[i].SetActive(i == currentIndex);

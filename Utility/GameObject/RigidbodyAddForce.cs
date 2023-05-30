@@ -22,7 +22,7 @@ namespace AAA.Utility.GameObjectUtil
 
         public void AddForce()
         {
-            Vector3 forceAmount = direction * multiplier;
+            var forceAmount = direction * multiplier;
             if(space == Space.Self)
                 forceAmount = transform.TransformDirection(forceAmount);
             rBody.AddForce(forceAmount, forceMode);

@@ -19,14 +19,14 @@ namespace AAA.Utility.GameObjectUtil
         }
         public void InstantiateRandomPrefab()
         {
-            GameObject go = prefabPool.GetRandomInstanceFromPool();
+            var go = prefabPool.GetRandomInstanceFromPool();
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
 
         }
         public void InstantiateSpecificPrefab(int index)
         {
-            GameObject go = prefabPool.GetInstanceFromPool(index);
+            var go = prefabPool.GetInstanceFromPool(index);
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
         }

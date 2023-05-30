@@ -1,7 +1,7 @@
 using UnityEngine;
 using AAA.GlobalVariables.Variables;
 
-namespace AAA.Utility.General
+namespace AAA.GlobalVariables.Utility
 {
     public class GameTimer : MonoBehaviour
     {

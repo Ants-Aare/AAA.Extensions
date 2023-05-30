@@ -1,3 +1,4 @@
+using AAA.Extensions;
 using UnityEngine;
 using AAA.Utility.Math;
 
@@ -19,21 +20,21 @@ namespace AAA.Utility.GameObjectUtil
         }
         public void RandomizePosition()
         {
-            Vector3 positionDelta = Vector3Utility.RandomVector(maxPositionDelta * -1, maxPositionDelta);
+            var positionDelta = Vector3Extensions.RandomVector(maxPositionDelta * -1, maxPositionDelta);
             transform.Translate(positionDelta, space);
         }
         public void RandomizeRotation()
         {
-            Vector3 rotationDelta = Vector3Utility.RandomVector(maxRotationDelta * -1, maxRotationDelta);
+            var rotationDelta = Vector3Extensions.RandomVector(maxRotationDelta * -1, maxRotationDelta);
             transform.Rotate(rotationDelta, space);
         }
         public void RandomizeScale()
         {
-            Vector3 newScale = Vector3.one;
+            var newScale = Vector3.one;
             if(scaleUniform)
                 newScale *= Random.Range(minScale.x, maxScale.x);
             else
-                newScale = Vector3Utility.RandomVector(minScale, maxScale);
+                newScale = Vector3Extensions.RandomVector(minScale, maxScale);
             transform.localScale = newScale;
         }
     }

@@ -23,7 +23,7 @@ namespace AAA.Utility.GameObjectUtil
         public void RotateAmount(float amount)
         {
             StopAllCoroutines();
-            Vector3 targetRotation = transform.eulerAngles + (axis * amount);
+            var targetRotation = transform.eulerAngles + (axis * amount);
             StartCoroutine(SetRotation(Quaternion.Euler(targetRotation), speedMultiplier));
         }
 
@@ -71,11 +71,11 @@ namespace AAA.Utility.GameObjectUtil
 
         private IEnumerator SetRotation(Quaternion targetRotation, float speedMultiplier)
         {
-            float startTime = Time.time;
+            var startTime = Time.time;
 
             while (true)
             {
-                float progress = (Time.time - startTime) / speedMultiplier;
+                var progress = (Time.time - startTime) / speedMultiplier;
 
                 if (progress > 1)
                 {

@@ -10,7 +10,7 @@ namespace AAA.Utility.GameObjectUtil
 
         public void SetRendererMaterial()
         {
-            Material[] mats = meshRenderer.materials;
+            var mats = meshRenderer.materials;
             mats[index] = material;
             meshRenderer.materials = mats;
         }

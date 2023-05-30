@@ -17,7 +17,7 @@ namespace AAA.Utility.GameObjectUtil
 
         public void Update()
         {
-            Vector3 position = mainCamera.WorldToScreenPoint(sourceWorldSpaceTransform.position);
+            var position = mainCamera.WorldToScreenPoint(sourceWorldSpaceTransform.position);
 
             targetScreenSpaceTransform.position = position + offset;
         }

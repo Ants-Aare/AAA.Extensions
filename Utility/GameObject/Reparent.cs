@@ -15,7 +15,7 @@ namespace AAA.Utility.GameObjectUtil
         }
         public void ReparentObjectsToTargetParents()
         {
-            for (int i = 0; i < objectsToReparent.Length; i++)
+            for (var i = 0; i < objectsToReparent.Length; i++)
             {
                 if (objectsToReparent[i] != null && targetParents[i] != null)
                     objectsToReparent[i].parent = targetParents[i];
@@ -26,7 +26,7 @@ namespace AAA.Utility.GameObjectUtil
         {
             if (targetParent == null)
                 return;
-            for (int i = 0; i < objectsToReparent.Length; i++)
+            for (var i = 0; i < objectsToReparent.Length; i++)
             {
                 if (objectsToReparent[i] != null)
                     objectsToReparent[i].parent = targetParent;

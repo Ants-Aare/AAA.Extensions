@@ -1,4 +1,3 @@
-using AAA.Extensions;
 using UnityEngine;
 
 namespace AAA.Extensions
@@ -66,14 +65,18 @@ namespace AAA.Extensions
 
         public static float MinComponent(this Vector3 value)
             => Mathf.Min(value.x, Mathf.Min(value.y, value.z));
-        
-        public static Vector3 SetX(this Vector3 vector, float value)
-            => new Vector3(value, vector.y, vector.z);
 
-        public static Vector3 SetY(this Vector3 vector, float value)
-            => new Vector3(vector.x, value, vector.z);
+        public static Vector3 SetX(this Vector3 vector, float value) => new(value, vector.y, vector.z);
 
-        public static Vector3 SetZ(this Vector3 vector, float value)
-            => new Vector3(vector.x, vector.y, value);
+        public static Vector3 SetY(this Vector3 vector, float value) => new(vector.x, value, vector.z);
+
+        public static Vector3 SetZ(this Vector3 vector, float value) => new(vector.x, vector.y, value);
+
+        public static Vector3 RandomVector(Vector3 minVector, Vector3 maxVector)
+            => new(
+                Random.Range(minVector.x, maxVector.x),
+                Random.Range(minVector.y, maxVector.y),
+                Random.Range(minVector.z, maxVector.z)
+                );
     }
 }

@@ -102,5 +102,24 @@ namespace AAA.GlobalVariables.Variables
             a.Value.Value--;
             return a;
         }
+
+
+        public void Increase(int amount) => Value.Value += amount;
+
+        public void Decrease(int amount) => Value.Value -= amount;
+
+        public void Increment() => Value.Value++;
+
+        public void Decrement() => Value.Value--;
+
+        public void SetVariableValue(int newValue) => Value.Value = newValue;
+
+        public void SetVariableMinValue(int newValue) => Value.MinValue = newValue;
+
+        public void SetVariableMaxValue(int newValue) => Value.MaxValue = newValue;
+
+        public void SetVariableProgress(float newValue) => Value.SetProgress(newValue);
+
+        public void SetRandomProgress() => SetVariableProgress(Random.Range(0f, 1f));
     }
 }

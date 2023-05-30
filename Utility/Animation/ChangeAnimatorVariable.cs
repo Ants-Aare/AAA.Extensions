@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AAA.Utility.Animation
 {
     public class ChangeAnimatorVariable : StateMachineBehaviour
     {
+        enum ValueType
+        {
+            Float,
+            Integer,
+            Boolean,
+        }
+        
         [SerializeField] private ValueType valueType;
         [SerializeField] private string variableName;
 
@@ -13,7 +18,7 @@ namespace AAA.Utility.Animation
         [SerializeField] private int targetInt;
         [SerializeField] private float targetFloat;
 
-        override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
             switch (valueType)
             {
