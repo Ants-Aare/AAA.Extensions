@@ -11,6 +11,6 @@ namespace AAA.GlobalVariables.Variables
 #endif
 
         protected override void SaveVariable() => PlayerPrefs.SetInt(name, value ? 1 : 0);
-        protected override void LoadVariable() => value = PlayerPrefs.GetInt(name) == 1;
+        protected override void LoadVariable() => value = PlayerPrefs.GetInt(name, defaultValue ? 1 : 0) == 1;
     }
 }

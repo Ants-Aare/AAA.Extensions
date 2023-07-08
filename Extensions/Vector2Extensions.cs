@@ -1,3 +1,4 @@
+using System;
 using AAA.Extensions;
 using UnityEngine;
 
@@ -86,13 +87,19 @@ namespace AAA.Extensions
         public static Vector2 Reciprocal(this Vector2 vector)
             => new(1f / vector.x, 1f / vector.y);
 
-        public static Vector2 Clamp(Vector2 value, Vector2 minValue, Vector2 maxValue)
+        public static Vector2 Clamp(this Vector2 value, Vector2 minValue, Vector2 maxValue)
             => Vector2.Min(Vector2.Max(minValue, value), maxValue);
 
+        public static Vector2 ClampX(this Vector2 value, float minValue, float maxValue)
+            => new(Math.Clamp(value.x, minValue, maxValue), value.y);
+
+        public static Vector2 ClampY(this Vector2 value, float minValue, float maxValue)
+            => new(value.x, Math.Clamp(value.y, minValue, maxValue));
+
         public static Vector2 SetX(this Vector2 vector, float value)
-            => new Vector2(value, vector.y);
+            => new(value, vector.y);
 
         public static Vector2 SetY(this Vector2 vector, float value)
-            => new Vector2(vector.x, value);
+            => new(vector.x, value);
     }
 }
