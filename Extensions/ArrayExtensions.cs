@@ -29,5 +29,11 @@ namespace AAA.Extensions
 
             return array.TryGet(index, out item);
         }
+        public static T GetClamped<T>(this T[] array, int index)
+        {
+            index = array.ClampIndex(index);
+
+            return array[index];
+        }
     }
 }

@@ -15,23 +15,23 @@ namespace AAA.Utility
         [SerializeField] private int maxCapacity = 20;
         [SerializeField] private bool performCollectionChecks = false;
 
-        [ShowNonSerializedField, ReadOnly] private ObjectPool<PooledObject>[] pools;
-        [ShowNonSerializedField, ReadOnly] private bool isInitialized;
+        private ObjectPool<PooledObject>[] pools;
 
         void OnEnable()
         {
             InitializePrefabPool();
         }
+        
         void OnDisable()
         {
-            isInitialized = false;
+            foreach (var pool in pools)
+            {
+                pool.Clear();
+            }
         }
 
         public void InitializePrefabPool()
         {
-            if(isInitialized)
-                return;
-
             pools = new ObjectPool<PooledObject>[prefabs.Length];
             for (int i = 0; i < prefabs.Length; i++)
             {
