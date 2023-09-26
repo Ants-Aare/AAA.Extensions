@@ -13,7 +13,7 @@ namespace AAA.GlobalVariables.Variables
         [FormerlySerializedAs("callOnChangedOnEnable")] [FormerlySerializedAs("initializeValueOnStart")] [SerializeField] protected bool callEventsOnEnable = true;
         [SerializeField] protected TVariable variable;
 
-        protected virtual void OnEnable()
+        protected virtual void Start()
         {
             if (variable == null)
             {
@@ -24,7 +24,7 @@ namespace AAA.GlobalVariables.Variables
             if (callEventsOnEnable)
                 OnChanged();
         }
-        protected virtual void OnDisable()
+        protected virtual void OnDestroy()
         {
             variable.OnChanged -= OnChanged;
         }

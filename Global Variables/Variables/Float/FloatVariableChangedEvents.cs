@@ -12,9 +12,9 @@ namespace AAA.GlobalVariables.Variables
         [SerializeField] private UnityEvent onIncreased, onDecreased;
         private float cachedValue = 0f;
 
-        protected override void OnEnable()
+        protected override void Start()
         {
-            base.OnEnable();
+            base.Start();
             cachedValue = variable.Value;
         }
         protected override void OnChanged()

@@ -13,9 +13,9 @@ namespace AAA.GlobalVariables.Variables
         [SerializeField] private UnityEvent onIncreased, onDecreased, onReachedMin, onReachedMax;
         private float cachedValue = 0f;
 
-        protected override void OnEnable()
+        protected override void Start()
         {
-            base.OnEnable();
+            base.Start();
             cachedValue = variable.Value.Value;
         }
         protected override void OnChanged()
