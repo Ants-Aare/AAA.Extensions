@@ -1,5 +1,8 @@
 using System;
+using System.Numerics;
 using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace AAA.Extensions
 {
@@ -40,5 +43,14 @@ namespace AAA.Extensions
 
         public static Vector2Int SetY(this Vector2Int vector, int value)
             => new Vector2Int(vector.x, value);
+
+        public static bool IsInRange(this Vector2Int value, Vector2Int min, Vector2Int max)
+        {
+            if (value.x < min.x || value.x >= max.x)
+                return false;
+            if (value.y < min.y || value.y >= max.y)
+                return false;
+            return true;
+        }
     }
 }

@@ -47,6 +47,12 @@ namespace AAA.Extensions
         public static Vector2 ToVector2XZ(this Vector3 vector)
             => new(vector.x, vector.z);
 
+        public static Vector2Int ToVector2IntXY(this Vector3 vector)
+            => new((int)vector.x, (int)vector.y);
+
+        public static Vector2Int ToVector2IntXZ(this Vector3 vector)
+            => new((int)vector.x, (int)vector.z);
+
         public static Vector3 Clamp(Vector3 value, Vector3 minValue, Vector3 maxValue)
             => Vector3.Min(Vector3.Max(minValue, value), maxValue);
 
@@ -77,6 +83,6 @@ namespace AAA.Extensions
                 Random.Range(minVector.x, maxVector.x),
                 Random.Range(minVector.y, maxVector.y),
                 Random.Range(minVector.z, maxVector.z)
-                );
+            );
     }
 }
