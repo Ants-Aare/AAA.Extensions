@@ -9,43 +9,6 @@ public class PlayParticle : MonoBehaviour
 
     [SerializeField][Expandable] private PrefabPool randomizedParticlePrefabs, multipleParticles, particlePrefabs;
 
-    public void PlaySpecificParticle(int prefabIndex)
-    {
-        GameObject go = particlePrefabs.GetInstanceFromPool(prefabIndex);
-
-        CreateParticlesystem(go);
-    }
-
-    public void PlayRandomizedParticle()
-    {
-        GameObject go = particlePrefabs.GetRandomInstanceFromPool();
-
-        CreateParticlesystem(go);
-    }
-    public void PlayRandomizedParticleAtPosition(Vector3 position)
-    {
-        GameObject go = particlePrefabs.GetRandomInstanceFromPool();
-
-        CreateParticlesystem(go, position);
-    }
-
-    public void PlayMultipleParticles()
-    {
-        GameObject[] gameObjects = multipleParticles.GetAllInstances();
-        foreach (var go in gameObjects)
-        {
-            CreateParticlesystem(go);
-        }
-    }
-    public void PlayMultipleParticlesAtPosition(Vector3 position)
-    {
-        GameObject[] gameObjects = multipleParticles.GetAllInstances();
-        foreach (var go in gameObjects)
-        {
-            CreateParticlesystem(go, position);
-        }
-    }
-
     private GameObject CreateParticlesystem(GameObject go)
     {
         if(instantiateAsChild)

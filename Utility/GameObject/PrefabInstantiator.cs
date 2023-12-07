@@ -10,23 +10,11 @@ namespace AAA.Utility.GameObjectUtil
         public void Start()
         {
             if (instantiateAtStart)
-                InstantiateAllPrefabs();
+                InstantiatePrefab();
         }
-
-        public void InstantiateAllPrefabs()
+        public void InstantiatePrefab()
         {
-            prefabPool.GetAllInstances();
-        }
-        public void InstantiateRandomPrefab()
-        {
-            var go = prefabPool.GetRandomInstanceFromPool();
-            go.transform.position = Vector3.zero;
-            go.transform.rotation = Quaternion.identity;
-
-        }
-        public void InstantiateSpecificPrefab(int index)
-        {
-            var go = prefabPool.GetInstanceFromPool(index);
+            var go = prefabPool.GetInstanceFromPool();
             go.transform.position = Vector3.zero;
             go.transform.rotation = Quaternion.identity;
         }

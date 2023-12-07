@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 
 namespace AAA.Utility
@@ -9,94 +11,88 @@ namespace AAA.Utility
     [CreateAssetMenu(menuName = "Variable/Prefab Pool")]
     public class PrefabPool : ScriptableObject
     {
-        [SerializeField] private PooledObject[] prefabs;
+        [SerializeField] private PooledObject prefab;
 
         [SerializeField] private int defaultCapacity = 10;
         [SerializeField] private int maxCapacity = 20;
         [SerializeField] private bool performCollectionChecks = false;
 
-        private ObjectPool<PooledObject>[] pools;
+         private ObjectPool<PooledObject> _pool;
+        [ShowNonSerializedField, ReadOnly] private bool _isInitialized;
+        private readonly List<PooledObject> _instances = new List<PooledObject>();
 
         void OnEnable()
         {
             InitializePrefabPool();
         }
-        
+
         void OnDisable()
         {
-            foreach (var pool in pools)
-            {
-                pool.Clear();
-            }
+            _isInitialized = false;
         }
 
         public void InitializePrefabPool()
         {
-            pools = new ObjectPool<PooledObject>[prefabs.Length];
-            for (int i = 0; i < prefabs.Length; i++)
-            {
-                int t = i;
-                pools[i] = new ObjectPool<PooledObject>(
-                    ()=> CreatePooledObject(t),
-                    OnTakeFromPool,
-                    OnReturnedToPool,
-                    OnDestroyPooledObject,
-                    performCollectionChecks, defaultCapacity, maxCapacity);
-            }
+            if (_isInitialized)
+                return;
+
+            // _pool = new ObjectPool<PooledObject>[prefabs.Length];
+            _pool = new ObjectPool<PooledObject>(
+                CreatePooledObject,
+                OnTakeFromPool,
+                OnReturnedToPool,
+                OnDestroyPooledObject,
+                performCollectionChecks, defaultCapacity, maxCapacity
+                );
         }
 
         #region Prefab Getters
-        public PooledObject[] GetAllPrefabs()
+
+        public PooledObject GetPrefab()
         {
-            return prefabs.Select((prefab)=>prefab).ToArray();
+            return prefab;
         }
-        public PooledObject GetRandomPrefab()
-        {
-            if (prefabs.Length != 0)
-                return prefabs[Random.Range(0, prefabs.Length)];
-            return null;
-        }
-        public PooledObject GetPrefab(int index)
-        {
-            index = Mathf.Clamp(index, 0, pools.Length - 1);
-            return prefabs[0];
-        }
+
         #endregion
 
         #region Instance Management
-        public GameObject GetRandomInstanceFromPool()
-        {
-            if (pools.Length == 0)
-                return null;
 
-            int index = Random.Range(0, pools.Length);
-            return pools[index].Get().gameObject;
-        }
-        public GameObject GetInstanceFromPool(int index)
+        public GameObject GetInstanceFromPool()
         {
-            index = Mathf.Clamp(index, 0, pools.Length - 1);
-            return pools[index].Get().gameObject;
+            var pooledObject = _pool.Get();
+            _instances.Add(pooledObject);
+            return pooledObject.gameObject;
         }
-        public GameObject[] GetAllInstances()=> pools.Select((pool) => pool.Get().gameObject).ToArray();
+        public void ReleaseInstance(PooledObject pooledObjectInstance)
+        {
+            _pool.Release(pooledObjectInstance);
+        }
 
-        public void ReleaseInstance(PooledObject pooledObjectInstance, int index)
+        public void ReleaseAllInstances()
         {
-            pools[index].Release(pooledObjectInstance);
+            foreach (var t in _instances)
+            {
+                _pool.Release(t);
+            }
+            _instances.Clear();
         }
+
         #endregion
 
         #region Pool Methods
-        private PooledObject CreatePooledObject(int index)
+
+        private PooledObject CreatePooledObject()
         {
-            PooledObject pooledObjectPrefab = GetPrefab(index);
-            PooledObject pooledObjectInstance = Instantiate(pooledObjectPrefab);
-            pooledObjectInstance.Initialize(this, index);
+            var pooledObjectPrefab = GetPrefab();
+            var pooledObjectInstance = Instantiate(pooledObjectPrefab);
+            pooledObjectInstance.Initialize(this);
 
             return pooledObjectInstance;
         }
-        private void OnTakeFromPool(PooledObject pooledObject)=>pooledObject.OnTakeFromPool();
-        private void OnReturnedToPool(PooledObject pooledObject)=>pooledObject.OnReturnedToPool();
-        private void OnDestroyPooledObject(PooledObject pooledObject)=>pooledObject.OnDestroyedPooledObject();
+        private void OnTakeFromPool(PooledObject pooledObject) => pooledObject.OnTakeFromPool();
+        private void OnReturnedToPool(PooledObject pooledObject) => pooledObject.OnReturnedToPool();
+        private void OnDestroyPooledObject(PooledObject pooledObject) => pooledObject.OnDestroyedPooledObject();
+
         #endregion
     }
 }
