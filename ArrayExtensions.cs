@@ -35,5 +35,10 @@ namespace AAA.Extensions
 
             return array[index];
         }
+
+        public static int GetIndexLooped<T>(this T[] array, int index)
+        {
+            return index % array.Length;
+        }
     }
 }
