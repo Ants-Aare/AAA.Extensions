@@ -102,6 +102,40 @@ namespace AAA.Extensions
         public static Vector2 SetY(this Vector2 vector, float value)
             => new(vector.x, value);
 
+        public static Vector3 SetZ(this Vector2 vector, float value)
+            => new(vector.x,vector.y, value);
+
+        public static bool IsContained(this Vector2 vector, Vector2 minVector, Vector2 maxVector)
+            => vector.x > minVector.x
+               && vector.y > minVector.y
+               && vector.x < maxVector.x
+               && vector.y < maxVector.y;
+
+        public static bool XYIsEqual(this Vector2 vector)
+            => vector.x == vector.y
+                ? true
+                : Mathf.Approximately(vector.x, vector.y);
+
+        public static bool IsGreaterThan(this Vector2 vector, Vector2 value)
+        {
+            return vector.x > value.x && vector.y > value.y;
+        }
+
+        public static bool IsAnyGreaterThan(this Vector2 vector, Vector2 value)
+        {
+            return vector.x > value.x || vector.y > value.y;
+        }
+
+        public static bool IsLesserThan(this Vector2 vector, Vector2 value)
+        {
+            return vector.x < value.x && vector.y < value.y;
+        }
+
+        public static bool IsAnyLesserThan(this Vector2 vector, Vector2 value)
+        {
+            return vector.x < value.x || vector.y < value.y;
+        }
+
 
         #region Screen Utility Extensions
 
