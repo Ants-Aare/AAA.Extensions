@@ -49,19 +49,6 @@ namespace AAA.Extensions
             return true;
         }
 
-        public static bool Contains<T>(this IEnumerable<T> enumerable, Predicate<T> predicate)
-        {
-            foreach (var element in enumerable)
-            {
-                if (predicate(element))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         public static IEnumerable<(T value, int index)> ZipIndex<T>(this IEnumerable<T> enumerable)
         {
             return enumerable.Select(ZipIndexFunc);

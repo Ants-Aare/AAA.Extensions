@@ -29,6 +29,7 @@ namespace AAA.Extensions
 
             return array.TryGet(index, out item);
         }
+
         public static T GetClamped<T>(this T[] array, int index)
         {
             index = array.ClampIndex(index);
@@ -40,5 +41,29 @@ namespace AAA.Extensions
         {
             return index % array.Length;
         }
+
+        public static T[] SetLength<T>(this T[] array, int newLength)
+        {
+            if (array.Length == newLength)
+                return array;
+
+            var newArray = new T[newLength];
+            var arrayLength = array.Length;
+            
+            for (var i = 0; i < newLength; i++)
+            {
+                newArray[i] = i < arrayLength
+                    ? array[i]
+                    : default;
+            }
+
+            return newArray;
+        }
+        
+        public static T GetRandom<T>(this T[] array)
+        {
+            var newIndex = Random.Range(0, array.Length);
+            return array[newIndex];
+        }   
     }
 }
