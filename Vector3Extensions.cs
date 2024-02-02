@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AAA.Extensions
 {
@@ -84,5 +86,31 @@ namespace AAA.Extensions
                 Random.Range(minVector.y, maxVector.y),
                 Random.Range(minVector.z, maxVector.z)
             );
+
+        public static Vector3 Get(this Vector3Direction direction)
+            => direction switch
+            {
+                Vector3Direction.up => Vector3.up,
+                Vector3Direction.down => Vector3.down,
+                Vector3Direction.forward => Vector3.forward,
+                Vector3Direction.back => Vector3.back,
+                Vector3Direction.left => Vector3.left,
+                Vector3Direction.right => Vector3.right,
+                Vector3Direction.zero => Vector3.zero,
+                Vector3Direction.one => Vector3.one,
+                _ => Vector3.zero
+            };
+    }
+
+    public enum Vector3Direction
+    {
+        zero = 0,
+        one = 1,
+        up,
+        down,
+        forward,
+        back,
+        left,
+        right,
     }
 }
