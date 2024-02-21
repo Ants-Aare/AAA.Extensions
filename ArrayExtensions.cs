@@ -32,8 +32,10 @@ namespace AAA.Extensions
 
         public static T GetClamped<T>(this T[] array, int index)
         {
+            if (array.Length == 0)
+                return default;
+            
             index = array.ClampIndex(index);
-
             return array[index];
         }
 
