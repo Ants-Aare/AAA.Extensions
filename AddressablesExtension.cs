@@ -1,3 +1,6 @@
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 #if ADDRESSABLES
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,5 +37,39 @@ namespace AAA.Extensions
 #endif
             return false;
         }
+
+        public static bool IsNullOrEmpty<T>(this AssetReferenceT<T> reference)
+            where T : Object
+        {
+            if (reference == null)
+                return true;
+            if (string.IsNullOrEmpty(reference.AssetGUID))
+                return true;
+            if (string.IsNullOrEmpty(reference.RuntimeKey.ToString()))
+                return true;
+            if (!reference.RuntimeKeyIsValid())
+                return true;
+            return false;
+        }
+
+        // public static bool TryGetResourceLocator<T>(object key, out IResourceLocator result)
+        // {
+        //     if (key != null)
+        //     {
+        //         foreach (IResourceLocator resourceLocator in Addressables.ResourceLocators)
+        //         {
+        //             if (resourceLocator.Locate(key, typeof(T), out _))
+        //             {
+        //                 result = resourceLocator;
+        //
+        //                 return true;
+        //             }
+        //         }
+        //     }
+        //
+        //     result = null;
+        //
+        //     return false;
+        // }
     }
 }
