@@ -14,7 +14,7 @@ namespace AAA.Extensions
                 return true;
             }
 
-            TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
+            var taskCompletionSource = new TaskCompletionSource<bool>();
 
             cancellationToken.Register(() => taskCompletionSource.TrySetResult(false));
 
@@ -35,7 +35,7 @@ namespace AAA.Extensions
 
             videoPlayer.Prepare();
 
-            bool result = await taskCompletionSource.Task;
+            var result = await taskCompletionSource.Task;
 
             videoPlayer.prepareCompleted -= OnPrepareCompleted;
             videoPlayer.errorReceived -= OnPrepareFailed;

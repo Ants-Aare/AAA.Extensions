@@ -83,7 +83,7 @@ namespace AAA.Extensions
 
         public static async void RunAsync<T>(this Task<T> task, Action<T> onComplete)
         {
-            T result = await task;
+            var result = await task;
 
             onComplete.Invoke(result);
         }

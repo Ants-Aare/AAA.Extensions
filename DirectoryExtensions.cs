@@ -36,14 +36,14 @@ namespace AAA.Extensions
                 return string.Empty;
             }
 
-            bool isNotValidOrRelative = !absolutePath.StartsWith(Application.dataPath);
+            var isNotValidOrRelative = !absolutePath.StartsWith(Application.dataPath);
 
             if (isNotValidOrRelative)
             {
                 return absolutePath;
             }
 
-            string relativePath = string.Empty;
+            var relativePath = string.Empty;
 
             if (Application.dataPath.Length < absolutePath.Length)
             {
@@ -60,7 +60,7 @@ namespace AAA.Extensions
                 return string.Empty;
             }
 
-            int assetsLeght = $"Assets{Path.DirectorySeparatorChar}".Length;
+            var assetsLeght = $"Assets{Path.DirectorySeparatorChar}".Length;
 
             if (assetsRelativePath.Length < assetsLeght)
             {

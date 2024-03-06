@@ -10,18 +10,18 @@ namespace AAA.Extensions
             this GridLayoutGroup gridLayout
             )
         {
-            RectTransform parentTransform = (RectTransform)gridLayout.transform.parent;
-            float parentWidth = parentTransform.rect.width;
+            var parentTransform = (RectTransform)gridLayout.transform.parent;
+            var parentWidth = parentTransform.rect.width;
 
-            int gridLayoutConstraintCount = gridLayout.constraintCount;
+            var gridLayoutConstraintCount = gridLayout.constraintCount;
 
-            float spacingSize = gridLayout.padding.left +
-                gridLayout.padding.right +
-                gridLayout.spacing.x * (gridLayoutConstraintCount - 1);
+            var spacingSize = gridLayout.padding.left +
+                              gridLayout.padding.right +
+                              gridLayout.spacing.x * (gridLayoutConstraintCount - 1);
 
-            float remainingSize = parentWidth - spacingSize;
+            var remainingSize = parentWidth - spacingSize;
 
-            float cellWidth = MathExtensions.Divide(remainingSize, gridLayoutConstraintCount);
+            var cellWidth = MathExtensions.Divide(remainingSize, gridLayoutConstraintCount);
 
             return cellWidth;
         }

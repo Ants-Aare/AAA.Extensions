@@ -7,7 +7,7 @@ namespace AAA.Extensions
     {
         public static void SetActive(IReadOnlyList<GameObject> gameObjects, bool active)
         {
-            foreach (GameObject gameObject in gameObjects)
+            foreach (var gameObject in gameObjects)
             {
                 gameObject.SetActive(active);
             }
@@ -27,7 +27,7 @@ namespace AAA.Extensions
 
         public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
         {
-            bool found = gameObject.TryGetComponent(out T component);
+            var found = gameObject.TryGetComponent(out T component);
 
             return found ? component : gameObject.AddComponent<T>();
         }
@@ -46,39 +46,18 @@ namespace AAA.Extensions
         {
             gameObject.transform.SetParent(null, worldPositionStays);
         }
-
-        public static void SetInteractable(this GameObject gameObject, bool interactable)
+        
+        public static void SetLayerRecursively(this GameObject go, int layer)
         {
-            CanvasGroup canvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
+            go.layer = layer;
 
-            canvasGroup.interactable = interactable;
+            for (int i = 0; i < go.transform.childCount; i++)
+                go.transform.GetChild(i).gameObject.SetLayerRecursively(layer);
         }
 
-        public static bool IsInteractable(this GameObject gameObject)
+        public static RectTransform GetRectTransform(this GameObject go)
         {
-            bool found = gameObject.TryGetComponent(out CanvasGroup canvasGroup);
-
-            if (!found)
-            {
-                return true;
-            }
-
-            return canvasGroup.interactable;
-        }
-
-        public static void SetAlpha(this GameObject gameObject, float alpha)
-        {
-            CanvasGroup canvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
-
-            canvasGroup.alpha = alpha;
-        }
-
-        public static void SetIntaractableAndBlocksRaycasts(this GameObject gameObject, bool interactableAndBlocksRaycasts)
-        {
-            CanvasGroup canvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
-
-            canvasGroup.interactable = interactableAndBlocksRaycasts;
-            canvasGroup.blocksRaycasts = interactableAndBlocksRaycasts;
+            return (RectTransform)go.transform;
         }
     }
 }

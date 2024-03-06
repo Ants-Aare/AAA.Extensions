@@ -24,10 +24,10 @@ namespace AAA.Extensions
         {
             polygonCollider2D.pathCount = 0;
 
-            foreach (List<Vector3> contour in mesh.GetContourVerticesOfMesh())
+            foreach (var contour in mesh.GetContourVerticesOfMesh())
             {
                 polygonCollider2D.pathCount++;
-                Vector2[] contour2d = contour.Select(meshToPlaneFunc).ToArray();
+                var contour2d = contour.Select(meshToPlaneFunc).ToArray();
                 polygonCollider2D.SetPath(polygonCollider2D.pathCount - 1, contour2d);
             }
         }

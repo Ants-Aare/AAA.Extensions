@@ -8,15 +8,15 @@ namespace AAA.Extensions
     {
         public static List<Type> GetInheritedTypes(Type baseType, bool includeAbstractsAndInterfaces = false)
         {
-            List<Type> ret = new List<Type>();
+            var ret = new List<Type>();
 
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            foreach(Assembly assembly in assemblies)
+            foreach(var assembly in assemblies)
             {
-                Type[] types = assembly.GetTypes();
+                var types = assembly.GetTypes();
 
-                foreach(Type type in types)
+                foreach(var type in types)
                 {
                     if (!baseType.IsAssignableFrom(type))
                     {
@@ -28,7 +28,7 @@ namespace AAA.Extensions
                         continue;
                     }
 
-                    bool isAbstractOrInterface = type.IsAbstract || type.IsInterface;
+                    var isAbstractOrInterface = type.IsAbstract || type.IsInterface;
 
                     if(!includeAbstractsAndInterfaces && isAbstractOrInterface)
                     {

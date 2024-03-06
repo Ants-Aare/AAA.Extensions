@@ -8,14 +8,14 @@ namespace AAA.Extensions
     {
         public static Vector2 CalculateFocusedScrollPosition(this ScrollRect scrollView, Vector2 focusPoint)
         {
-            Vector2 contentSize = scrollView.content.rect.size;
-            Vector2 viewportSize = ((RectTransform)scrollView.content.parent).rect.size;
+            var contentSize = scrollView.content.rect.size;
+            var viewportSize = ((RectTransform)scrollView.content.parent).rect.size;
             Vector2 contentScale = scrollView.content.localScale;
 
             contentSize.Scale(contentScale);
             focusPoint.Scale(contentScale);
 
-            Vector2 scrollPosition = scrollView.normalizedPosition;
+            var scrollPosition = scrollView.normalizedPosition;
             // if (scrollView.horizontal && contentSize.x > viewportSize.x)
             //     scrollPosition.x = Mathf.Clamp01((focusPoint.x - viewportSize.x * 0.5f) / (contentSize.x - viewportSize.x));
             // if (scrollView.vertical && contentSize.y > viewportSize.y)
@@ -33,7 +33,7 @@ namespace AAA.Extensions
         {
             Vector2 itemCenterPoint = scrollView.content.InverseTransformPoint(item.transform.TransformPoint(item.rect.center));
 
-            Vector2 contentSizeOffset = scrollView.content.rect.size;
+            var contentSizeOffset = scrollView.content.rect.size;
             contentSizeOffset.Scale(scrollView.content.pivot);
 
             var focusedScrollPointPosition=  scrollView.CalculateFocusedScrollPosition(itemCenterPoint + contentSizeOffset);
@@ -52,9 +52,9 @@ namespace AAA.Extensions
 
         static IEnumerator LerpToScrollPositionCoroutine(this ScrollRect scrollView, Vector2 targetNormalizedPos, float speed)
         {
-            Vector2 initialNormalizedPos = scrollView.normalizedPosition;
+            var initialNormalizedPos = scrollView.normalizedPosition;
 
-            float t = 0f;
+            var t = 0f;
             while (t < 1f)
             {
                 scrollView.normalizedPosition = Vector2.LerpUnclamped(initialNormalizedPos, targetNormalizedPos, 1f - (1f - t) * (1f - t));

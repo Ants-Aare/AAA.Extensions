@@ -46,7 +46,7 @@ namespace AAA.Extensions
                 return;
             }
 
-            for (int i = 0; i < playableDirector.playableGraph.GetRootPlayableCount(); ++i)
+            for (var i = 0; i < playableDirector.playableGraph.GetRootPlayableCount(); ++i)
             {
                 playableDirector.playableGraph.GetRootPlayable(i).SetSpeed(double.MaxValue);
             }

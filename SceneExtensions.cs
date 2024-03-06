@@ -7,11 +7,11 @@ namespace AAA.Extensions
     {
         public static bool TryGetRootComponent<T>(this Scene scene, out T component)
         {
-            GameObject[] rootGameObjects = scene.GetRootGameObjects();
+            var rootGameObjects = scene.GetRootGameObjects();
 
-            foreach (GameObject rootGameObject in rootGameObjects)
+            foreach (var rootGameObject in rootGameObjects)
             {
-                bool hasComponent = rootGameObject.TryGetComponent(out component);
+                var hasComponent = rootGameObject.TryGetComponent(out component);
 
                 if (!hasComponent)
                 {
@@ -24,5 +24,20 @@ namespace AAA.Extensions
             component = default;
             return false;
         }
+
+
+        // SceneManager.GetSceneByBuildIndex(int buildIndex).Name or .Path returns null if the scene is not loaded
+        // Bullshit, I know, but apparently NOT a bug: https://issuetracker.unity3d.com/issues/scenemanager-dot-getscenebybuildindex-dot-name-returns-an-empty-string-if-scene-is-not-loaded
+        // GetScenePathByBuildIndex DOES work properly though.
+        public static string SceneIndexToName(int buildIndex)
+        {
+            var path = SceneUtility.GetScenePathByBuildIndex(buildIndex);
+            return System.IO.Path.GetFileNameWithoutExtension(path);
+        }
+
+
+        // This is a WAY better name for the function
+        public static bool SceneExists(string sceneName)
+            => Application.CanStreamedLevelBeLoaded(sceneName);
     }
 }

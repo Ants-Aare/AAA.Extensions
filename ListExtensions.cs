@@ -7,9 +7,9 @@ namespace AAA.Extensions
     {
         public static void AddRangeIfDoesNotContain<T>(this List<T> list, IEnumerable<T> collection)
         {
-            foreach (T item in collection)
+            foreach (var item in collection)
             {
-                bool contains = list.Contains(item);
+                var contains = list.Contains(item);
 
                 if (contains)
                 {
@@ -34,7 +34,7 @@ namespace AAA.Extensions
         /// <typeparam name="T">The type of the list</typeparam>
         public static int InsertByFunc<T>(this List<T> list, T element, Func<T, T, bool> shouldAddAtPositionFunc)
         {
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 if (shouldAddAtPositionFunc.Invoke(element, list[i]))
                 {
@@ -49,7 +49,7 @@ namespace AAA.Extensions
 
         public static bool TryPop<T>(this List<T> list, out T value)
         {
-            bool couldGet = list.TryGet(0, out value);
+            var couldGet = list.TryGet(0, out value);
 
             if (!couldGet)
             {
@@ -63,17 +63,17 @@ namespace AAA.Extensions
         {
             if (list.Count == 0)
                 throw new InvalidOperationException("Attempting to pop item on empty list.");
-            int index = list.Count - 1;
-            T obj = list[index];
+            var index = list.Count - 1;
+            var obj = list[index];
             list.RemoveAt(index);
             return obj;
         }
 
         public static void RemoveAll<T>(this List<T> list, T value)
         {
-            for (int i = list.Count - 1; i >= 0; --i)
+            for (var i = list.Count - 1; i >= 0; --i)
             {
-                T checkingValue = list[i];
+                var checkingValue = list[i];
 
                 if (checkingValue.Equals(value))
                 {

@@ -88,7 +88,7 @@ namespace AAA.Extensions
                 return default;
             }
 
-            T best = enumerator.Current;
+            var best = enumerator.Current;
 
             while (enumerator.MoveNext())
             {
@@ -113,8 +113,8 @@ namespace AAA.Extensions
                 return default;
             }
 
-            T best = enumerator.Current;
-            Y bestValue = toCompareFunc.Invoke(best);
+            var best = enumerator.Current;
+            var bestValue = toCompareFunc.Invoke(best);
 
             while (enumerator.MoveNext())
             {

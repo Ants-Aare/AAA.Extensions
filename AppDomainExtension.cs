@@ -12,8 +12,8 @@ namespace AAA.Extensions
 
         public static IEnumerable<Type> GetAllTypes(this IEnumerable<Assembly> assemblies)
         {
-            List<Type> allTypes = new List<Type>();
-            foreach (Assembly assembly in assemblies)
+            var allTypes = new List<Type>();
+            foreach (var assembly in assemblies)
             {
                 try
                 {

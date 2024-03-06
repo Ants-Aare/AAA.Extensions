@@ -22,15 +22,15 @@ namespace AAA.Extensions
 
         public static float GetFrustumWidthAtPrespectiveCameraDistance(this Camera camera, float cameraDistance)
         {
-            float horizontalFieldOfView = Camera.VerticalToHorizontalFieldOfView(camera.fieldOfView, camera.aspect);
+            var horizontalFieldOfView = Camera.VerticalToHorizontalFieldOfView(camera.fieldOfView, camera.aspect);
 
             return 2.0f * cameraDistance * Mathf.Tan(horizontalFieldOfView * 0.5f * Mathf.Deg2Rad);
         }
 
         public static Vector2 GetFrustumSizeAtPerspectiveCameraDistance(this Camera camera, float cameraDistance)
         {
-            float width = camera.GetFrustumWidthAtPrespectiveCameraDistance(cameraDistance);
-            float height = camera.GetFrustumHeightAtPerspectiveCameraDistance(cameraDistance);
+            var width = camera.GetFrustumWidthAtPrespectiveCameraDistance(cameraDistance);
+            var height = camera.GetFrustumHeightAtPerspectiveCameraDistance(cameraDistance);
 
             return new Vector2(width, height);
         }
@@ -47,15 +47,15 @@ namespace AAA.Extensions
 
         public static float GetPrespectiveCameraDistanceAtFrustumWidth(this Camera camera, float frustumWidth, float aspect)
         {
-            float horizontalFieldOfView = Camera.VerticalToHorizontalFieldOfView(camera.fieldOfView, aspect);
+            var horizontalFieldOfView = Camera.VerticalToHorizontalFieldOfView(camera.fieldOfView, aspect);
 
             return frustumWidth * 0.5f / Mathf.Tan(horizontalFieldOfView * 0.5f * Mathf.Deg2Rad);
         }
 
         public static Vector2 GetPrespectiveCameraDistanceAtFrustumSize(this Camera camera, Vector2 frustumSize)
         {
-            float width = camera.GetPrespectiveCameraDistanceAtFrustumWidth(frustumSize.x);
-            float height = camera.GetPrespectiveCameraDistanceAtFrustumHeight(frustumSize.y);
+            var width = camera.GetPrespectiveCameraDistanceAtFrustumWidth(frustumSize.x);
+            var height = camera.GetPrespectiveCameraDistanceAtFrustumHeight(frustumSize.y);
 
             return new Vector2(width, height);
         }
@@ -83,17 +83,17 @@ namespace AAA.Extensions
             float cameraDistance
             )
         {
-            Transform cameraTransform = camera.transform;
+            var cameraTransform = camera.transform;
 
-            float aspectRatio = MathExtensions.Divide(camera.pixelWidth, camera.pixelHeight);
+            var aspectRatio = MathExtensions.Divide(camera.pixelWidth, camera.pixelHeight);
 
             Vector2 halfScreenSize = new(
                 orthographicSize * aspectRatio,
                 orthographicSize
             );
 
-            float screenWidth = orthographicSize * aspectRatio * 2f;
-            float screenHeight = orthographicSize * 2f;
+            var screenWidth = orthographicSize * aspectRatio * 2f;
+            var screenHeight = orthographicSize * 2f;
 
             Vector3 screenPosition = new(
                 screenWidth * Mathf.Clamp(viewportPosition.x, 0f, 1f),
@@ -101,7 +101,7 @@ namespace AAA.Extensions
                 cameraDistance
             );
 
-            Vector3 cameraPosition = cameraTransform.position;
+            var cameraPosition = cameraTransform.position;
 
             Vector3 finalPosition = new(
                 (cameraPosition.x - halfScreenSize.x) + screenPosition.x,
@@ -109,7 +109,7 @@ namespace AAA.Extensions
                 screenPosition.z
             );
 
-            Vector3 rotatedPosition = cameraTransform.rotation.RotatePointAroundPivot(finalPosition, cameraPosition);
+            var rotatedPosition = cameraTransform.rotation.RotatePointAroundPivot(finalPosition, cameraPosition);
 
             return rotatedPosition;
         }

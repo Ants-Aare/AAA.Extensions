@@ -11,7 +11,7 @@ namespace AAA.Extensions
     {
          public static async Task<List<T>> FindGameObjectsByComponentTypeAsync<T>() where T : UnityEngine.Object
         {
-            List<T> ret = new List<T>();
+            var ret = new List<T>();
 
             if (!SearchService.IsIndexReady(null))
             {
@@ -23,12 +23,12 @@ namespace AAA.Extensions
                 }
             }
 
-            Type type = typeof(T);
-            ISearchList results = SearchService.Request($"p: t:prefab t:{type.Name}", SearchFlags.Synchronous);
+            var type = typeof(T);
+            var results = SearchService.Request($"p: t:prefab t:{type.Name}", SearchFlags.Synchronous);
 
-            foreach (SearchItem result in results)
+            foreach (var result in results)
             {
-                T casted = (T)result.ToObject(typeof(T));
+                var casted = (T)result.ToObject(typeof(T));
 
                 ret.Add(casted);
             }
@@ -38,17 +38,17 @@ namespace AAA.Extensions
 
          public static List<T> FindAssetsByTypeAndName<T>(string name) where T : UnityEngine.Object
          {
-             Type type = typeof(T);
-             string fullFilter = $"{name} t:{type.Name}";
-             string[] guids = AssetDatabase.FindAssets(fullFilter);
+             var type = typeof(T);
+             var fullFilter = $"{name} t:{type.Name}";
+             var guids = AssetDatabase.FindAssets(fullFilter);
 
-             List<T> assets = new List<T>();
+             var assets = new List<T>();
 
-             foreach (string guid in guids)
+             foreach (var guid in guids)
              {
-                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);
 
-                 T asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+                 var asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
 
                  if (asset != null)
                  {
@@ -61,13 +61,13 @@ namespace AAA.Extensions
 
          public static bool TryFindFirstAssetByTypeAndName<T>(string name, out T asset) where T : UnityEngine.Object
          {
-             Type type = typeof(T);
-             string fullFilter = $"{name} t:{type.Name}";
-             string[] guids = AssetDatabase.FindAssets(fullFilter);
+             var type = typeof(T);
+             var fullFilter = $"{name} t:{type.Name}";
+             var guids = AssetDatabase.FindAssets(fullFilter);
 
              foreach (var guid in guids)
              {
-                 string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);
                  asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
 
                  if(asset != null)
@@ -102,7 +102,7 @@ namespace AAA.Extensions
 
         public static bool TryFindAssetByGuid<T>(string guid, out T asset) where T : UnityEngine.Object
         {
-            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            var assetPath = AssetDatabase.GUIDToAssetPath(guid);
 
             if (string.IsNullOrEmpty(assetPath))
             {

@@ -6,70 +6,70 @@ namespace AAA.Extensions
     {
         public static void SetAnchoredPositionX(this RectTransform transform, float x)
         {
-            Vector2 currPosition = transform.anchoredPosition;
+            var currPosition = transform.anchoredPosition;
             transform.anchoredPosition = new Vector2(x, currPosition.y);
         }
 
         public static void SetAnchoredPositionY(this RectTransform transform, float y)
         {
-            Vector2 currPosition = transform.anchoredPosition;
+            var currPosition = transform.anchoredPosition;
             transform.anchoredPosition = new Vector2(currPosition.x, y);
         }
 
         public static void AddAnchoredPositionX(this RectTransform transform, float x)
         {
-            Vector2 currPosition = transform.anchoredPosition;
+            var currPosition = transform.anchoredPosition;
             transform.anchoredPosition = new Vector2(currPosition.x + x, currPosition.y);
         }
 
         public static void AddAnchoredPositionY(this RectTransform transform, float y)
         {
-            Vector2 currPosition = transform.anchoredPosition;
+            var currPosition = transform.anchoredPosition;
             transform.anchoredPosition = new Vector2(currPosition.x, currPosition.y + y);
         }
 
         public static void SetPivotX(this RectTransform transform, float x)
         {
-            Vector2 currPosition = transform.pivot;
+            var currPosition = transform.pivot;
             transform.pivot = new Vector3(x, currPosition.y);
         }
 
         public static void SetPivotY(this RectTransform transform, float y)
         {
-            Vector2 currPosition = transform.pivot;
+            var currPosition = transform.pivot;
             transform.pivot = new Vector3(currPosition.x, y);
         }
 
         public static void SetSizeDeltaX(this RectTransform transform, float x)
         {
-            Vector2 currSizeDelta = transform.sizeDelta;
+            var currSizeDelta = transform.sizeDelta;
             transform.sizeDelta = new Vector2(x, currSizeDelta.y);
         }
 
         public static void SetSizeDeltaY(this RectTransform transform, float y)
         {
-            Vector2 currSizeDelta = transform.sizeDelta;
+            var currSizeDelta = transform.sizeDelta;
             transform.sizeDelta = new Vector2(currSizeDelta.x, y);
         }
 
         public static void SetAnchorMaxX(this RectTransform transform, float x)
         {
-            Vector2 currAnchor = transform.anchorMax;
+            var currAnchor = transform.anchorMax;
             transform.anchorMax = new Vector3(x, currAnchor.x);
         }
 
         public static void SetAnchorMaxY(this RectTransform transform, float y)
         {
-            Vector2 currAnchor = transform.anchorMax;
+            var currAnchor = transform.anchorMax;
             transform.anchorMax = new Vector3(currAnchor.x, y);
         }
 
         public static Rect GetAnchoredRect(this RectTransform transform)
         {
-            Vector2 halfSize = transform.sizeDelta * 0.5f;
-            Vector2 anchoredPosition = transform.anchoredPosition;
+            var halfSize = transform.sizeDelta * 0.5f;
+            var anchoredPosition = transform.anchoredPosition;
 
-            Rect bounds = new Rect
+            var bounds = new Rect
             {
                 min = anchoredPosition - halfSize,
                 max = anchoredPosition + halfSize,
@@ -85,14 +85,14 @@ namespace AAA.Extensions
 
         public static Rect GetScreenRect(this RectTransform transform)
         {
-            Bounds bounds = transform.GetWorldCornersBounds();
+            var bounds = transform.GetWorldCornersBounds();
 
             return RectExtensions.FromCenterAndSize(bounds.center.ToVector2XY(), bounds.size.ToVector2XY());
         }
 
         public static Vector2 GetAnchoredPositionFromScreenPosition(this RectTransform transform, Vector2 screenPosition)
         {
-            RectTransform parentRectTransform = transform.parent as RectTransform;
+            var parentRectTransform = transform.parent as RectTransform;
 
             if (parentRectTransform == null)
             {
@@ -103,7 +103,7 @@ namespace AAA.Extensions
                 parentRectTransform,
                 screenPosition,
                 null,
-                out Vector2 localPoint
+                out var localPoint
             );
 
             return localPoint;
@@ -111,7 +111,7 @@ namespace AAA.Extensions
 
         public static Vector2 GetScreenPositionFromAnchoredPosition(this RectTransform transform, Vector2 anchoredPosition)
         {
-            RectTransform parentRectTransform = transform.parent as RectTransform;
+            var parentRectTransform = transform.parent as RectTransform;
 
             if (parentRectTransform == null)
             {
@@ -125,26 +125,26 @@ namespace AAA.Extensions
 
         public static Vector2 GetAnchoredPositionRelativeToRectTransform(this RectTransform transform, RectTransform to)
         {
-            Vector2 transformPivot = transform.pivot;
-            Rect transformRect = transform.rect;
+            var transformPivot = transform.pivot;
+            var transformRect = transform.rect;
 
-            Vector2 toPivot = to.pivot;
-            Rect toRect = to.rect;
+            var toPivot = to.pivot;
+            var toRect = to.rect;
 
-            Vector2 transformPivotDerivedOffset = new Vector2(
+            var transformPivotDerivedOffset = new Vector2(
                 transformRect.width * transformPivot.x + transformRect.xMin,
                 transformRect.height * transformPivot.y + transformRect.yMin
                 );
 
-            Vector2 toPivotDerivedOffset = new Vector2(
+            var toPivotDerivedOffset = new Vector2(
                 toRect.width * toPivot.x + toRect.xMin,
                 toRect.height * toPivot.y + toRect.yMin
                 );
 
-            Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(null, transform.position);
+            var screenPosition = RectTransformUtility.WorldToScreenPoint(null, transform.position);
             screenPosition += transformPivotDerivedOffset;
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(to, screenPosition, null, out Vector2 localPoint);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(to, screenPosition, null, out var localPoint);
 
             return to.anchoredPosition + localPoint - toPivotDerivedOffset;
         }
@@ -285,8 +285,8 @@ namespace AAA.Extensions
         public static Bounds GetWorldCornersBounds(this RectTransform rectTransform)
         {
             rectTransform.GetWorldCorners(WorldCorners);
-            Bounds bounds = new Bounds(WorldCorners[0], Vector3.zero);
-            for(int i = 1; i < 4; ++i)
+            var bounds = new Bounds(WorldCorners[0], Vector3.zero);
+            for(var i = 1; i < 4; ++i)
             {
                 bounds.Encapsulate(WorldCorners[i]);
             }

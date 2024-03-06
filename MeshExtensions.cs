@@ -65,7 +65,7 @@ namespace AAA.Extensions
             var vertices = mesh.vertices;
             var uvs = new Vector2[vertices.Length];
 
-            for (int i = 0; i < uvs.Length; i++)
+            for (var i = 0; i < uvs.Length; i++)
             {
                 var planePosition = vertexToPlanePositionFunc(vertices[i]) - minPosition;
                 uvs[i] = planePosition / size;
@@ -76,9 +76,9 @@ namespace AAA.Extensions
 
         public static bool TryGenerateMeshPlaneContourUsingOffset(this Mesh mesh, Vector3 offset, out Mesh contourMesh)
         {
-            List<List<Vector3>> allContourVertices = mesh.GetContourVerticesOfMesh();
+            var allContourVertices = mesh.GetContourVerticesOfMesh();
 
-            bool found = allContourVertices.TryGet(0, out List<Vector3> contourVertices);
+            var found = allContourVertices.TryGet(0, out var contourVertices);
 
             if (!found)
             {
@@ -93,32 +93,32 @@ namespace AAA.Extensions
             }
 
             //Generate vertices
-            Vector3[] vertices = new Vector3[contourVertices.Count * 2];
-            foreach (int i in ..contourVertices.Count)
+            var vertices = new Vector3[contourVertices.Count * 2];
+            foreach (var i in ..contourVertices.Count)
             {
-                Vector3 position = contourVertices[i];
+                var position = contourVertices[i];
                 vertices[i] = position;
                 vertices[i + contourVertices.Count] = position + offset;
             }
 
             //Generate UVs
-            Vector2[] uvs = new Vector2[vertices.Length];
+            var uvs = new Vector2[vertices.Length];
             foreach (var i in ..contourVertices.Count)
             {
-                bool pair = i % 2 == 0;
+                var pair = i % 2 == 0;
                 uvs[i] = new Vector2(pair ? 0 : 1, 0);
                 uvs[i + contourVertices.Count] = new Vector2(pair ? 0 : 1, 1);
             }
 
             //Generate triangles
             // Multiplied by 3 becase for each vertex we have a triangle
-            int[] triangles = new int[vertices.Length * 3];
-            int vertexCount = contourVertices.Count;
+            var triangles = new int[vertices.Length * 3];
+            var vertexCount = contourVertices.Count;
 
             //Do all vertices minus the last one which we do explicitly again because it loops to the first one
-            foreach (int i in ..(vertexCount - 1))
+            foreach (var i in ..(vertexCount - 1))
             {
-                int startIndex = i * 6;
+                var startIndex = i * 6;
 
                 triangles[startIndex] = i;
                 triangles[startIndex + 1] = i + 1 + vertexCount;
@@ -130,7 +130,7 @@ namespace AAA.Extensions
             }
 
             //Explicit last vertex triangles
-            int lastIndexStart = (vertexCount - 1) * 6;
+            var lastIndexStart = (vertexCount - 1) * 6;
             triangles[lastIndexStart] = vertexCount - 1;
             triangles[lastIndexStart + 1] = vertexCount;
             triangles[lastIndexStart + 2] = vertexCount + vertexCount - 1;
@@ -168,24 +168,24 @@ namespace AAA.Extensions
         /// <seealso cref="https://www.h3xed.com/programming/automatically-create-polygon-collider-2d-from-2d-mesh-in-unity"/>
         public static List<List<Vector3>> GetContourVerticesOfMesh(this Mesh mesh)
         {
-            List<List<Vector3>> ret = new List<List<Vector3>>();
+            var ret = new List<List<Vector3>>();
 
             // Get triangles and vertices from mesh
-            int[] triangles = mesh.triangles;
-            Vector3[] vertices = mesh.vertices;
+            var triangles = mesh.triangles;
+            var vertices = mesh.vertices;
 
             // Get just the outer edges from the mesh's triangles (ignore or remove any shared edges)
-            Dictionary<string, KeyValuePair<int, int>> edges = new Dictionary<string, KeyValuePair<int, int>>();
-            for (int i = 0; i < triangles.Length; i += 3)
+            var edges = new Dictionary<string, KeyValuePair<int, int>>();
+            for (var i = 0; i < triangles.Length; i += 3)
             {
-                for (int e = 0; e < 3; e++)
+                for (var e = 0; e < 3; e++)
                 {
-                    int vert1 = triangles[i + e];
-                    int index2 = i + e + 1 > i + 2
+                    var vert1 = triangles[i + e];
+                    var index2 = i + e + 1 > i + 2
                         ? i
                         : i + e + 1;
-                    int vert2 = triangles[index2];
-                    string edge = Mathf.Min(vert1, vert2) + ":" + Mathf.Max(vert1, vert2);
+                    var vert2 = triangles[index2];
+                    var edge = Mathf.Min(vert1, vert2) + ":" + Mathf.Max(vert1, vert2);
                     if (edges.ContainsKey(edge))
                     {
                         edges.Remove(edge);
@@ -198,8 +198,8 @@ namespace AAA.Extensions
             }
 
             // Create edge lookup (Key is first vertex, Value is second vertex, of each edge)
-            Dictionary<int, int> lookup = new Dictionary<int, int>();
-            foreach (KeyValuePair<int, int> edge in edges.Values)
+            var lookup = new Dictionary<int, int>();
+            foreach (var edge in edges.Values)
             {
                 if (lookup.ContainsKey(edge.Key) == false)
                 {
@@ -208,12 +208,12 @@ namespace AAA.Extensions
             }
 
             // Loop through edge vertices in order
-            int startVert = 0;
-            int nextVert = 0;
-            HashSet<int> visited = new HashSet<int>();
+            var startVert = 0;
+            var nextVert = 0;
+            var visited = new HashSet<int>();
             while (visited.Count < lookup.Count)
             {
-                List<Vector3> contourPositions = new List<Vector3>();
+                var contourPositions = new List<Vector3>();
 
                 do
                 {
@@ -229,8 +229,8 @@ namespace AAA.Extensions
 
                 ret.Add(contourPositions);
 
-                bool found = false;
-                foreach (int key in lookup.Keys)
+                var found = false;
+                foreach (var key in lookup.Keys)
                 {
                     if (visited.Contains(key))
                     {

@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace AAA.Extensions
 {
@@ -59,11 +61,11 @@ namespace AAA.Extensions
 
             while (toCheck.Count > 0)
             {
-                int checking = toCheck[0];
+                var checking = toCheck[0];
                 toCheck.RemoveAt(0);
 
-                int div = checking / alphabetCharactersCount;
-                int mod = checking % alphabetCharactersCount;
+                var div = checking / alphabetCharactersCount;
+                var mod = checking % alphabetCharactersCount;
                 if (mod == 0) { mod = alphabetCharactersCount; div--; }
 
                 if (checking > alphabetCharactersCount)
@@ -73,12 +75,44 @@ namespace AAA.Extensions
                     continue;
                 }
 
-                char character = Convert.ToChar(checking + 64);
+                var character = Convert.ToChar(checking + 64);
 
                 stringBuilder.Append(character);
             }
 
             return stringBuilder.ToString();
+        }
+
+        public static int NewRandom<T>(this int previousRandom, T[] array)
+            => NewRandom(previousRandom, 0, array.Length);
+        public static int NewRandom<T>(this int previousRandom, IEnumerable<T> enumerable)
+            => NewRandom(previousRandom, 0, enumerable.Count());
+
+        public static int NewRandom(this int previousRandom, int minInclusive, int maxExclusive)
+        {
+            if (maxExclusive - minInclusive == 1)
+            {
+                return minInclusive;
+            }
+
+            if (maxExclusive - minInclusive == 2)
+            {
+                return previousRandom == minInclusive
+                    ? maxExclusive - 1
+                    : minInclusive;
+            }
+
+            var iterations = 0;
+            while (true)
+            {
+                var candidate = Random.Range(minInclusive, maxExclusive);
+                if (candidate != previousRandom)
+                    return candidate;
+                iterations++;
+
+                if (iterations > 100)
+                    return candidate;
+            }
         }
     }
 }

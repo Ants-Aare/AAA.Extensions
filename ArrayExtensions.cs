@@ -6,7 +6,7 @@ namespace AAA.Extensions
     {
         public static bool TryGet<T>(this T[] array, int index, out T item)
         {
-            bool outsideBounds = index < 0 || array.Length <= index;
+            var outsideBounds = index < 0 || array.Length <= index;
 
             if (outsideBounds)
             {
@@ -66,6 +66,40 @@ namespace AAA.Extensions
         {
             var newIndex = Random.Range(0, array.Length);
             return array[newIndex];
-        }   
+        } 
+        
+        public static T GetNewRandom<T>(this T[] array, int previousRandom, out int selectedRandom)
+        {
+            if (array.Length == 1)
+            {
+                selectedRandom = 0;
+                return array[0];
+            }
+
+            if (array.Length == 2)
+            {
+                selectedRandom = previousRandom == 0 ? 1 : 0;
+                return array[selectedRandom];
+            }
+
+            var iterations = 0;
+            while (true)
+            {
+                var candidate =Random.Range(0, array.Length);
+                if (candidate != previousRandom)
+                {
+                    selectedRandom = candidate;
+                    return array[selectedRandom];
+                }
+
+                iterations++;
+
+                if (iterations > 100)
+                {
+                    selectedRandom = previousRandom;
+                    return array[selectedRandom];
+                }
+            }
+        }
     }
 }

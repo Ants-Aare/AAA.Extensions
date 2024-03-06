@@ -6,7 +6,7 @@ namespace AAA.Extensions
     {
         public static bool IsHtmlColor(this Color color, string htmlColor)
         {
-            string pixelHtmlColor = ColorUtility.ToHtmlStringRGB(color);
+            var pixelHtmlColor = ColorUtility.ToHtmlStringRGB(color);
 
             string FormatHtmlColor(string htmlColorString)
             {
@@ -23,7 +23,7 @@ namespace AAA.Extensions
 
         public static Color FromHtmlColor(string htmlColor)
         {
-            bool couldParse = ColorUtility.TryParseHtmlString(htmlColor, out Color color);
+            var couldParse = ColorUtility.TryParseHtmlString(htmlColor, out var color);
 
             if (!couldParse)
             {
@@ -35,14 +35,14 @@ namespace AAA.Extensions
 
         public static Color FromRGBA255(float r, float g, float b, float a)
         {
-            float delta = 1f / 255f;
+            var delta = 1f / 255f;
 
             return new Color(delta * r, delta * g, delta * b, delta * a);
         }
 
         public static Color FromRGB255(float r, float g, float b)
         {
-            float delta = 1f / 255f;
+            var delta = 1f / 255f;
 
             return new Color(delta * r, delta * g, delta * b, 1);
         }

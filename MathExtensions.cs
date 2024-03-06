@@ -38,7 +38,7 @@ namespace AAA.Extensions
             current = Math.Max(min, current);
             current = Math.Min(current, max);
 
-            float maxMinusMin = max - min;
+            var maxMinusMin = max - min;
 
             return Divide(current, maxMinusMin);
         }

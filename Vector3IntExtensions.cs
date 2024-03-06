@@ -10,7 +10,7 @@ namespace AAA.Extensions
 
         public static Vector3Int AbsManhattanDistance(Vector3Int a, Vector3Int b)
         {
-            Vector3Int distance = b - a;
+            var distance = b - a;
 
             return new Vector3Int(Mathf.Abs(distance.x), Mathf.Abs(distance.y), Mathf.Abs(distance.z));
         }

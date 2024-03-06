@@ -12,11 +12,11 @@ namespace AAA.Extensions
         {
             try
             {
-                bool fileAlreadyExists = File.Exists(filePath);
+                var fileAlreadyExists = File.Exists(filePath);
 
                 if (!fileAlreadyExists)
                 {
-                    string filePathDirectory = Path.GetDirectoryName(filePath);
+                    var filePathDirectory = Path.GetDirectoryName(filePath);
 
                     if (string.IsNullOrEmpty(filePathDirectory))
                     {
@@ -30,7 +30,7 @@ namespace AAA.Extensions
                     File.Delete(filePath);
                 }
 
-                await using (FileStream sourceStream = File.Open(filePath, FileMode.OpenOrCreate))
+                await using (var sourceStream = File.Open(filePath, FileMode.OpenOrCreate))
                 {
                     sourceStream.Seek(0, SeekOrigin.End);
 

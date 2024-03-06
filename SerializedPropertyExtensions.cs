@@ -17,7 +17,7 @@ namespace AAA.Extensions
                 return;
             }
 
-            SerializedProperty endProperty = serializedProperty.GetEndProperty();
+            var endProperty = serializedProperty.GetEndProperty();
 
             serializedProperty.NextVisible(true);
 
@@ -34,8 +34,8 @@ namespace AAA.Extensions
                 return 0;
             }
 
-            float height = 0f;
-            SerializedProperty endProperty = serializedProperty.GetEndProperty();
+            var height = 0f;
+            var endProperty = serializedProperty.GetEndProperty();
 
             serializedProperty.NextVisible(true);
 
@@ -58,7 +58,7 @@ namespace AAA.Extensions
 
             serializedProperty.arraySize++;
 
-            SerializedProperty elementProperty = serializedProperty.GetArrayElementAtIndex(serializedProperty.arraySize - 1);
+            var elementProperty = serializedProperty.GetArrayElementAtIndex(serializedProperty.arraySize - 1);
 
             elementProperty.objectReferenceValue = unityObject;
         }
@@ -78,7 +78,7 @@ namespace AAA.Extensions
                 return;
             }
 
-            int oldSize = serializedProperty.arraySize;
+            var oldSize = serializedProperty.arraySize;
 
             serializedProperty.DeleteArrayElementAtIndex(index);
 

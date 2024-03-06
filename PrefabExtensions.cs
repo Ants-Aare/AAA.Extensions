@@ -7,7 +7,7 @@ namespace AAA.Extensions
     {
         public static bool IsPrefabInContext(string assetPath)
         {
-            PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+            var prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
 
             if (prefabStage == null)
             {

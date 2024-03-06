@@ -7,7 +7,7 @@ namespace AAA.Extensions
     {
         public static bool TryGet<T>(this IReadOnlyList<T> list, int index, out T item)
         {
-            bool outsideBounds = index < 0 || list.Count <= index;
+            var outsideBounds = index < 0 || list.Count <= index;
 
             if (outsideBounds)
             {
@@ -33,9 +33,9 @@ namespace AAA.Extensions
 
         public static bool TryGetItemIndex<T>(this IReadOnlyList<T> list, T item, out int index)
         {
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
-                T checkingItem = list[i];
+                var checkingItem = list[i];
 
                 if (!checkingItem.Equals(item))
                 {

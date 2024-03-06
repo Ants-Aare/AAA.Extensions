@@ -6,7 +6,7 @@ namespace AAA.Extensions
     {
         public static void SetAlpha(this SpriteRenderer spriteRenderer, float normalizedAlpha)
         {
-            Color color = spriteRenderer.color;
+            var color = spriteRenderer.color;
             color.a = normalizedAlpha;
             spriteRenderer.color = color;
         }
