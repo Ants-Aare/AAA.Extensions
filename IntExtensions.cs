@@ -114,5 +114,10 @@ namespace AAA.Extensions
                     return candidate;
             }
         }
+        
+        public static bool IsBetween(this int value, int minInclusive, int maxExclusive)
+        {
+            return (value >= minInclusive && value < maxExclusive) || (value <= minInclusive && value > maxExclusive);
+        }
     }
 }

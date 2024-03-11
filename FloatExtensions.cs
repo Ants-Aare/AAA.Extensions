@@ -19,5 +19,9 @@ namespace AAA.Extensions
         {
             return (float)Math.Round(value, decimals);
         }
+        public static bool IsBetween(this float value, float minInclusive, float maxInclusive)
+        {
+            return (value >= minInclusive && value <= maxInclusive) || (value <= minInclusive && value >= maxInclusive);
+        }
     }
 }
