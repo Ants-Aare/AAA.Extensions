@@ -9,7 +9,21 @@ namespace AAA.Extensions
         public static readonly Vector3 MaxValue = new(float.MaxValue, float.MaxValue, float.MaxValue);
         public static readonly Vector3 MinValue = new(float.MinValue, float.MinValue, float.MinValue);
         public static readonly Vector3 HalfOne = new(0.5f, 0.5f, 0.5f);
+        
+        public static Vector3 GetClosestPointOnFiniteLine(this Vector3 point, Vector3 lineStart, Vector3 lineEnd)
+        {
+            var lineDirection = lineEnd - lineStart;
+            var lineLength = lineDirection.magnitude;
+            lineDirection.Normalize();
+            var projectLength = Mathf.Clamp(Vector3.Dot(point - lineStart, lineDirection), 0f, lineLength);
+            return lineStart + lineDirection * projectLength;
+        }
 
+        public static Vector3 GetClosestPointOnInfiniteLine(this Vector3 point, Vector3 lineStart, Vector3 lineEnd)
+        {
+            return lineStart + Vector3.Project(point - lineStart, lineEnd - lineStart);
+        }
+        
         public static bool AreEpsilonEquals(Vector3 a, Vector3 b)
             => MathExtensions.IsEpsilonEqualsZero((a - b).sqrMagnitude);
 
@@ -100,6 +114,8 @@ namespace AAA.Extensions
                 Vector3Direction.one => Vector3.one,
                 _ => Vector3.zero
             };
+        
+        
     }
 
     public enum Vector3Direction

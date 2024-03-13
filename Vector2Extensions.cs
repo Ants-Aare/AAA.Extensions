@@ -10,6 +10,26 @@ namespace AAA.Extensions
         public static readonly Vector2 MinValue = new(float.MinValue, float.MinValue);
         public static readonly Vector2 HalfOne = new(0.5f, 0.5f);
 
+        public static Vector2 GetClosestPointOnFiniteLine(this Vector2 point, Vector2 lineStart, Vector2 lineEnd)
+        {
+            var heading = (lineEnd - lineStart);
+            var magnitudeMax = heading.magnitude;
+            heading.Normalize();
+
+            var lhs = point - lineStart;
+            var dotP = Vector2.Dot(lhs, heading);
+            dotP = Mathf.Clamp(dotP, 0f, magnitudeMax);
+            return lineStart + heading * dotP;
+        }
+        public static Vector2 GetClosestPointOnInfiniteLine(this Vector2 point, Vector2 origin, Vector2 direction)
+        {
+            direction.Normalize();
+            var lhs = point - origin;
+
+            var dotP = Vector2.Dot(lhs, direction);
+            return origin + direction * dotP;
+        }
+        
         public static bool AreEpsilonEquals(Vector2 a, Vector2 b)
         {
             return MathExtensions.IsEpsilonEqualsZero((a - b).sqrMagnitude);
