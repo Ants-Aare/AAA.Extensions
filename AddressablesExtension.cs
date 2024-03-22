@@ -72,4 +72,51 @@ namespace AAA.Extensions
         //     return false;
         // }
     }
+    
+    
+    
+    //I don't understand why this isn't included in unity by default???
+    //Copied from here: https://forum.unity.com/threads/something-like-assetreferencet-sceneasset.812085/
+    [System.Serializable]
+    public class AssetReferenceScene : AssetReference
+    {
+        /// <summary>
+        /// Construct a new AssetReference object.
+        /// </summary>
+        /// <param name="guid">The guid of the asset.</param>
+        public AssetReferenceScene(string guid) : base(guid)
+        {
+        }
+ 
+ 
+        /// <inheritdoc/>
+        public override bool ValidateAsset(Object obj)
+        {
+#if UNITY_EDITOR
+            var type = obj.GetType();
+            return typeof(UnityEditor.SceneAsset).IsAssignableFrom(type);
+#else
+        return false;
+#endif
+ 
+        }
+ 
+        /// <inheritdoc/>
+        public override bool ValidateAsset(string path)
+        {
+#if UNITY_EDITOR
+            var type = UnityEditor.AssetDatabase.GetMainAssetTypeAtPath(path);
+            return typeof(UnityEditor.SceneAsset).IsAssignableFrom(type);
+#else
+        return false;
+#endif
+        }
+ 
+#if UNITY_EDITOR
+        /// <summary>
+        /// Type-specific override of parent editorAsset.  Used by the editor to represent the asset referenced.
+        /// </summary>
+        public new UnityEditor.SceneAsset editorAsset => (UnityEditor.SceneAsset)base.editorAsset;
+#endif
+    }
 }
