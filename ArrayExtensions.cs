@@ -20,6 +20,8 @@ namespace AAA.Extensions
 
         public static int ClampIndex<T>(this T[] array, int index)
         {
+            if (array == null)
+                return -1;
             return Mathf.Clamp(index, 0, array.Length - 1);
         }
 
